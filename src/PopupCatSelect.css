@@ -1,0 +1,106 @@
+.CatSelect tr,
+th,
+td {
+	text-align: center;
+}
+
+.PopHeader {
+	padding: 5px;
+}
+
+.PopBody {
+	padding: 0px;
+}
+.TableView {
+	padding: 25px;
+}
+.TableTitle {
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.PopFooter {
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 0px;
+}
+
+.FooterButton {
+}
+.SelectedView {
+	padding: 25px;
+	border-bottom: 1px solid #dee2e6;
+}
+.SelectedContents {
+	display: flex;
+	margin: 5px;
+}
+
+.SelectedTitleCurrent {
+	font-size: 13px;
+	text-align: center;
+	height: 30px;
+	width: 100px;
+	padding: 4px;
+	border: solid 1px #52b36b;
+
+	border-radius: .25rem 0 0 0.25rem;
+}
+
+.SelectedBodyCurrent {
+	font-size: 13px;
+
+	height: 30px;
+	width: 100%;
+	padding: 4px 4px 4px 15px;
+
+	border-top: solid 1px #52b36b;
+	border-right: solid 1px #52b36b;
+	border-bottom: solid 1px #52b36b;
+	border-radius: 0 .25rem 0.25rem 0;
+	background: #fafafa;
+}
+
+.SelectedTitle {
+	font-size: 13px;
+	text-align: center;
+	height: 30px;
+	width: 100px;
+	padding: 4px;
+	border: solid 1px #ced4da;
+
+	border-radius: .25rem 0 0 0.25rem;
+}
+
+.SelectedBody {
+	font-size: 13px;
+
+	height: 30px;
+	width: 100%;
+	padding: 4px 4px 4px 15px;
+
+	border-top: solid 1px #ced4da;
+	border-right: solid 1px #ced4da;
+	border-bottom: solid 1px #ced4da;
+	border-radius: 0 .25rem 0.25rem 0;
+	background: #fafafa;
+}
+
+.btn-Move {
+	margin: 0 15px;
+	font-size: 13px;
+	width: 60px;
+	height: 30px;
+	color: #555;
+	background: #edf0f5;
+}
+
+.btn-Move:hover {
+	color: #fff;
+	background: #cccccc;
+}
+
+.MoveView {
+	width: 100px;
+}
