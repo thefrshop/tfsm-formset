@@ -1,0 +1,45 @@
+{
+  "name": "react-createpage",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "^16.9.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thefrshop/react-createpage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thefrshop/react-createpage/issues"
+  },
+  "homepage": "https://github.com/thefrshop/react-createpage#readme",
+  "description": "��#\u0000 \u0000r\u0000e\u0000a\u0000c\u0000t\u0000-\u0000c\u0000r\u0000e\u0000a\u0000t\u0000e\u0000p\u0000a\u0000g\u0000e\u0000\r\u0000 \u0000",
+  "devDependencies": {}
+}
