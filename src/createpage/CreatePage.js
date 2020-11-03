@@ -7,7 +7,6 @@ import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
 
 import CatSelected from './CatSelected';
-import './bootstrap.min.css';
 
 class CreatePage extends React.Component {
 	constructor(props) {
@@ -49,7 +48,7 @@ class CreatePage extends React.Component {
 				InitData[item.id] = {
 					UploadInfo: [],
 					FileList: []
-				}; 
+				};
 			} else if (item.format === 'UploadHtml') {
 				InitData[item.id] = {
 					UploadInfo: [],
