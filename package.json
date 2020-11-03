@@ -1,6 +1,6 @@
 {
   "name": "react-createpage",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "react createpage",
   "module": "dist/index.js",
   "license": "MIT",
@@ -29,5 +29,4 @@
     "url": "https://github.com/thefrshop/react-createpage/issues"
   },
   "homepage": "https://github.com/thefrshop/react-createpage#readme"
-
 }
