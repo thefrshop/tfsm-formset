@@ -1,29 +1,21 @@
 {
   "name": "react-createpage",
-  "version": "0.1.0",
-  "dependencies": {
-    "react": "^16.9.0"
+  "version": "0.1.4",
+  "description": "react createpage",
+  "module": "dist/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@svgr/rollup": "^5.4.0",
+    "rollup": "^2.33.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-url": "^3.0.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@thefreshop"
@@ -33,13 +25,9 @@
     "type": "git",
     "url": "git+https://github.com/thefrshop/react-createpage.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/thefrshop/react-createpage/issues"
   },
-  "homepage": "https://github.com/thefrshop/react-createpage#readme",
-  "description": "��#\u0000 \u0000r\u0000e\u0000a\u0000c\u0000t\u0000-\u0000c\u0000r\u0000e\u0000a\u0000t\u0000e\u0000p\u0000a\u0000g\u0000e\u0000\r\u0000 \u0000",
-  "devDependencies": {}
+  "homepage": "https://github.com/thefrshop/react-createpage#readme"
+
 }
