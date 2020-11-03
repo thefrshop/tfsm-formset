@@ -4304,57 +4304,6 @@ var Image = React.forwardRef(function (_ref, ref) {
 Image.displayName = 'Image';
 Image.defaultProps = defaultProps$6;
 
-var InputGroupAppend = createWithBsPrefix('input-group-append');
-var InputGroupPrepend = createWithBsPrefix('input-group-prepend');
-var InputGroupText = createWithBsPrefix('input-group-text', {
-  Component: 'span'
-});
-
-var InputGroupCheckbox = function InputGroupCheckbox(props) {
-  return /*#__PURE__*/React.createElement(InputGroupText, null, /*#__PURE__*/React.createElement("input", _extends({
-    type: "checkbox"
-  }, props)));
-};
-
-var InputGroupRadio = function InputGroupRadio(props) {
-  return /*#__PURE__*/React.createElement(InputGroupText, null, /*#__PURE__*/React.createElement("input", _extends({
-    type: "radio"
-  }, props)));
-};
-
-/**
- *
- * @property {InputGroupAppend} Append
- * @property {InputGroupPrepend} Prepend
- * @property {InputGroupText} Text
- * @property {InputGroupRadio} Radio
- * @property {InputGroupCheckbox} Checkbox
- */
-var InputGroup = React.forwardRef(function (_ref, ref) {
-  var bsPrefix = _ref.bsPrefix,
-      size = _ref.size,
-      className = _ref.className,
-      _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      props = _objectWithoutPropertiesLoose(_ref, ["bsPrefix", "size", "className", "as"]);
-
-  bsPrefix = useBootstrapPrefix(bsPrefix, 'input-group');
-  return /*#__PURE__*/React.createElement(Component, _extends({
-    ref: ref
-  }, props, {
-    className: classnames(className, bsPrefix, size && bsPrefix + "-" + size)
-  }));
-});
-InputGroup.displayName = 'InputGroup';
-
-var InputGroupWithExtras = _extends({}, InputGroup, {
-  Text: InputGroupText,
-  Radio: InputGroupRadio,
-  Checkbox: InputGroupCheckbox,
-  Append: InputGroupAppend,
-  Prepend: InputGroupPrepend
-});
-
 var TabContext = React.createContext(null);
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -13411,13 +13360,17 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
 
+    _this.componentDidMount = function () {
+      _this.GetValue(_this.props.ModifyMode);
+    };
+
     _this.GetValue = function (ModifyMode) {
-      if (ModifyMode === true) {
-        //console.log('InitialValue', this.props.InitialValue);
-        return _this.props.InitialValue;
-      } else {
+      if (ModifyMode !== true) {
         var Code = momentTimezone$1().format('X');
-        return Code;
+
+        _this.setState({
+          Code: Code
+        });
       }
     };
 
@@ -13425,28 +13378,34 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
       var Code = momentTimezone$1().format('X');
 
       _this.setState({
-        product_no: Code
+        Code: Code
       });
     };
 
     _this.GetNum = function () {
-      return _this.state.product_no;
+      return _defineProperty({}, _this.props.name, _this.state.Code);
     };
+
+    _this.onChange = function () {};
 
     _this.props.forwardGetValue(function () {
       return _this.GetNum();
     });
 
+    _this.state = {
+      Code: _this.props.InitialValue
+    };
     return _this;
   }
 
   _createClass(ProductCodeGen, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(InputGroupWithExtras, null, /*#__PURE__*/React.createElement(FormImpl.Control, {
-        value: this.GetValue(this.props.ModifyMode),
-        readOnly: true
-      }), this.props.ModifyMode ? null : /*#__PURE__*/React.createElement(Button, {
+      return /*#__PURE__*/React.createElement("div", {
+        className: "CodeGen"
+      }, /*#__PURE__*/React.createElement(FormImpl.Text, {
+        className: "CodeGenText"
+      }, this.state.Code), this.props.ModifyMode ? null : /*#__PURE__*/React.createElement(Button, {
         size: "sm",
         variant: "SelectEnd",
         onClick: this.RefreshNum
@@ -13487,13 +13446,13 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".ProductCreatePage {\r\n\ttext-align: left;\r\n\tmax-width: 1000px;\r\n\tbackground: #f4f8fb;\r\n}\r\n.ProductCreatePage .BackButton {\r\n\tmargin: 10px 0;\r\n}\r\n\r\n.ProductCreateView {\r\n\tmargin: 20px 0 10px;\r\n}\r\n\r\n.ProductCreateView .FormView {\r\n\tpadding: 10px;\r\n\tmargin-top: 15px;\r\n\tmargin-bottom: 20px;\r\n\tbackground: #ffffff;\r\n\tborder-radius: .5rem;\r\n\tbox-shadow: 1px 1px 5px rgba(237, 238, 240, .2);\r\n}\r\n.ProductCreateView .FormViewTitle {\r\n\tborder-bottom: 2px solid #f9f9f9;\r\n\tpadding: 10px 15px;\r\n\tfont-size: 15px;\r\n\tfont-weight: bold;\r\n\tcolor: #555555;\r\n}\r\n.ProductCreateView .FormViewPage {\r\n\tpadding: 25px 15px;\r\n}\r\n\r\n.ProductCreateView .ItemView {\r\n\tdisplay: flex;\r\n\tmargin: 15px 10px;\r\n}\r\n.ProductCreateView .ItemViewRow {\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\tmargin: 10px;\r\n}\r\n\r\n.ProductCreateView .ItemHeader {\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n}\r\n\r\n.ProductCreateView .ItemBody {\r\n\tmargin-top: 5px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.ProductCreateView .ItemTitle {\r\n\tmargin: 10px;\r\n\twidth: 100px;\r\n\tfont-weight: 500;\r\n\tfont-size: 15px;\r\n\tcolor: #777777;\r\n}\r\n.ProductCreateView .ItemContent {\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n\twidth: 550px;\r\n}\r\n\r\n.ImageformBox {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\tborder: 1px solid #ced4da;\r\n\tborder-radius: .25rem;\r\n\tpadding: 5px;\r\n\tmin-height: 180px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.Imageform {\r\n\tborder: 1px solid #ced4da;\r\n\tposition: relative;\r\n\tborder-radius: .25rem;\r\n\tmargin: 5px;\r\n\twidth: 120px;\r\n}\r\n\r\n.ImageformImage {\r\n\twidth: 120px;\r\n}\r\n.ImageformTitle {\r\n\tmargin: 5px;\r\n\tfont-size: 12px;\r\n}\r\n\r\n.ImageformXBTN {\r\n\ttop: 0;\r\n\tright: 0;\r\n\tmargin: 0;\r\n\tfont-size: 10px;\r\n\twidth: 20px;\r\n\theight: 20px;\r\n\tpadding: 0;\r\n\tbackground: #555555;\r\n}\r\n\r\n.ProductCreateView .CreateArea {\r\n\tpadding: 5px;\r\n}\r\n\r\n.ProductCreateView .col,\r\n.row,\r\n.container {\r\n\tpadding: 0px;\r\n}\r\n\r\n.CarTable {\r\n\tmargin: 10px auto;\r\n\twidth: 700px;\r\n}\r\n\r\n.ProducerTable {\r\n\tmargin: 10px auto;\r\n\twidth: 700px;\r\n}\r\n\r\n.nav-tabs {\r\n\tmargin-bottom: 10px;\r\n\tflex-direction: row;\r\n\tbackground: #fff;\r\n}\r\n\r\n.ProductCreateFooter {\r\n\tdisplay: flex;\r\n\tflex-direction: row-reverse;\r\n\tmargin-bottom: 100px;\r\n}\r\n\r\n.btn-Submit {\r\n\tfont-size: 15px;\r\n\twidth: 120px;\r\n\theight: 40px;\r\n\tcolor: #ffffff;\r\n\tbackground: #52b36b;\r\n}\r\n\r\n.btn-SelectPre {\r\n\tz-index: 999;\r\n\tfont-size: 15px;\r\n\twidth: 80px;\r\n\theight: 38px;\r\n\tcolor: #555;\r\n\tborder: solid 1px #ced4da;\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.btn-SelectEnd {\r\n\tz-index: 999;\r\n\tfont-size: 15px;\r\n\twidth: 50px;\r\n\theight: 38px;\r\n\tcolor: #555;\r\n\tborder-top: solid 1px #ced4da;\r\n\tborder-right: solid 1px #ced4da;\r\n\tborder-bottom: solid 1px #ced4da;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n}\r\n\r\n.btn-SelectPre:hover,\r\n.btn-SelectEnd:hover {\r\n\tcolor: #ffffff;\r\n\tbackground: #52b36b;\r\n}\r\n";
+var css_248z = ".ProductCreatePage {\r\n\ttext-align: left;\r\n\tmax-width: 1000px;\r\n\tbackground: #f4f8fb;\r\n}\r\n.ProductCreatePage .BackButton {\r\n\tmargin: 10px 0;\r\n}\r\n\r\n.ProductCreateView {\r\n\tmargin: 20px 0 10px;\r\n}\r\n\r\n.ProductCreateView .FormView {\r\n\tpadding: 10px;\r\n\tmargin-top: 15px;\r\n\tmargin-bottom: 20px;\r\n\tbackground: #ffffff;\r\n\tborder-radius: .5rem;\r\n\tbox-shadow: 1px 1px 5px rgba(237, 238, 240, .2);\r\n}\r\n.ProductCreateView .FormViewTitle {\r\n\tborder-bottom: 2px solid #f9f9f9;\r\n\tpadding: 10px 15px;\r\n\tfont-size: 15px;\r\n\tfont-weight: bold;\r\n\tcolor: #555555;\r\n}\r\n.ProductCreateView .FormViewPage {\r\n\tpadding: 25px 40px;\r\n}\r\n.ProductCreateView .ItemView2 {\r\n\tdisplay: flex;\r\n}\r\n\r\n.ProductCreateView .ItemView {\r\n\twidth: 100%;\r\n\tdisplay: flex;\r\n\tmargin-bottom: 20px;\r\n}\r\n.ProductCreateView .ItemViewRow {\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n}\r\n\r\n.ProductCreateView .ItemHeader {\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n}\r\n\r\n.ProductCreateView .ItemBody {\r\n\tmargin-top: 5px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.ProductCreateView .ItemTitle {\r\n\tpadding: 6px 20px 6px 0;\r\n\ttext-align: right;\r\n\twidth: 100px;\r\n\tfont-weight: 500;\r\n\tfont-size: 15px;\r\n\tcolor: #777777;\r\n}\r\n.ProductCreateView .ItemContent {\r\n\tdisplay: flex;\r\n\tflex-direction: row;\r\n\twidth: calc(100% - 100px);\r\n}\r\n\r\n.ImageformBox {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\tborder: 1px solid #ced4da;\r\n\tborder-radius: .25rem;\r\n\tpadding: 5px;\r\n\tmin-height: 180px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.Imageform {\r\n\tborder: 1px solid #ced4da;\r\n\tposition: relative;\r\n\tborder-radius: .25rem;\r\n\tmargin: 5px;\r\n\twidth: 120px;\r\n}\r\n\r\n.ImageformImage {\r\n\twidth: 120px;\r\n}\r\n.ImageformTitle {\r\n\tmargin: 5px;\r\n\tfont-size: 12px;\r\n}\r\n\r\n.ImageformXBTN {\r\n\ttop: 0;\r\n\tright: 0;\r\n\tmargin: 0;\r\n\tfont-size: 10px;\r\n\twidth: 20px;\r\n\theight: 20px;\r\n\tpadding: 0;\r\n\tbackground: #555555;\r\n}\r\n\r\n.ProductCreateView .CreateArea {\r\n\tpadding: 5px;\r\n}\r\n\r\n.ProductCreateView .col,\r\n.row,\r\n.container {\r\n\tpadding: 0px;\r\n}\r\n\r\n.CarTable {\r\n\tmargin: 10px auto;\r\n\twidth: 700px;\r\n}\r\n\r\n.ProducerTable {\r\n\tmargin: 10px auto;\r\n\twidth: 700px;\r\n}\r\n\r\n.nav-tabs {\r\n\tmargin-bottom: 10px;\r\n\tflex-direction: row;\r\n\tbackground: #fff;\r\n}\r\n\r\n.ProductCreateFooter {\r\n\tdisplay: flex;\r\n\tflex-direction: row-reverse;\r\n}\r\n\r\n.btn-Submit {\r\n\tfont-size: 15px;\r\n\twidth: 120px;\r\n\theight: 40px;\r\n\tcolor: #ffffff;\r\n\tbackground: #52b36b;\r\n}\r\n\r\n.btn-SelectPre {\r\n\tz-index: 999;\r\n\tfont-size: 15px;\r\n\twidth: 80px;\r\n\theight: 38px;\r\n\tcolor: #555;\r\n\tborder: solid 1px #ced4da;\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.btn-SelectEnd {\r\n\tz-index: 999;\r\n\tfont-size: 15px;\r\n\twidth: 50px;\r\n\theight: 34px;\r\n\tcolor: #555;\r\n\tborder-top: solid 1px #ced4da;\r\n\tborder-right: solid 1px #ced4da;\r\n\tborder-bottom: solid 1px #ced4da;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n}\r\n\r\n.btn-SelectPre:hover,\r\n.btn-SelectEnd:hover {\r\n\tcolor: #ffffff;\r\n\tbackground: #52b36b;\r\n}\r\n\r\n.CodeGen {\r\n\tdisplay: flex;\r\n\twidth: 100%;\r\n}\r\n.CodeGenText {\r\n\tmargin: 0;\r\n\twidth: 100%;\r\n\theight: 34px;\r\n\talign-items: center;\r\n\tbackground: #f4f8fb !important;\r\n\tborder: 1px solid #dbdde2;\r\n\tborder-radius: 0;\r\n\tcolor: #555;\r\n\tfont-size: 13px;\r\n\tpadding: .375rem .75rem;\r\n}\r\n";
 styleInject(css_248z);
 
 var css_248z$1 = ".CatSelectView {\r\n\twidth: 100%;\r\n\tdisplay: flex;\r\n\theight: 38px;\r\n}\r\n\r\n.CatSelectContent {\r\n\tdisplay: flex;\r\n\twidth: 100%;\r\n\tborder-top: solid 1px #ced4da;\r\n\tborder-right: solid 1px #ced4da;\r\n\tborder-bottom: solid 1px #ced4da;\r\n\r\n\tcolor: #555;\r\n\tbackground: #fafafa;\r\n\tborder-radius: 0 .25rem .25rem 0;\r\n\theight: 38px;\r\n}\r\n\r\n.ViewSelected {\r\n\tpadding: 8px 0px 8px 15px;\r\n\tfont-size: 14px;\r\n\tdisplay: flex;\r\n}\r\n\r\n.ViewSelected .name {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.ViewSelected .data {\r\n\tfont-weight: 500;\r\n\tfont-size: 14px;\r\n}\r\n";
 styleInject(css_248z$1);
 
-var css_248z$2 = ".CatSelect tr,\r\nth,\r\ntd {\r\n\ttext-align: center;\r\n}\r\n\r\n.PopHeader {\r\n\tpadding: 5px;\r\n}\r\n\r\n.PopBody {\r\n\tpadding: 0px;\r\n}\r\n.TableView {\r\n\tpadding: 25px;\r\n}\r\n.TableTitle {\r\n\tpadding: 5px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.PopFooter {\r\n\theight: 60px;\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tpadding: 15px 0px;\r\n}\r\n\r\n.FooterButton {\r\n}\r\n.SelectedView {\r\n\tpadding: 25px;\r\n\tborder-bottom: 1px solid #dee2e6;\r\n}\r\n.SelectedContents {\r\n\tdisplay: flex;\r\n\tmargin: 5px;\r\n}\r\n\r\n.SelectedTitleCurrent {\r\n\tfont-size: 13px;\r\n\ttext-align: center;\r\n\theight: 30px;\r\n\twidth: 100px;\r\n\tpadding: 4px;\r\n\tborder: solid 1px #52b36b;\r\n\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.SelectedBodyCurrent {\r\n\tfont-size: 13px;\r\n\r\n\theight: 30px;\r\n\twidth: 100%;\r\n\tpadding: 4px 4px 4px 15px;\r\n\r\n\tborder-top: solid 1px #52b36b;\r\n\tborder-right: solid 1px #52b36b;\r\n\tborder-bottom: solid 1px #52b36b;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n\tbackground: #fafafa;\r\n}\r\n\r\n.SelectedTitle {\r\n\tfont-size: 13px;\r\n\ttext-align: center;\r\n\theight: 30px;\r\n\twidth: 100px;\r\n\tpadding: 4px;\r\n\tborder: solid 1px #ced4da;\r\n\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.SelectedBody {\r\n\tfont-size: 13px;\r\n\r\n\theight: 30px;\r\n\twidth: 100%;\r\n\tpadding: 4px 4px 4px 15px;\r\n\r\n\tborder-top: solid 1px #ced4da;\r\n\tborder-right: solid 1px #ced4da;\r\n\tborder-bottom: solid 1px #ced4da;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n\tbackground: #fafafa;\r\n}\r\n\r\n.btn-Move {\r\n\tmargin: 0 15px;\r\n\tfont-size: 13px;\r\n\twidth: 60px;\r\n\theight: 30px;\r\n\tcolor: #555;\r\n\tbackground: #edf0f5;\r\n}\r\n\r\n.btn-Move:hover {\r\n\tcolor: #fff;\r\n\tbackground: #cccccc;\r\n}\r\n\r\n.MoveView {\r\n\twidth: 100px;\r\n}\r\n";
+var css_248z$2 = ".PopupCatSelect .modal-body {\r\n\theight: 500px;\r\n}\r\n\r\n.CatSelect tr,\r\nth,\r\ntd {\r\n\ttext-align: center;\r\n}\r\n\r\n.PopHeader {\r\n\tpadding: 5px;\r\n}\r\n\r\n.PopBody {\r\n\tpadding: 0px;\r\n}\r\n.TableView {\r\n\tpadding: 25px;\r\n}\r\n.TableTitle {\r\n\tpadding: 5px;\r\n\tmargin-bottom: 10px;\r\n}\r\n\r\n.PopFooter {\r\n\theight: 60px;\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tpadding: 15px 0px;\r\n}\r\n\r\n.FooterButton {\r\n}\r\n.SelectedView {\r\n\tpadding: 25px;\r\n\tborder-bottom: 1px solid #dee2e6;\r\n}\r\n.SelectedContents {\r\n\tdisplay: flex;\r\n\tmargin: 5px;\r\n}\r\n\r\n.SelectedTitleCurrent {\r\n\tfont-size: 13px;\r\n\ttext-align: center;\r\n\theight: 30px;\r\n\twidth: 100px;\r\n\tpadding: 4px;\r\n\tborder: solid 1px #52b36b;\r\n\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.SelectedBodyCurrent {\r\n\tfont-size: 13px;\r\n\r\n\theight: 30px;\r\n\twidth: 100%;\r\n\tpadding: 4px 4px 4px 15px;\r\n\r\n\tborder-top: solid 1px #52b36b;\r\n\tborder-right: solid 1px #52b36b;\r\n\tborder-bottom: solid 1px #52b36b;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n\tbackground: #fafafa;\r\n}\r\n\r\n.SelectedTitle {\r\n\tfont-size: 13px;\r\n\ttext-align: center;\r\n\theight: 30px;\r\n\twidth: 100px;\r\n\tpadding: 4px;\r\n\tborder: solid 1px #ced4da;\r\n\r\n\tborder-radius: .25rem 0 0 0.25rem;\r\n}\r\n\r\n.SelectedBody {\r\n\tfont-size: 13px;\r\n\r\n\theight: 30px;\r\n\twidth: 100%;\r\n\tpadding: 4px 4px 4px 15px;\r\n\r\n\tborder-top: solid 1px #ced4da;\r\n\tborder-right: solid 1px #ced4da;\r\n\tborder-bottom: solid 1px #ced4da;\r\n\tborder-radius: 0 .25rem 0.25rem 0;\r\n\tbackground: #fafafa;\r\n}\r\n\r\n.btn-Move {\r\n\tmargin: 0 15px;\r\n\tfont-size: 13px;\r\n\twidth: 60px;\r\n\theight: 30px;\r\n\tcolor: #555;\r\n\tbackground: #edf0f5;\r\n}\r\n\r\n.btn-Move:hover {\r\n\tcolor: #fff;\r\n\tbackground: #cccccc;\r\n}\r\n\r\n.MoveView {\r\n\twidth: 100px;\r\n}\r\n";
 styleInject(css_248z$2);
 
 var _const = createCommonjsModule(function (module, exports) {
@@ -18996,7 +18955,7 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
   return children;
 }
 
-var values$1 = Object.values || function (obj) {
+var values = Object.values || function (obj) {
   return Object.keys(obj).map(function (k) {
     return obj[k];
   });
@@ -19097,7 +19056,7 @@ var TransitionGroup = /*#__PURE__*/function (_React$Component) {
         props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
 
     var contextValue = this.state.contextValue;
-    var children = values$1(this.state.children).map(childFactory);
+    var children = values(this.state.children).map(childFactory);
     delete props.appear;
     delete props.enter;
     delete props.exit;
@@ -21909,6 +21868,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
 
+    _this.Submit = function () {
+      _this.Submitbtn.current.click();
+    };
+
     _this.InitDataSet = function (Struct) {
       var InitData = {};
       Struct.forEach(function (StructItems) {
@@ -21972,6 +21935,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           key: index,
           ModifyMode: _this.state.ModifyMode,
           InitialValue: values[item.id],
+          name: item.id,
           forwardGetValue: function forwardGetValue(c) {
             _this.GetNum = c;
           }
@@ -21984,7 +21948,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemContent"
         }, /*#__PURE__*/React.createElement(FormImpl.Control, {
           required: true,
-          type: "text",
+          type: item.inputtype,
           name: item.id,
           value: values[item.id],
           onChange: handleChange
@@ -22195,9 +22159,18 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.onSubmit = function (data) {
-      console.log(data);
+      //console.log(this.GetNum());
+      data = Object.assign(data, _this.GetNum());
+
+      _this.props.onSubmit(data);
     };
 
+    _this.handleChange = function () {};
+
+    _this.Submitbtn = /*#__PURE__*/React.createRef();
+    if (_this.props.Submit !== undefined) _this.props.Submit(function () {
+      return _this.Submit();
+    });
     _this.state = {
       isloading: false,
       create_state: 0,
@@ -22207,21 +22180,34 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       deleteimage: []
     };
     return _this;
-  } // 타입별 데이터 초기화
-
+  }
 
   _createClass(CreatePage, [{
     key: "render",
     value: function render() {
+      var bt_style = {};
+
+      if (this.props.CustomSubmit === true) {
+        bt_style = {
+          display: 'none'
+        };
+      } else {
+        bt_style = {
+          display: 'flex'
+        };
+      }
+
       return /*#__PURE__*/React.createElement("div", {
         className: "ProductCreatePage"
       }, /*#__PURE__*/React.createElement(FormImpl, {
-        onSubmit: handleSubmit
+        onSubmit: this.onSubmit
       }, /*#__PURE__*/React.createElement("div", {
         className: "ProductCreateView"
-      }, this.FormView(this.props.DataStruct.Struct, values, handleChange)), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-        className: "ProductCreateFooter"
+      }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
+        className: "ProductCreateFooter",
+        style: bt_style
       }, /*#__PURE__*/React.createElement(Button, {
+        ref: this.Submitbtn,
         type: "submit",
         variant: "Submit",
         size: "sm"
