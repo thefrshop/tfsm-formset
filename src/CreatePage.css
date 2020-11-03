@@ -27,17 +27,20 @@
 	color: #555555;
 }
 .ProductCreateView .FormViewPage {
-	padding: 25px 15px;
+	padding: 25px 40px;
+}
+.ProductCreateView .ItemView2 {
+	display: flex;
 }
 
 .ProductCreateView .ItemView {
+	width: 100%;
 	display: flex;
-	margin: 15px 10px;
+	margin-bottom: 20px;
 }
 .ProductCreateView .ItemViewRow {
 	display: flex;
 	flex-direction: column;
-	margin: 10px;
 }
 
 .ProductCreateView .ItemHeader {
@@ -51,7 +54,8 @@
 }
 
 .ProductCreateView .ItemTitle {
-	margin: 10px;
+	padding: 6px 20px 6px 0;
+	text-align: right;
 	width: 100px;
 	font-weight: 500;
 	font-size: 15px;
@@ -60,7 +64,7 @@
 .ProductCreateView .ItemContent {
 	display: flex;
 	flex-direction: row;
-	width: 550px;
+	width: calc(100% - 100px);
 }
 
 .ImageformBox {
@@ -129,7 +133,6 @@
 .ProductCreateFooter {
 	display: flex;
 	flex-direction: row-reverse;
-	margin-bottom: 100px;
 }
 
 .btn-Submit {
@@ -154,7 +157,7 @@
 	z-index: 999;
 	font-size: 15px;
 	width: 50px;
-	height: 38px;
+	height: 34px;
 	color: #555;
 	border-top: solid 1px #ced4da;
 	border-right: solid 1px #ced4da;
@@ -166,4 +169,21 @@
 .btn-SelectEnd:hover {
 	color: #ffffff;
 	background: #52b36b;
+}
+
+.CodeGen {
+	display: flex;
+	width: 100%;
+}
+.CodeGenText {
+	margin: 0;
+	width: 100%;
+	height: 34px;
+	align-items: center;
+	background: #f4f8fb !important;
+	border: 1px solid #dbdde2;
+	border-radius: 0;
+	color: #555;
+	font-size: 13px;
+	padding: .375rem .75rem;
 }

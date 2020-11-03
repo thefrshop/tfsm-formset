@@ -12,6 +12,10 @@ class CreatePage extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.Submitbtn = React.createRef();
+
+		if (this.props.Submit !== undefined) this.props.Submit(() => this.Submit());
+
 		this.state = {
 			isloading: false,
 			create_state: 0,
@@ -21,6 +25,9 @@ class CreatePage extends React.Component {
 			deleteimage: []
 		};
 	}
+	Submit = () => {
+		this.Submitbtn.current.click();
+	};
 
 	// 타입별 데이터 초기화
 	InitDataSet = (Struct) => {
@@ -86,6 +93,7 @@ class CreatePage extends React.Component {
 								key={index}
 								ModifyMode={this.state.ModifyMode}
 								InitialValue={values[item.id]}
+								name={item.id}
 								forwardGetValue={(c) => {
 									this.GetNum = c;
 								}}
@@ -100,7 +108,7 @@ class CreatePage extends React.Component {
 						<div className="ItemContent">
 							<Form.Control
 								required
-								type="text"
+								type={item.inputtype}
 								name={item.id}
 								value={values[item.id]}
 								onChange={handleChange}
@@ -319,21 +327,34 @@ class CreatePage extends React.Component {
 	};
 
 	onSubmit = (data) => {
-		console.log(data);
+		//console.log(this.GetNum());
+
+		data = Object.assign(data, this.GetNum());
+		this.props.onSubmit(data);
 	};
 
+	handleChange = () => {};
 	render() {
+		var bt_style = {};
+		if (this.props.CustomSubmit === true) {
+			bt_style = {
+				display: 'none'
+			};
+		} else {
+			bt_style = {
+				display: 'flex'
+			};
+		}
+
 		return (
 			<div className="ProductCreatePage">
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={this.onSubmit}>
 					<div className="ProductCreateView">
-						{this.FormView(this.props.DataStruct.Struct, values, handleChange)}
+						{this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)}
 					</div>
 
-					<br />
-
-					<div className="ProductCreateFooter">
-						<Button type="submit" variant="Submit" size="sm">
+					<div className="ProductCreateFooter" style={bt_style}>
+						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
 							{this.state.ModifyMode ? '수정' : '등록'}
 						</Button>
 					</div>
