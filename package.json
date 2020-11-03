@@ -1,6 +1,6 @@
 {
   "name": "tfsm-formset",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "tfsm formset",
   "module": "dist/index.js",
   "license": "MIT",
