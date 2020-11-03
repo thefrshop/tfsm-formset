@@ -1,6 +1,6 @@
 {
   "name": "react-createpage",
-  "version": "0.1.5",
+  "version": "0.1.4",
   "description": "react createpage",
   "module": "dist/index.js",
   "license": "MIT",
@@ -11,22 +11,42 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-url": "^3.0.1"
   },
   "peerDependencies": {
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-spring": "^8.0.27"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@thefreshop"
+    "registry": "https://npm.pkg.github.com/@thefreshop/react-createpage"
   },
-  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thefrshop/react-createpage.git"
+    "url": "https://github.com/thefrshop/react-createpage"
   },
   "bugs": {
     "url": "https://github.com/thefrshop/react-createpage/issues"
   },
-  "homepage": "https://github.com/thefrshop/react-createpage#readme"
+  "homepage": "https://github.com/thefrshop/react-createpage#readme",
+  "dependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "autoprefixer": "^10.0.1",
+    "babel-preset-react-app": "^10.0.0",
+    "formik": "^2.2.1",
+    "moment-timezone": "^0.5.31",
+    "postcss": "^8.1.4",
+    "postcss-import": "^13.0.0",
+    "postcss-loader": "^4.0.4",
+    "react-addons-update": "^15.6.2",
+    "react-bootstrap": "^1.4.0",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-icons": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": ""
 }

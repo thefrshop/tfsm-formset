@@ -3,21 +3,10 @@ import update from 'react-addons-update';
 
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
-import { Formik } from 'formik';
-//import AWS from 'aws-sdk';
 import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
 
 import CatSelected from './CatSelected';
-
-/*
-const s3 = new AWS.S3({
-	accessKeyId: 'AKIAI47NEUL5NH7JV5AA',
-	secretAccessKey: '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',
-	region: 'ap-northeast-2'
-}); //s3 configuration
-
-*/
 
 class CreatePage extends React.Component {
 	constructor(props) {
@@ -336,23 +325,19 @@ class CreatePage extends React.Component {
 	render() {
 		return (
 			<div className="ProductCreatePage">
-				<Formik onSubmit={this.onSubmit} initialValues={this.state.InitData} enableReinitialize>
-					{({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
-						<Form onSubmit={handleSubmit}>
-							<div className="ProductCreateView">
-								{this.FormView(this.props.DataStruct.Struct, values, handleChange)}
-							</div>
+				<Form onSubmit={handleSubmit}>
+					<div className="ProductCreateView">
+						{this.FormView(this.props.DataStruct.Struct, values, handleChange)}
+					</div>
 
-							<br />
+					<br />
 
-							<div className="ProductCreateFooter">
-								<Button type="submit" variant="Submit" size="sm">
-									{this.state.ModifyMode ? '수정' : '등록'}
-								</Button>
-							</div>
-						</Form>
-					)}
-				</Formik>
+					<div className="ProductCreateFooter">
+						<Button type="submit" variant="Submit" size="sm">
+							{this.state.ModifyMode ? '수정' : '등록'}
+						</Button>
+					</div>
+				</Form>
 			</div>
 		);
 	}
