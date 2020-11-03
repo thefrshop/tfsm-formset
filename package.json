@@ -1,11 +1,19 @@
 {
   "name": "react-createpage",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "react createpage",
   "module": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
     "@svgr/rollup": "^5.4.0",
+    "babel-preset-react-app": "^10.0.0",
+    "moment-timezone": "^0.5.31",
+    "postcss": "^8.1.4",
+    "react-addons-update": "^15.6.2",
+    "react-bootstrap": "^1.4.0",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-icons": "^3.11.0",
     "rollup": "^2.33.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -27,20 +35,6 @@
     "url": "https://github.com/thefrshop/react-createpage/issues"
   },
   "homepage": "https://github.com/thefrshop/react-createpage#readme",
-  "dependencies": {
-    "@rollup/plugin-json": "^4.1.0",
-    "autoprefixer": "^10.0.1",
-    "babel-preset-react-app": "^10.0.0",
-    "formik": "^2.2.1",
-    "moment-timezone": "^0.5.31",
-    "postcss": "^8.1.4",
-    "postcss-import": "^13.0.0",
-    "postcss-loader": "^4.0.4",
-    "react-addons-update": "^15.6.2",
-    "react-bootstrap": "^1.4.0",
-    "react-bootstrap-table-next": "^4.0.3",
-    "react-icons": "^3.11.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
