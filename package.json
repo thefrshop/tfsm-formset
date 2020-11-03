@@ -9,7 +9,6 @@
   ],
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
-    "@svgr/rollup": "^5.4.0",
     "babel-preset-react-app": "^10.0.0",
     "moment-timezone": "^0.5.31",
     "postcss": "^8.1.4",
