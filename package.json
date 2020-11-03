@@ -1,7 +1,7 @@
 {
-  "name": "react-createpage",
+  "name": "tfsm-formset",
   "version": "0.1.6",
-  "description": "react createpage",
+  "description": "tfsm formset",
   "module": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thefrshop/react-createpage"
+    "url": "https://github.com/thefrshop/tfsm-formset"
   },
   "bugs": {
-    "url": "https://github.com/thefrshop/react-createpage/issues"
+    "url": "https://github.com/thefrshop/tfsm-formset/issues"
   },
-  "homepage": "https://github.com/thefrshop/react-createpage#readme",
+  "homepage": "https://github.com/thefrshop/tfsm-formset#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
