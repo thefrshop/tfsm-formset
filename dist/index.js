@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState, useContext, useEffect, useMemo, useImperativeHandle, useReducer, forwardRef, createContext, createElement, Children, isValidElement, cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import events from 'events';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {

@@ -7,6 +7,7 @@ import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
 
 import CatSelected from './CatSelected';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class CreatePage extends React.Component {
 	constructor(props) {
