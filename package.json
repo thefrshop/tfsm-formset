@@ -1,9 +1,12 @@
 {
   "name": "tfsm-formset",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "tfsm formset",
   "module": "dist/index.js",
   "license": "MIT",
+  "files": [
+    "/dist"
+  ],
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@svgr/rollup": "^5.4.0",
