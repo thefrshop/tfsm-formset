@@ -22,7 +22,8 @@ class CreatePage extends React.Component {
 			InitData: this.InitDataSet(this.props.DataStruct.Struct),
 			imagefile: [],
 			htmlfile: null,
-			deleteimage: []
+			deleteimage: [],
+			values: {}
 		};
 	}
 	Submit = () => {
@@ -110,7 +111,7 @@ class CreatePage extends React.Component {
 								required
 								type={item.inputtype}
 								name={item.id}
-								value={values[item.id]}
+								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -125,7 +126,7 @@ class CreatePage extends React.Component {
 								required
 								type="text"
 								name={item.id}
-								value={values[item.id]}
+								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -140,7 +141,7 @@ class CreatePage extends React.Component {
 								required
 								type="number"
 								name={item.id}
-								value={values[item.id]}
+								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -326,14 +327,20 @@ class CreatePage extends React.Component {
 		return opt;
 	};
 
-	onSubmit = (data) => {
-		//console.log(this.GetNum());
-
-		data = Object.assign(data, this.GetNum());
-		this.props.onSubmit(data);
+	onSubmit = () => {
+		this.props.onSubmit(this.state.values);
 	};
 
-	handleChange = () => {};
+	handleChange = (item) => {
+		this.setState(
+			{
+				values: update(this.state.values, {
+					[item.target.name]: { $set: item.target.value }
+				})
+			},
+			() => console.log(this.state.values)
+		);
+	};
 	render() {
 		var bt_style = {};
 		if (this.props.CustomSubmit === true) {
@@ -348,17 +355,17 @@ class CreatePage extends React.Component {
 
 		return (
 			<div className="ProductCreatePage">
-				<Form onSubmit={this.onSubmit}>
+				<div>
 					<div className="ProductCreateView">
 						{this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)}
 					</div>
 
 					<div className="ProductCreateFooter" style={bt_style}>
-						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
+						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm" onClick={this.onSubmit}>
 							{this.state.ModifyMode ? '수정' : '등록'}
 						</Button>
 					</div>
-				</Form>
+				</div>
 			</div>
 		);
 	}

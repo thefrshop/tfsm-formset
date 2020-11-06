@@ -6281,7 +6281,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           required: true,
           type: item.inputtype,
           name: item.id,
-          value: values[item.id],
+          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Textline') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6294,7 +6294,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           required: true,
           type: "text",
           name: item.id,
-          value: values[item.id],
+          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Price') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6307,7 +6307,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           required: true,
           type: "number",
           name: item.id,
-          value: values[item.id],
+          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Select') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6489,13 +6489,21 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return opt;
     };
 
-    _this.onSubmit = function (data) {
-      data = Object.assign(data, _this.GetNum());
-
-      _this.props.onSubmit(data);
+    _this.onSubmit = function () {
+      _this.props.onSubmit(_this.state.values);
     };
 
-    _this.handleChange = function () {};
+    _this.handleChange = function (item) {
+      var _update2;
+
+      _this.setState({
+        values: update(_this.state.values, (_update2 = {}, _update2[item.target.name] = {
+          $set: item.target.value
+        }, _update2))
+      }, function () {
+        return console.log(_this.state.values);
+      });
+    };
 
     _this.Submitbtn = React.createRef();
     if (_this.props.Submit !== undefined) _this.props.Submit(function () {
@@ -6507,7 +6515,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       InitData: _this.InitDataSet(_this.props.DataStruct.Struct),
       imagefile: [],
       htmlfile: null,
-      deleteimage: []
+      deleteimage: [],
+      values: {}
     };
     return _this;
   }
@@ -6529,9 +6538,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     return /*#__PURE__*/React.createElement("div", {
       className: "ProductCreatePage"
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Form, {
-      onSubmit: this.onSubmit
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateView"
     }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateFooter",
@@ -6540,7 +6547,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       ref: this.Submitbtn,
       type: "submit",
       variant: "Submit",
-      size: "sm"
+      size: "sm",
+      onClick: this.onSubmit
     }, this.state.ModifyMode ? '수정' : '등록'))));
   };
 

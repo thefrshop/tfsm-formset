@@ -2,12 +2,17 @@ import React from 'react';
 
 import { CreatePage } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
+import './App.css';
 
 class App extends React.Component {
+	onSubmit = (data) => {
+		console.log(data);
+	};
+
 	render() {
 		return (
-			<div>
-				<CreatePage DataStruct={ProductDataStruct} />
+			<div className="App">
+				<CreatePage DataStruct={ProductDataStruct} onSubmit={this.onSubmit} />
 			</div>
 		);
 	}
