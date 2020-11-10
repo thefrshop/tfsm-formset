@@ -12,11 +12,21 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<CreatePage DataStruct={ProductDataStruct} onSubmit={this.onSubmit} />
+				<CreatePage
+					DataStruct={ProductDataStruct}
+					onSubmit={this.onSubmit}
+					hierarchyData={{
+						Category: catdataSample,
+						Supply: catdataSample
+					}}
+				/>
 			</div>
 		);
 	}
 }
+
+const CatSet_name = [ '대분류', '중분류', '소분류' ];
+const CatSet_orderField = 'Name';
 
 export default App;
 
@@ -38,6 +48,24 @@ const ProductDataStruct = {
 					id: 'ProductName',
 					name: '상품명',
 					format: 'Text'
+				},
+				{
+					id: 'Category',
+					name: '상품분류',
+					format: 'Hierarchy',
+					HierarchyData: {
+						name: CatSet_name,
+						viewField: CatSet_orderField
+					}
+				},
+				{
+					id: 'Supply',
+					name: '생산자',
+					format: 'Hierarchy',
+					HierarchyData: {
+						name: CatSet_name,
+						viewField: CatSet_orderField
+					}
 				}
 			]
 		},
@@ -106,3 +134,19 @@ const ProductDataStruct = {
 		}
 	]
 };
+
+const catdataSample = [
+	[
+		{ Code: '1', Name: '1', lev: 0, pid: 0, key: 'sKItoqKJnAbTnGVP3mfM' },
+
+		{ Code: '11', pid: 0, lev: 0, Name: '11', key: 'mlX5LMJgMf7FVqBRODBq' },
+
+		{ Name: '111', pid: 0, Code: '111', lev: 0, key: 'RSeghKOWqnOojJxljSFu' }
+	],
+	[
+		{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
+
+		{ Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' }
+	],
+	[ { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' } ]
+];
