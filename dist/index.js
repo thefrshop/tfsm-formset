@@ -2,9 +2,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var update = _interopDefault(require('react-addons-update'));
-var reactBootstrap = require('react-bootstrap');
 var moment$1 = _interopDefault(require('moment-timezone'));
 var go = require('react-icons/go');
+var reactBootstrap = require('react-bootstrap');
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 
 function _inheritsLoose(subClass, superClass) {
@@ -5830,11 +5830,11 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     return /*#__PURE__*/React.createElement("div", {
       className: "CodeGen"
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Text, {
+    }, /*#__PURE__*/React.createElement("div", {
       className: "CodeGenText"
-    }, this.state.Code), this.props.ModifyMode ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, this.state.Code), this.props.ModifyMode ? null : /*#__PURE__*/React.createElement("button", {
       size: "sm",
-      variant: "SelectEnd",
+      className: "btn-SelectEnd",
       onClick: this.RefreshNum
     }, /*#__PURE__*/React.createElement(go.GoSync, {
       color: "#1f8b3b",
@@ -6277,9 +6277,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+        }, /*#__PURE__*/React.createElement("input", {
+          className: "TextInput",
           required: true,
-          type: item.inputtype,
+          type: "text",
           name: item.id,
           value: _this.state.values[item.id],
           onChange: handleChange
@@ -6290,7 +6291,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+        }, /*#__PURE__*/React.createElement("input", {
+          className: "TextInput",
           required: true,
           type: "text",
           name: item.id,
@@ -6303,7 +6305,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+        }, /*#__PURE__*/React.createElement("input", {
+          className: "TextInput",
           required: true,
           type: "number",
           name: item.id,
@@ -6316,7 +6319,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+        }, /*#__PURE__*/React.createElement("select", {
+          className: "TextSelect",
           required: true,
           custom: true,
           as: "select",
@@ -6347,7 +6351,13 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             className: "ItemTitle"
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
-          }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
+          }, /*#__PURE__*/React.createElement("button", {
+            className: "InputFile"
+          }, "\uD30C\uC77C \uC120\uD0DD", /*#__PURE__*/React.createElement("input", {
+            style: {
+              display: 'none'
+            },
+            type: "file",
             label: values[item.id].UploadInfo.length + "\uAC1C",
             "data-browse": "+",
             onChange: function onChange(e) {
@@ -6355,7 +6365,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             },
             multiple: true,
             custom: true
-          }))), /*#__PURE__*/React.createElement("div", {
+          })))), /*#__PURE__*/React.createElement("div", {
             className: "ItemBody"
           }, /*#__PURE__*/React.createElement("div", {
             className: "ImageformBox"
@@ -6369,7 +6379,9 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
+        }, /*#__PURE__*/React.createElement("input", {
+          className: "InputFile",
+          type: "file",
           label: values[item.id].UploadInfo.length + "\uAC1C",
           "data-browse": "+",
           onChange: function onChange(e) {
@@ -6386,7 +6398,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
           var TabTable = [];
           FormViewTable.forEach(function (TabItem, Tabindex) {
-            TabTable.push( /*#__PURE__*/React.createElement(reactBootstrap.Tab, {
+            TabTable.push( /*#__PURE__*/React.createElement("tab", {
               key: Tabindex,
               className: "ImageformBox",
               eventKey: item.Items[TabItem.key].id,
@@ -6404,7 +6416,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             className: "ItemContent"
           })), /*#__PURE__*/React.createElement("div", {
             className: "ItemBody"
-          }, /*#__PURE__*/React.createElement(reactBootstrap.Tabs, {
+          }, /*#__PURE__*/React.createElement("div", {
             defaultActiveKey: item.Items[0].id,
             id: "noanim-tab-example"
           }, TabTable))));
@@ -6434,13 +6446,13 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         images.push( /*#__PURE__*/React.createElement("div", {
           className: "Imageform",
           key: index
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+        }, /*#__PURE__*/React.createElement("img", {
           className: "ImageformImage",
           variant: "top",
           src: value.url
         }), /*#__PURE__*/React.createElement("div", {
           className: "ImageformTitle"
-        }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+        }, value.name), /*#__PURE__*/React.createElement("button", {
           className: "ImageformXBTN",
           onClick: function onClick() {
             _this.remove(value, index);
@@ -6543,7 +6555,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateFooter",
       style: bt_style
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, /*#__PURE__*/React.createElement("button", {
       ref: this.Submitbtn,
       type: "submit",
       variant: "Submit",

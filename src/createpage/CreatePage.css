@@ -57,7 +57,7 @@
 	padding: 6px 20px 6px 0;
 	text-align: right;
 	width: 120px;
-	font-weight: 500;
+	font-weight: 400;
 	font-size: 15px;
 	color: #777777;
 }
@@ -65,6 +65,30 @@
 	display: flex;
 	flex-direction: row;
 	width: calc(100% - 100px);
+}
+
+.ProductCreateView .ItemContent .TextInput {
+	margin: 0;
+	width: 100%;
+	height: 34px;
+	align-items: center;
+	border: 1px solid #dbdde2;
+	border-radius: 0.25rem;
+	color: #555;
+	font-size: 13px;
+	padding: .375rem .75rem;
+}
+
+.ProductCreateView .ItemContent .TextSelect {
+	margin: 0;
+	width: 100%;
+	height: 34px;
+	align-items: center;
+	border: 1px solid #dbdde2;
+	border-radius: 0.25rem;
+	color: #555;
+	font-size: 13px;
+	padding: .375rem .75rem;
 }
 
 .ImageformBox {
@@ -159,6 +183,7 @@
 	width: 50px;
 	height: 34px;
 	color: #555;
+	border-left: 0;
 	border-top: solid 1px #ced4da;
 	border-right: solid 1px #ced4da;
 	border-bottom: solid 1px #ced4da;
@@ -182,7 +207,7 @@
 	align-items: center;
 	background: #f4f8fb !important;
 	border: 1px solid #dbdde2;
-	border-radius: 0;
+	border-radius: 0.25rem 0 0 0.25rem;
 	color: #555;
 	font-size: 13px;
 	padding: .375rem .75rem;

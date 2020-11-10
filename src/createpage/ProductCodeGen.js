@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
 import moment from 'moment-timezone';
 import 'moment/locale/ko';
 import { GoSync } from 'react-icons/go';
@@ -40,12 +39,12 @@ class ProductCodeGen extends React.Component {
 	render() {
 		return (
 			<div className="CodeGen">
-				<Form.Text className="CodeGenText">{this.state.Code}</Form.Text>
+				<div className="CodeGenText">{this.state.Code}</div>
 
 				{this.props.ModifyMode ? null : (
-					<Button size="sm" variant="SelectEnd" onClick={this.RefreshNum}>
+					<button size="sm" className="btn-SelectEnd" onClick={this.RefreshNum}>
 						<GoSync color="#1f8b3b" size="1.5em" />
-					</Button>
+					</button>
 				)}
 			</div>
 		);
