@@ -5,6 +5,7 @@ import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
 
 import CatSelected from './CatSelected';
+import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
 class CreatePage extends React.Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class CreatePage extends React.Component {
 		if (this.props.Submit !== undefined) this.props.Submit(() => this.Submit());
 
 		this.state = {
+			ModifyMode: false,
 			isloading: false,
 			create_state: 0,
 			InitData: this.InitDataSet(this.props.DataStruct.Struct),
@@ -105,12 +107,11 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<input
+							<Form.Control
 								className="TextInput"
 								required
 								type="text"
 								name={item.id}
-								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -121,12 +122,11 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<input
+							<Form.Control
 								className="TextInput"
 								required
 								type="text"
 								name={item.id}
-								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -137,12 +137,11 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<input
+							<Form.Control
 								className="TextInput"
 								required
 								type="number"
 								name={item.id}
-								value={this.state.values[item.id]}
 								onChange={handleChange}
 							/>
 						</div>
@@ -153,16 +152,9 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<select
-								className="TextSelect"
-								required
-								custom
-								as="select"
-								name={item.id}
-								value={values[item.id]}
-							>
+							<Form.Control className="TextSelect" required custom as="select" name={item.id}>
 								{this.GetOption(item.SelectText)}
-							</select>
+							</Form.Control>
 						</div>
 					</div>
 				);
@@ -188,20 +180,15 @@ class CreatePage extends React.Component {
 						<div className="ItemHeader">
 							<div className="ItemTitle">{item.name}</div>
 							<div className="ItemContent">
-								<button className="InputFile">
-									파일 선택
-									<input
-										style={{ display: 'none' }}
-										type="file"
-										label={`${values[item.id].UploadInfo.length}개`}
-										data-browse="+"
-										onChange={(e) => {
-											this.ImageFileChange(e, item, values);
-										}}
-										multiple
-										custom
-									/>
-								</button>
+								<Form.File
+									label={`${values[item.id].UploadInfo.length}개`}
+									data-browse="+"
+									onChange={(e) => {
+										this.ImageFileChange(e, item, values);
+									}}
+									multiple
+									custom
+								/>
 							</div>
 						</div>
 						<div className="ItemBody">
@@ -215,9 +202,7 @@ class CreatePage extends React.Component {
 						<div className="ItemHeader">
 							<div className="ItemTitle">{item.name}</div>
 							<div className="ItemContent">
-								<input
-									className="InputFile"
-									type="file"
+								<Form.File
 									label={`${values[item.id].UploadInfo.length}개`}
 									data-browse="+"
 									onChange={(e) => {
@@ -239,14 +224,14 @@ class CreatePage extends React.Component {
 				let TabTable = [];
 				FormViewTable.forEach((TabItem, Tabindex) => {
 					TabTable.push(
-						<tab
+						<Tab
 							key={Tabindex}
 							className="ImageformBox"
 							eventKey={item.Items[TabItem.key].id}
 							title={item.Items[TabItem.key].name}
 						>
 							{TabItem}
-						</tab>
+						</Tab>
 					);
 				});
 
@@ -257,9 +242,9 @@ class CreatePage extends React.Component {
 							<div className="ItemContent" />
 						</div>
 						<div className="ItemBody">
-							<div defaultActiveKey={item.Items[0].id} id="noanim-tab-example">
+							<Tabs defaultActiveKey={item.Items[0].id} id="noanim-tab-example">
 								{TabTable}
-							</div>
+							</Tabs>
 						</div>
 					</div>
 				);
@@ -293,16 +278,16 @@ class CreatePage extends React.Component {
 		values[item.id].UploadInfo.forEach((value, index) => {
 			images.push(
 				<div className="Imageform" key={index}>
-					<img className="ImageformImage" variant="top" src={value.url} />
+					<Image className="ImageformImage" variant="top" src={value.url} />
 					<div className="ImageformTitle">{value.name}</div>
-					<button
+					<Button
 						className="ImageformXBTN"
 						onClick={() => {
 							this.remove(value, index);
 						}}
 					>
 						x
-					</button>
+					</Button>
 				</div>
 			);
 		});
@@ -376,9 +361,9 @@ class CreatePage extends React.Component {
 					</div>
 
 					<div className="ProductCreateFooter" style={bt_style}>
-						<button ref={this.Submitbtn} type="submit" variant="Submit" size="sm" onClick={this.onSubmit}>
+						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm" onClick={this.onSubmit}>
 							{this.state.ModifyMode ? '수정' : '등록'}
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

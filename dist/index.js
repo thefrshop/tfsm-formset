@@ -6277,12 +6277,11 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement("input", {
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
           className: "TextInput",
           required: true,
           type: "text",
           name: item.id,
-          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Textline') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6291,12 +6290,11 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement("input", {
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
           className: "TextInput",
           required: true,
           type: "text",
           name: item.id,
-          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Price') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6305,12 +6303,11 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement("input", {
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
           className: "TextInput",
           required: true,
           type: "number",
           name: item.id,
-          value: _this.state.values[item.id],
           onChange: handleChange
         }))));else if (item.format === 'Select') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
@@ -6319,13 +6316,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement("select", {
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
           className: "TextSelect",
           required: true,
           custom: true,
           as: "select",
-          name: item.id,
-          value: values[item.id]
+          name: item.id
         }, _this.GetOption(item.SelectText)))));else if (item.format === 'Hierarchy') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemView",
@@ -6351,13 +6347,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             className: "ItemTitle"
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
-          }, /*#__PURE__*/React.createElement("button", {
-            className: "InputFile"
-          }, "\uD30C\uC77C \uC120\uD0DD", /*#__PURE__*/React.createElement("input", {
-            style: {
-              display: 'none'
-            },
-            type: "file",
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
             label: values[item.id].UploadInfo.length + "\uAC1C",
             "data-browse": "+",
             onChange: function onChange(e) {
@@ -6365,7 +6355,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             },
             multiple: true,
             custom: true
-          })))), /*#__PURE__*/React.createElement("div", {
+          }))), /*#__PURE__*/React.createElement("div", {
             className: "ItemBody"
           }, /*#__PURE__*/React.createElement("div", {
             className: "ImageformBox"
@@ -6379,9 +6369,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "ItemTitle"
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
-        }, /*#__PURE__*/React.createElement("input", {
-          className: "InputFile",
-          type: "file",
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
           label: values[item.id].UploadInfo.length + "\uAC1C",
           "data-browse": "+",
           onChange: function onChange(e) {
@@ -6398,7 +6386,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
           var TabTable = [];
           FormViewTable.forEach(function (TabItem, Tabindex) {
-            TabTable.push( /*#__PURE__*/React.createElement("tab", {
+            TabTable.push( /*#__PURE__*/React.createElement(reactBootstrap.Tab, {
               key: Tabindex,
               className: "ImageformBox",
               eventKey: item.Items[TabItem.key].id,
@@ -6416,7 +6404,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             className: "ItemContent"
           })), /*#__PURE__*/React.createElement("div", {
             className: "ItemBody"
-          }, /*#__PURE__*/React.createElement("div", {
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Tabs, {
             defaultActiveKey: item.Items[0].id,
             id: "noanim-tab-example"
           }, TabTable))));
@@ -6446,13 +6434,13 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         images.push( /*#__PURE__*/React.createElement("div", {
           className: "Imageform",
           key: index
-        }, /*#__PURE__*/React.createElement("img", {
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
           className: "ImageformImage",
           variant: "top",
           src: value.url
         }), /*#__PURE__*/React.createElement("div", {
           className: "ImageformTitle"
-        }, value.name), /*#__PURE__*/React.createElement("button", {
+        }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
           className: "ImageformXBTN",
           onClick: function onClick() {
             _this.remove(value, index);
@@ -6522,6 +6510,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return _this.Submit();
     });
     _this.state = {
+      ModifyMode: false,
       isloading: false,
       create_state: 0,
       InitData: _this.InitDataSet(_this.props.DataStruct.Struct),
@@ -6555,7 +6544,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateFooter",
       style: bt_style
-    }, /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement(reactBootstrap.Button, {
       ref: this.Submitbtn,
       type: "submit",
       variant: "Submit",
