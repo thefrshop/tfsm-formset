@@ -6488,8 +6488,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
                   $push: [file]
                 }
               }, _update))
-            }, function () {
-              return console.log(_this.state.InitData);
             });
           };
         });
@@ -6506,7 +6504,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return opt;
     };
 
-    _this.onSubmit = function () {
+    _this.onSubmit = function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
       _this.props.onSubmit(_this.state.InitData);
     };
 
@@ -6517,8 +6518,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.target.name] = {
           $set: item.target.value
         }, _update2))
-      }, function () {
-        return console.log(_this.state.InitData);
       });
     };
 
@@ -6555,7 +6554,9 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     return /*#__PURE__*/React.createElement("div", {
       className: "ProductCreatePage"
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement(reactBootstrap.Form, {
+      onSubmit: this.onSubmit
+    }, /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateView"
     }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
       className: "ProductCreateFooter",
@@ -6564,8 +6565,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       ref: this.Submitbtn,
       type: "submit",
       variant: "Submit",
-      size: "sm",
-      onClick: this.onSubmit
+      size: "sm"
     }, this.state.ModifyMode ? '수정' : '등록'))));
   };
 

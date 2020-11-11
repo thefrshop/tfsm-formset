@@ -308,17 +308,14 @@ class CreatePage extends React.Component {
 				let reader = new FileReader();
 				reader.readAsDataURL(file);
 				reader.onloadend = (e) => {
-					this.setState(
-						{
-							InitData: update(this.state.InitData, {
-								[item.id]: {
-									UploadInfo: { $push: [ { name: file.name, url: e.target.result } ] },
-									FileList: { $push: [ file ] }
-								}
-							})
-						},
-						() => console.log(this.state.InitData)
-					);
+					this.setState({
+						InitData: update(this.state.InitData, {
+							[item.id]: {
+								UploadInfo: { $push: [ { name: file.name, url: e.target.result } ] },
+								FileList: { $push: [ file ] }
+							}
+						})
+					});
 				};
 			});
 		}
@@ -333,19 +330,19 @@ class CreatePage extends React.Component {
 		return opt;
 	};
 
-	onSubmit = () => {
+	onSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+
 		this.props.onSubmit(this.state.InitData);
 	};
 
 	handleChange = (item) => {
-		this.setState(
-			{
-				InitData: update(this.state.InitData, {
-					[item.target.name]: { $set: item.target.value }
-				})
-			},
-			() => console.log(this.state.InitData)
-		);
+		this.setState({
+			InitData: update(this.state.InitData, {
+				[item.target.name]: { $set: item.target.value }
+			})
+		});
 	};
 	render() {
 		var bt_style = {};
@@ -361,17 +358,17 @@ class CreatePage extends React.Component {
 
 		return (
 			<div className="ProductCreatePage">
-				<div>
+				<Form onSubmit={this.onSubmit}>
 					<div className="ProductCreateView">
 						{this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)}
 					</div>
 
 					<div className="ProductCreateFooter" style={bt_style}>
-						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm" onClick={this.onSubmit}>
+						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
 							{this.state.ModifyMode ? '수정' : '등록'}
 						</Button>
 					</div>
-				</div>
+				</Form>
 			</div>
 		);
 	}
