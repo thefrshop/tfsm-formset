@@ -7,8 +7,6 @@ class ProductCodeGen extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.props.forwardGetValue(() => this.GetNum());
-
 		this.state = {
 			Code: this.props.InitialValue
 		};
@@ -21,20 +19,25 @@ class ProductCodeGen extends React.Component {
 	GetValue = (ModifyMode) => {
 		if (ModifyMode !== true) {
 			var Code = moment().format('X');
-			this.setState({ Code: Code });
+			this.setState({ Code: Code }, () => this.onChange());
 		}
 	};
 
 	RefreshNum = () => {
 		var Code = moment().format('X');
-		this.setState({ Code: Code });
+		this.setState({ Code: Code }, () => this.onChange());
 	};
 
-	GetNum = () => {
-		return { [this.props.name]: this.state.Code };
+	onChange = () => {
+		if (this.props.onChange !== undefined) {
+			this.props.onChange({
+				target: {
+					name: this.props.name,
+					value: this.state.Code
+				}
+			});
+		}
 	};
-
-	onChange = () => {};
 
 	render() {
 		return (

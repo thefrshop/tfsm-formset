@@ -5795,6 +5795,8 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
 
         _this.setState({
           Code: Code
+        }, function () {
+          return _this.onChange();
         });
       }
     };
@@ -5804,20 +5806,21 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
 
       _this.setState({
         Code: Code
+      }, function () {
+        return _this.onChange();
       });
     };
 
-    _this.GetNum = function () {
-      var _ref;
-
-      return _ref = {}, _ref[_this.props.name] = _this.state.Code, _ref;
+    _this.onChange = function () {
+      if (_this.props.onChange !== undefined) {
+        _this.props.onChange({
+          target: {
+            name: _this.props.name,
+            value: _this.state.Code
+          }
+        });
+      }
     };
-
-    _this.onChange = function () {};
-
-    _this.props.forwardGetValue(function () {
-      return _this.GetNum();
-    });
 
     _this.state = {
       Code: _this.props.InitialValue
@@ -6153,7 +6156,20 @@ var CatSelected = /*#__PURE__*/function (_React$Component) {
       _this.setState({
         CategorySelect: CategorySelect,
         ShowPopup: false
+      }, function () {
+        return _this.onChange();
       });
+    };
+
+    _this.onChange = function () {
+      if (_this.props.onChange !== undefined) {
+        _this.props.onChange({
+          target: {
+            name: _this.props.name,
+            value: _this.state.CategorySelect
+          }
+        });
+      }
     };
 
     _this.hideCatSelect = function () {
@@ -6175,7 +6191,7 @@ var CatSelected = /*#__PURE__*/function (_React$Component) {
       className: "CatSelectView"
     }, /*#__PURE__*/React.createElement(PopupCatSelect, {
       title: this.props.title,
-      name: this.props.name,
+      name: this.props.HierarchyNames,
       viewField: this.props.viewField,
       hierarchyData: this.props.hierarchyData,
       ispopup: this.state.ShowPopup,
@@ -6267,9 +6283,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           ModifyMode: _this.state.ModifyMode,
           InitialValue: values[item.id],
           name: item.id,
-          forwardGetValue: function forwardGetValue(c) {
-            _this.GetNum = c;
-          }
+          onChange: handleChange
         }))));else if (item.format === 'Text') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
           key: index
@@ -6321,7 +6335,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           required: true,
           custom: true,
           as: "select",
-          name: item.id
+          name: item.id,
+          onChange: handleChange
         }, _this.GetOption(item.SelectText)))));else if (item.format === 'Hierarchy') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemView",
@@ -6331,11 +6346,13 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
           }, /*#__PURE__*/React.createElement(CatSelected, {
+            name: item.id,
             title: item.name,
-            name: item.HierarchyData.name,
+            HierarchyNames: item.HierarchyData.name,
             viewField: item.HierarchyData.viewField,
             hierarchyData: _this.props.hierarchyData[item.id],
-            selected: values[item.id]
+            selected: values[item.id],
+            onChange: handleChange
           }))));
         } else if (item.format === 'UploadImage') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
@@ -6472,7 +6489,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
                 }
               }, _update))
             }, function () {
-              return console.log('InitData:', _this.state.InitData);
+              return console.log(_this.state.InitData);
             });
           };
         });
@@ -6490,18 +6507,18 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.onSubmit = function () {
-      _this.props.onSubmit(_this.state.values);
+      _this.props.onSubmit(_this.state.InitData);
     };
 
     _this.handleChange = function (item) {
       var _update2;
 
       _this.setState({
-        values: update(_this.state.values, (_update2 = {}, _update2[item.target.name] = {
+        InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.target.name] = {
           $set: item.target.value
         }, _update2))
       }, function () {
-        return console.log(_this.state.values);
+        return console.log(_this.state.InitData);
       });
     };
 
@@ -6516,8 +6533,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       InitData: _this.InitDataSet(_this.props.DataStruct.Struct),
       imagefile: [],
       htmlfile: null,
-      deleteimage: [],
-      values: {}
+      deleteimage: []
     };
     return _this;
   }

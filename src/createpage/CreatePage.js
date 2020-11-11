@@ -22,8 +22,7 @@ class CreatePage extends React.Component {
 			InitData: this.InitDataSet(this.props.DataStruct.Struct),
 			imagefile: [],
 			htmlfile: null,
-			deleteimage: [],
-			values: {}
+			deleteimage: []
 		};
 	}
 	Submit = () => {
@@ -95,9 +94,7 @@ class CreatePage extends React.Component {
 								ModifyMode={this.state.ModifyMode}
 								InitialValue={values[item.id]}
 								name={item.id}
-								forwardGetValue={(c) => {
-									this.GetNum = c;
-								}}
+								onChange={handleChange}
 							/>
 						</div>
 					</div>
@@ -152,7 +149,14 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<Form.Control className="TextSelect" required custom as="select" name={item.id}>
+							<Form.Control
+								className="TextSelect"
+								required
+								custom
+								as="select"
+								name={item.id}
+								onChange={handleChange}
+							>
 								{this.GetOption(item.SelectText)}
 							</Form.Control>
 						</div>
@@ -165,11 +169,13 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<CatSelected
+								name={item.id}
 								title={item.name}
-								name={item.HierarchyData.name}
+								HierarchyNames={item.HierarchyData.name}
 								viewField={item.HierarchyData.viewField}
 								hierarchyData={this.props.hierarchyData[item.id]}
 								selected={values[item.id]}
+								onChange={handleChange}
 							/>
 						</div>
 					</div>
@@ -311,7 +317,7 @@ class CreatePage extends React.Component {
 								}
 							})
 						},
-						() => console.log('InitData:', this.state.InitData)
+						() => console.log(this.state.InitData)
 					);
 				};
 			});
@@ -328,17 +334,17 @@ class CreatePage extends React.Component {
 	};
 
 	onSubmit = () => {
-		this.props.onSubmit(this.state.values);
+		this.props.onSubmit(this.state.InitData);
 	};
 
 	handleChange = (item) => {
 		this.setState(
 			{
-				values: update(this.state.values, {
+				InitData: update(this.state.InitData, {
 					[item.target.name]: { $set: item.target.value }
 				})
 			},
-			() => console.log(this.state.values)
+			() => console.log(this.state.InitData)
 		);
 	};
 	render() {

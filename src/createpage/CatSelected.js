@@ -37,10 +37,24 @@ class CatSelected extends React.Component {
 	};
 
 	CatSelectOk = (CategorySelect) => {
-		this.setState({
-			CategorySelect: CategorySelect,
-			ShowPopup: false
-		});
+		this.setState(
+			{
+				CategorySelect: CategorySelect,
+				ShowPopup: false
+			},
+			() => this.onChange()
+		);
+	};
+
+	onChange = () => {
+		if (this.props.onChange !== undefined) {
+			this.props.onChange({
+				target: {
+					name: this.props.name,
+					value: this.state.CategorySelect
+				}
+			});
+		}
 	};
 
 	hideCatSelect = () => {
@@ -54,7 +68,7 @@ class CatSelected extends React.Component {
 			<div className="CatSelectView">
 				<PopupCatSelect
 					title={this.props.title}
-					name={this.props.name}
+					name={this.props.HierarchyNames}
 					viewField={this.props.viewField}
 					hierarchyData={this.props.hierarchyData}
 					ispopup={this.state.ShowPopup}
