@@ -6572,6 +6572,23 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
   return CreatePage;
 }(React.Component);
 
+var getStructFromFormat = function getStructFromFormat(DataStruct, FormatName) {
+  return getFormat(DataStruct.Struct, FormatName);
+};
+
+var getFormat = function getFormat(DataStruct, FormatName) {
+  var sttable = [];
+  DataStruct.forEach(function (item) {
+    if (item.format === FormatName) {
+      sttable.push(item);
+    } else if (item.format === 'Tab' || item.format === 'Titletext') {
+      var TabData = getFormat(item.Items, FormatName);
+      sttable = Object.assign(sttable, TabData);
+    }
+  });
+  return sttable;
+};
+
 var ExampleComponent = function ExampleComponent(_ref) {
   var text = _ref.text;
   return /*#__PURE__*/React.createElement("div", {
@@ -6581,4 +6598,5 @@ var ExampleComponent = function ExampleComponent(_ref) {
 
 exports.CreatePage = CreatePage;
 exports.ExampleComponent = ExampleComponent;
+exports.getStructFromFormat = getStructFromFormat;
 //# sourceMappingURL=index.js.map
