@@ -11,8 +11,11 @@ const getFormat = (DataStruct, FormatName) => {
 			sttable.push(item);
 		} else if (item.format === 'Tab' || item.format === 'Titletext') {
 			var TabData = getFormat(item.Items, FormatName);
-			sttable = Object.assign(sttable, TabData);
+			TabData.forEach((tbaitem) => {
+				sttable.push(tbaitem);
+			});
 		}
 	});
+
 	return sttable;
 };

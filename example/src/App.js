@@ -7,7 +7,7 @@ import './App.css';
 class App extends React.Component {
 	componentDidMount = () => {
 		console.log(getStructFromFormat(ProductDataStruct, 'UploadImage'));
-		console.log(getStructFromFormat(ProductDataStruct, 'Price'));
+		//console.log(getStructFromFormat(ProductDataStruct, 'Price'));
 	};
 
 	onSubmit = (data) => {
