@@ -6591,6 +6591,25 @@ var getFormat = function getFormat(DataStruct, FormatName) {
   return sttable;
 };
 
+var getIDList = function getIDList(DataStruct) {
+  return getID(DataStruct.Struct);
+};
+
+var getID = function getID(DataStruct) {
+  var IDList = [];
+  DataStruct.forEach(function (item) {
+    if (item.format === 'Tab' || item.format === 'Titletext') {
+      var TabData = getID(item.Items);
+      TabData.forEach(function (tbaitem) {
+        IDList.push(tbaitem);
+      });
+    } else {
+      IDList.push(item.id);
+    }
+  });
+  return IDList;
+};
+
 var ExampleComponent = function ExampleComponent(_ref) {
   var text = _ref.text;
   return /*#__PURE__*/React.createElement("div", {
@@ -6600,5 +6619,6 @@ var ExampleComponent = function ExampleComponent(_ref) {
 
 exports.CreatePage = CreatePage;
 exports.ExampleComponent = ExampleComponent;
+exports.getIDList = getIDList;
 exports.getStructFromFormat = getStructFromFormat;
 //# sourceMappingURL=index.js.map

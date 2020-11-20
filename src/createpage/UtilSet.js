@@ -19,3 +19,23 @@ const getFormat = (DataStruct, FormatName) => {
 
 	return sttable;
 };
+
+export const getIDList = (DataStruct) => {
+	return getID(DataStruct.Struct);
+};
+
+const getID = (DataStruct) => {
+	let IDList = [];
+	DataStruct.forEach((item) => {
+		if (item.format === 'Tab' || item.format === 'Titletext') {
+			var TabData = getID(item.Items);
+			TabData.forEach((tbaitem) => {
+				IDList.push(tbaitem);
+			});
+		} else {
+			IDList.push(item.id);
+		}
+	});
+
+	return IDList;
+};
