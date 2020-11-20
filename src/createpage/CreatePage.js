@@ -49,6 +49,8 @@ class CreatePage extends React.Component {
 					UploadInfo: [],
 					FileList: []
 				};
+			} else if (item.format === 'Hierarchy') {
+				InitData[item.id] = [];
 			} else if (item.format === 'UploadHtml') {
 				InitData[item.id] = {
 					UploadInfo: [],
@@ -61,6 +63,8 @@ class CreatePage extends React.Component {
 				InitData = Object.assign(InitData, TabData);
 			} else if (item.format === 'Textline') {
 				InitData[item.id] = '';
+			} else if (item.format === 'Select') {
+				InitData[item.id] = item.SelectText[0];
 			}
 		});
 		return InitData;

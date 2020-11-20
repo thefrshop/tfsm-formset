@@ -6238,6 +6238,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             UploadInfo: [],
             FileList: []
           };
+        } else if (item.format === 'Hierarchy') {
+          InitData[item.id] = [];
         } else if (item.format === 'UploadHtml') {
           InitData[item.id] = {
             UploadInfo: [],
@@ -6251,6 +6253,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           InitData = Object.assign(InitData, TabData);
         } else if (item.format === 'Textline') {
           InitData[item.id] = '';
+        } else if (item.format === 'Select') {
+          InitData[item.id] = item.SelectText[0];
         }
       });
       return InitData;
