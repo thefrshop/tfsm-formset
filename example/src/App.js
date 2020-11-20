@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CreatePage, getStructFromFormat, getIDList } from 'tfsm-formset/dist';
+import { CreatePage, getStructFromFormat, getIDList, getIFList } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
 import './App.css';
 
@@ -9,6 +9,7 @@ class App extends React.Component {
 		console.log(getStructFromFormat(ProductDataStruct, 'UploadImage'));
 		//console.log(getStructFromFormat(ProductDataStruct, 'Price'));
 		console.log(getIDList(ProductDataStruct));
+		console.log(getIFList(ProductDataStruct));
 	};
 
 	onSubmit = (data) => {

@@ -6610,6 +6610,28 @@ var getID = function getID(DataStruct) {
   return IDList;
 };
 
+var getIFList = function getIFList(DataStruct) {
+  return getIF(DataStruct.Struct);
+};
+
+var getIF = function getIF(DataStruct) {
+  var IFList = [];
+  DataStruct.forEach(function (item) {
+    if (item.format === 'Tab' || item.format === 'Titletext') {
+      var TabData = getIF(item.Items);
+      TabData.forEach(function (tbaitem) {
+        IFList.push(tbaitem);
+      });
+    } else {
+      IFList.push({
+        id: item.id,
+        format: item.format
+      });
+    }
+  });
+  return IFList;
+};
+
 var ExampleComponent = function ExampleComponent(_ref) {
   var text = _ref.text;
   return /*#__PURE__*/React.createElement("div", {
@@ -6620,5 +6642,6 @@ var ExampleComponent = function ExampleComponent(_ref) {
 exports.CreatePage = CreatePage;
 exports.ExampleComponent = ExampleComponent;
 exports.getIDList = getIDList;
+exports.getIFList = getIFList;
 exports.getStructFromFormat = getStructFromFormat;
 //# sourceMappingURL=index.js.map

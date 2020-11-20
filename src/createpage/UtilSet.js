@@ -39,3 +39,23 @@ const getID = (DataStruct) => {
 
 	return IDList;
 };
+
+export const getIFList = (DataStruct) => {
+	return getIF(DataStruct.Struct);
+};
+
+const getIF = (DataStruct) => {
+	let IFList = [];
+	DataStruct.forEach((item) => {
+		if (item.format === 'Tab' || item.format === 'Titletext') {
+			var TabData = getIF(item.Items);
+			TabData.forEach((tbaitem) => {
+				IFList.push(tbaitem);
+			});
+		} else {
+			IFList.push({ id: item.id, format: item.format });
+		}
+	});
+
+	return IFList;
+};
