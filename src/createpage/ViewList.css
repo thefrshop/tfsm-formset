@@ -1,0 +1,40 @@
+.ViewList {
+	display: flex;
+	margin: 10px;
+	width: 100%;
+	padding: 0;
+}
+
+.ViewListformBox {
+	display: flex;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	padding: 5px;
+	min-height: 100px;
+	margin-bottom: 10px;
+}
+
+.ViewList .Viewitle {
+	text-align: center;
+	padding: 7px;
+	font-size: 14px;
+	width: 150px;
+	height: 38px;
+	color: #555;
+	border: solid 1px #ced4da;
+	border-radius: .25rem 0 0 0.25rem;
+}
+
+.ViewList .ViewContent {
+	font-size: 14px;
+	padding: 7px;
+	width: calc(100% - 150px);
+	border-top: solid 1px #ced4da;
+	border-right: solid 1px #ced4da;
+	border-bottom: solid 1px #ced4da;
+
+	color: #555;
+	background: #fafafa;
+	border-radius: 0 .25rem .25rem 0;
+	height: 38px;
+}

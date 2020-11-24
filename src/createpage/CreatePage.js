@@ -6,6 +6,8 @@ import './CreatePage.css';
 
 import CatSelect from './CatSelect';
 import ListSelect from './ListSelect';
+import ViewList from './ViewList';
+
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
 class CreatePage extends React.Component {
@@ -53,7 +55,7 @@ class CreatePage extends React.Component {
 			} else if (item.format === 'Hierarchy') {
 				InitData[item.id] = [];
 			} else if (item.format === 'ListSelect') {
-				InitData[item.id] = [];
+				InitData[item.id] = '';
 			} else if (item.format === 'UploadHtml') {
 				InitData[item.id] = {
 					UploadInfo: [],
@@ -191,20 +193,37 @@ class CreatePage extends React.Component {
 				);
 			} else if (item.format === 'ListSelect') {
 				ItemsTable.push(
-					<div className="ItemView" key={index}>
-						<div className="ItemTitle">{item.name}</div>
-						<div className="ItemContent">
-							<ListSelect
-								{...this.props}
-								name={item.id}
-								title={item.name}
-								selected={values[item.id]}
-								onChange={handleChange}
-								columns={item.columns}
-								dataprops={item.dataprops}
-								keyField={item.keyField}
-								orderField={item.orderField}
-							/>
+					<div className="ItemViewRow" key={index}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<ListSelect
+									{...this.props}
+									name={item.id}
+									title={item.name}
+									selected={values[item.id]}
+									onChange={handleChange}
+									columns={item.columns}
+									dataprops={item.dataprops}
+									keyField={item.keyField}
+									orderField={item.orderField}
+									viewField={item.viewField}
+								/>
+							</div>
+						</div>
+						<div className="ItemBody">
+							<div className="ViewListformBox">
+								<ViewList
+									{...this.props}
+									name={item.id}
+									title={item.name}
+									selected={values[item.id]}
+									columns={item.columns}
+									keyField={item.keyField}
+									orderField={item.orderField}
+									viewField={item.viewField}
+								/>
+							</div>
 						</div>
 					</div>
 				);

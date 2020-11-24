@@ -4,7 +4,7 @@ import { CreatePage, getStructFromFormat, getIDList, getIFList } from 'tfsm-form
 import 'tfsm-formset/dist/index.css';
 import './App.css';
 
-class App extends React.Component {
+export default class App extends React.Component {
 	componentDidMount = () => {
 		console.log(getStructFromFormat(ProductDataStruct, 'UploadImage'));
 		//console.log(getStructFromFormat(ProductDataStruct, 'Price'));
@@ -45,7 +45,6 @@ const Listcolumns = [
 		text: '분류 이름'
 	}
 ];
-export default App;
 
 const ProductDataStruct = {
 	DataType: 'Product',
@@ -82,7 +81,7 @@ const ProductDataStruct = {
 					dataprops: 'ListData',
 					columns: Listcolumns,
 					keyField: 'Code',
-					orderField: 'Name'
+					viewField: 'Name'
 				}
 			]
 		},

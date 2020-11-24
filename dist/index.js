@@ -6340,16 +6340,20 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
     _this = _React$Component.call(this, props) || this;
 
     _this.ViewSelected = function () {
-      console.log(_this.state.Selected);
-
       if (_this.state.Selected !== undefined) {
+        var name = '';
+
+        _this.props.columns.forEach(function (element) {
+          if (element.dataField === _this.props.viewField) name = element.text;
+        });
+
         return /*#__PURE__*/React.createElement("div", {
           className: "ViewSelected"
         }, /*#__PURE__*/React.createElement("div", {
           className: "name"
-        }, _this.props.name, " : "), /*#__PURE__*/React.createElement("div", {
+        }, name, " : "), /*#__PURE__*/React.createElement("div", {
           className: "data"
-        }, _this.props.viewField));
+        }, _this.state.Selected[_this.props.viewField]));
       }
 
       return '';
@@ -6388,8 +6392,7 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.state = {
-      ShowPopup: false,
-      Selected: ''
+      ShowPopup: false
     };
     return _this;
   }
@@ -6412,6 +6415,45 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
   };
 
   return ListSelected;
+}(React.Component);
+
+var ViewList = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ViewList, _React$Component);
+
+  function ViewList(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.ItemsView = function () {
+      var viewlist = [];
+
+      if (_this.props.selected !== '') {
+        _this.props.columns.forEach(function (item, index) {
+          viewlist.push( /*#__PURE__*/React.createElement("div", {
+            className: "ViewList",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "Viewitle"
+          }, item.text), /*#__PURE__*/React.createElement("div", {
+            className: "ViewContent"
+          }, _this.props.selected[item.dataField])));
+        });
+      }
+
+      return viewlist;
+    };
+
+    return _this;
+  }
+
+  var _proto = ViewList.prototype;
+
+  _proto.render = function render() {
+    return this.ItemsView();
+  };
+
+  return ViewList;
 }(React.Component);
 
 var CreatePage = /*#__PURE__*/function (_React$Component) {
@@ -6447,7 +6489,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         } else if (item.format === 'Hierarchy') {
           InitData[item.id] = [];
         } else if (item.format === 'ListSelect') {
-          InitData[item.id] = [];
+          InitData[item.id] = '';
         } else if (item.format === 'UploadHtml') {
           InitData[item.id] = {
             UploadInfo: [],
@@ -6570,8 +6612,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }))));
         } else if (item.format === 'ListSelect') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
-            className: "ItemView",
+            className: "ItemViewRow",
             key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
           }, /*#__PURE__*/React.createElement("div", {
             className: "ItemTitle"
           }, item.name), /*#__PURE__*/React.createElement("div", {
@@ -6584,8 +6628,21 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             columns: item.columns,
             dataprops: item.dataprops,
             keyField: item.keyField,
-            orderField: item.orderField
-          })))));
+            orderField: item.orderField,
+            viewField: item.viewField
+          })))), /*#__PURE__*/React.createElement("div", {
+            className: "ItemBody"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ViewListformBox"
+          }, /*#__PURE__*/React.createElement(ViewList, _extends({}, _this.props, {
+            name: item.id,
+            title: item.name,
+            selected: values[item.id],
+            columns: item.columns,
+            keyField: item.keyField,
+            orderField: item.orderField,
+            viewField: item.viewField
+          }))))));
         } else if (item.format === 'UploadImage') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemViewRow",

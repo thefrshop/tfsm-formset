@@ -8,18 +8,21 @@ class ListSelected extends React.Component {
 		super(props);
 
 		this.state = {
-			ShowPopup: false,
-			Selected: ''
+			ShowPopup: false
 		};
 	}
 
 	ViewSelected = () => {
-		console.log(this.state.Selected);
 		if (this.state.Selected !== undefined) {
+			var name = '';
+			this.props.columns.forEach((element) => {
+				if (element.dataField === this.props.viewField) name = element.text;
+			});
+			//console.log(this.state.Selected);
 			return (
 				<div className="ViewSelected">
-					<div className="name">{this.props.name} : </div>
-					<div className="data">{this.props.viewField}</div>
+					<div className="name">{name} : </div>
+					<div className="data">{this.state.Selected[this.props.viewField]}</div>
 				</div>
 			);
 		}
