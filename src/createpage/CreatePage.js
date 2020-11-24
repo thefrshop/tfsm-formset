@@ -4,7 +4,8 @@ import update from 'react-addons-update';
 import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
 
-import CatSelected from './CatSelected';
+import CatSelect from './CatSelect';
+import ListSelect from './ListSelect';
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
 class CreatePage extends React.Component {
@@ -51,6 +52,8 @@ class CreatePage extends React.Component {
 				};
 			} else if (item.format === 'Hierarchy') {
 				InitData[item.id] = [];
+			} else if (item.format === 'ListSelect') {
+				InitData[item.id] = [];
 			} else if (item.format === 'UploadHtml') {
 				InitData[item.id] = {
 					UploadInfo: [],
@@ -76,6 +79,8 @@ class CreatePage extends React.Component {
 		Struct.forEach((StructItems) => {
 			StructItems.Items.forEach((item, index) => {
 				if (item.format === 'Hierarchy') {
+					InitPopup[item.id] = false;
+				} else if (item.format === 'ListSelect') {
 					InitPopup[item.id] = false;
 				}
 			});
@@ -172,7 +177,7 @@ class CreatePage extends React.Component {
 					<div className="ItemView" key={index}>
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
-							<CatSelected
+							<CatSelect
 								name={item.id}
 								title={item.name}
 								HierarchyNames={item.HierarchyData.name}
@@ -180,6 +185,25 @@ class CreatePage extends React.Component {
 								hierarchyData={this.props.hierarchyData[item.id]}
 								selected={values[item.id]}
 								onChange={handleChange}
+							/>
+						</div>
+					</div>
+				);
+			} else if (item.format === 'ListSelect') {
+				ItemsTable.push(
+					<div className="ItemView" key={index}>
+						<div className="ItemTitle">{item.name}</div>
+						<div className="ItemContent">
+							<ListSelect
+								{...this.props}
+								name={item.id}
+								title={item.name}
+								selected={values[item.id]}
+								onChange={handleChange}
+								columns={item.columns}
+								dataprops={item.dataprops}
+								keyField={item.keyField}
+								orderField={item.orderField}
 							/>
 						</div>
 					</div>

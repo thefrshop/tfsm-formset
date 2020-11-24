@@ -26,15 +26,25 @@ class App extends React.Component {
 						Category: catdataSample,
 						Supply: catdataSample
 					}}
+					ListData={ListData}
 				/>
 			</div>
 		);
 	}
 }
-
+const ListData = [ { Code: 'sss', Name: 'ss' } ];
 const CatSet_name = [ '대분류', '중분류', '소분류' ];
 const CatSet_orderField = 'Name';
-
+const Listcolumns = [
+	{
+		dataField: 'Code',
+		text: '분류 코드'
+	},
+	{
+		dataField: 'Name',
+		text: '분류 이름'
+	}
+];
 export default App;
 
 const ProductDataStruct = {
@@ -68,11 +78,11 @@ const ProductDataStruct = {
 				{
 					id: 'Supply',
 					name: '생산자',
-					format: 'Hierarchy',
-					HierarchyData: {
-						name: CatSet_name,
-						viewField: CatSet_orderField
-					}
+					format: 'ListSelect',
+					dataprops: 'ListData',
+					columns: Listcolumns,
+					keyField: 'Code',
+					orderField: 'Name'
 				}
 			]
 		},

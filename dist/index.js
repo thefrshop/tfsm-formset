@@ -7,6 +7,24 @@ var go = require('react-icons/go');
 var reactBootstrap = require('react-bootstrap');
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
@@ -6119,10 +6137,10 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
   return PopupCatSelect;
 }(React.Component);
 
-var CatSelected = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(CatSelected, _React$Component);
+var CatSelect = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(CatSelect, _React$Component);
 
-  function CatSelected(props) {
+  function CatSelect(props) {
     var _this;
 
     _this = _React$Component.call(this, props) || this;
@@ -6184,7 +6202,7 @@ var CatSelected = /*#__PURE__*/function (_React$Component) {
     return _this;
   }
 
-  var _proto = CatSelected.prototype;
+  var _proto = CatSelect.prototype;
 
   _proto.render = function render() {
     return /*#__PURE__*/React.createElement("div", {
@@ -6205,7 +6223,195 @@ var CatSelected = /*#__PURE__*/function (_React$Component) {
     }, this.ViewSelected()));
   };
 
-  return CatSelected;
+  return CatSelect;
+}(React.Component);
+
+var PopupListSelect = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(PopupListSelect, _React$Component);
+
+  function PopupListSelect(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.onSelect = function (row) {
+      _this.setState({
+        Selected: row,
+        done: true
+      });
+    };
+
+    _this.MoveCarousel = function (selectedIndex) {
+      _this.setState({
+        index: selectedIndex
+      });
+    };
+
+    _this.selectRowProp = function () {
+      return {
+        mode: 'radio',
+        hideSelectColumn: true,
+        clickToSelect: true,
+        onSelect: _this.onSelect,
+        bgColor: '#ffffe0'
+      };
+    };
+
+    _this.onHide = function () {
+      _this.setState({
+        index: 0
+      });
+
+      _this.props.onHide();
+    };
+
+    var ListData = _this.props[_this.props.dataprops];
+
+    if (ListData === undefined) {
+      ListData = [];
+    }
+
+    _this.state = {
+      isloading: false,
+      ListData: ListData,
+      done: false
+    };
+    return _this;
+  }
+
+  var _proto = PopupListSelect.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {};
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    return /*#__PURE__*/React.createElement("div", {
+      className: "PopupCatSelect"
+    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal, {
+      centered: true,
+      show: this.props.ispopup,
+      size: "md",
+      onHide: this.onHide
+    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal.Header, {
+      closeButton: true
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "PopHeader"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "Title"
+    }, this.props.title))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Body, {
+      className: "PopBody"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "TableView"
+    }, /*#__PURE__*/React.createElement(BootstrapTable, {
+      data: this.state.ListData,
+      keyField: "Code",
+      orderField: "Num",
+      columns: this.props.columns,
+      selectRow: this.selectRowProp()
+    }))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, {
+      className: "PopFooter"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "DoneView"
+    }, !this.state.done ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+      variant: "Submit",
+      className: "FooterButton",
+      onClick: function onClick() {
+        return _this2.props.onOk(_this2.state.Selected);
+      }
+    }, "\uC644\uB8CC")), !this.state.isloading ? null : /*#__PURE__*/React.createElement(reactBootstrap.Spinner, {
+      as: "span",
+      animation: "grow",
+      size: "sm",
+      role: "status",
+      "aria-hidden": "true"
+    }))));
+  };
+
+  return PopupListSelect;
+}(React.Component);
+
+var ListSelected = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ListSelected, _React$Component);
+
+  function ListSelected(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.ViewSelected = function () {
+      console.log(_this.state.Selected);
+
+      if (_this.state.Selected !== undefined) {
+        return /*#__PURE__*/React.createElement("div", {
+          className: "ViewSelected"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "name"
+        }, _this.props.name, " : "), /*#__PURE__*/React.createElement("div", {
+          className: "data"
+        }, _this.props.viewField));
+      }
+
+      return '';
+    };
+
+    _this.openSelect = function () {
+      _this.setState({
+        ShowPopup: true
+      });
+    };
+
+    _this.onSelectOk = function (Selected) {
+      _this.setState({
+        Selected: Selected,
+        ShowPopup: false
+      }, function () {
+        return _this.onChange();
+      });
+    };
+
+    _this.onChange = function () {
+      if (_this.props.onChange !== undefined) {
+        _this.props.onChange({
+          target: {
+            name: _this.props.name,
+            value: _this.state.Selected
+          }
+        });
+      }
+    };
+
+    _this.hideCatSelect = function () {
+      _this.setState({
+        ShowPopup: false
+      });
+    };
+
+    _this.state = {
+      ShowPopup: false,
+      Selected: ''
+    };
+    return _this;
+  }
+
+  var _proto = ListSelected.prototype;
+
+  _proto.render = function render() {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "CatSelectView"
+    }, /*#__PURE__*/React.createElement(PopupListSelect, _extends({}, this.props, {
+      ispopup: this.state.ShowPopup,
+      onHide: this.hideCatSelect,
+      onOk: this.onSelectOk
+    })), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+      variant: "SelectPre",
+      onClick: this.openSelect
+    }, "\uC120\uD0DD"), /*#__PURE__*/React.createElement("div", {
+      className: "CatSelectContent"
+    }, this.ViewSelected()));
+  };
+
+  return ListSelected;
 }(React.Component);
 
 var CreatePage = /*#__PURE__*/function (_React$Component) {
@@ -6240,6 +6446,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           };
         } else if (item.format === 'Hierarchy') {
           InitData[item.id] = [];
+        } else if (item.format === 'ListSelect') {
+          InitData[item.id] = [];
         } else if (item.format === 'UploadHtml') {
           InitData[item.id] = {
             UploadInfo: [],
@@ -6265,6 +6473,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       Struct.forEach(function (StructItems) {
         StructItems.Items.forEach(function (item, index) {
           if (item.format === 'Hierarchy') {
+            InitPopup[item.id] = false;
+          } else if (item.format === 'ListSelect') {
             InitPopup[item.id] = false;
           }
         });
@@ -6349,7 +6559,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             className: "ItemTitle"
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
-          }, /*#__PURE__*/React.createElement(CatSelected, {
+          }, /*#__PURE__*/React.createElement(CatSelect, {
             name: item.id,
             title: item.name,
             HierarchyNames: item.HierarchyData.name,
@@ -6358,6 +6568,24 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             selected: values[item.id],
             onChange: handleChange
           }))));
+        } else if (item.format === 'ListSelect') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemView",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          }, /*#__PURE__*/React.createElement(ListSelected, _extends({}, _this.props, {
+            name: item.id,
+            title: item.name,
+            selected: values[item.id],
+            onChange: handleChange,
+            columns: item.columns,
+            dataprops: item.dataprops,
+            keyField: item.keyField,
+            orderField: item.orderField
+          })))));
         } else if (item.format === 'UploadImage') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemViewRow",

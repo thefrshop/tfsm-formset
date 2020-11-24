@@ -1,0 +1,100 @@
+import React from 'react';
+
+import { Button, Modal, Spinner, Carousel } from 'react-bootstrap';
+import './PopupCatSelect.css';
+import update from 'react-addons-update';
+
+import BootstrapTable from 'react-bootstrap-table-next';
+
+class PopupListSelect extends React.Component {
+	constructor(props) {
+		super(props);
+
+		var ListData = this.props[this.props.dataprops];
+		if (ListData === undefined) {
+			ListData = [];
+		}
+
+		this.state = {
+			isloading: false,
+			ListData: ListData,
+			done: false
+		};
+	}
+
+	componentDidMount() {}
+
+	onSelect = (row) => {
+		this.setState({
+			Selected: row,
+			done: true
+		});
+	};
+
+	MoveCarousel = (selectedIndex) => {
+		this.setState({
+			index: selectedIndex
+		});
+	};
+
+	selectRowProp = () => {
+		return {
+			mode: 'radio',
+			hideSelectColumn: true,
+			clickToSelect: true,
+			onSelect: this.onSelect,
+			bgColor: '#ffffe0'
+		};
+	};
+
+	onHide = () => {
+		this.setState({
+			index: 0
+		});
+		this.props.onHide();
+	};
+
+	render() {
+		return (
+			<div className="PopupCatSelect">
+				<Modal centered show={this.props.ispopup} size="md" onHide={this.onHide}>
+					<Modal.Header closeButton>
+						<div className="PopHeader">
+							<div className="Title">{this.props.title}</div>
+						</div>
+					</Modal.Header>
+					<Modal.Body className="PopBody">
+						<div className="TableView">
+							<BootstrapTable
+								data={this.state.ListData}
+								keyField="Code"
+								orderField="Num"
+								columns={this.props.columns}
+								selectRow={this.selectRowProp()}
+							/>
+						</div>
+					</Modal.Body>
+					<Modal.Footer className="PopFooter">
+						<div className="DoneView">
+							{!this.state.done ? null : (
+								<Button
+									variant="Submit"
+									className="FooterButton"
+									onClick={() => this.props.onOk(this.state.Selected)}
+								>
+									완료
+								</Button>
+							)}
+						</div>
+
+						{!this.state.isloading ? null : (
+							<Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+						)}
+					</Modal.Footer>
+				</Modal>
+			</div>
+		);
+	}
+}
+
+export default PopupListSelect;

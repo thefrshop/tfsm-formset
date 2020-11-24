@@ -1,9 +1,9 @@
 import React from 'react';
-import './CatSelected.css';
+import './CatSelect.css';
 import { Button } from 'react-bootstrap';
 import PopupCatSelect from './PopupCatSelect';
 
-class CatSelected extends React.Component {
+class CatSelect extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -85,4 +85,4 @@ class CatSelected extends React.Component {
 	}
 }
 
-export default CatSelected;
+export default CatSelect;

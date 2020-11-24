@@ -108,3 +108,7 @@ td {
 .MoveView {
 	width: 100px;
 }
+
+.DoneView {
+	margin: 0 auto;
+}
