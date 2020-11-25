@@ -1,4 +1,5 @@
 import React from 'react';
+import './ViewList.css';
 
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
@@ -9,20 +10,22 @@ class ViewList extends React.Component {
 
 	ItemsView = () => {
 		let viewlist = [];
-		this.props.ListData.forEach((item) => {
-			this.props.columns;
+		if (this.props.selected !== '') {
+			this.props.columns.forEach((item, index) => {
+				viewlist.push(
+					<div className="ViewList" key={index}>
+						<div className="Viewitle">{item.text} </div>
+						<div className="ViewContent">{this.props.selected[item.dataField]}</div>
+					</div>
+				);
+			});
+		}
 
-			viewlist.push(
-				<div className="ViewSelected">
-					<div className="name">{name} : </div>
-					<div className="data">{this.state.Selected[this.props.viewField]}</div>
-				</div>
-			);
-		});
+		return viewlist;
 	};
 	render() {
-		return <div className="ProductCreatePage">{this.ItemsView()}</div>;
+		return this.ItemsView();
 	}
 }
 
-export default viewList;
+export default ViewList;

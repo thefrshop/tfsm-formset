@@ -6435,7 +6435,7 @@ var ViewList = /*#__PURE__*/function (_React$Component) {
             key: index
           }, /*#__PURE__*/React.createElement("div", {
             className: "Viewitle"
-          }, item.text), /*#__PURE__*/React.createElement("div", {
+          }, item.text, " "), /*#__PURE__*/React.createElement("div", {
             className: "ViewContent"
           }, _this.props.selected[item.dataField])));
         });
