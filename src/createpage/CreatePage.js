@@ -304,7 +304,7 @@ class CreatePage extends React.Component {
 				);
 			} else if (item.format === 'Child') {
 				this.props.children.forEach((element) => {
-					console.log(element.key);
+					//console.log(element.key);
 
 					if (element.key === item.key) {
 						ItemsTable.push(

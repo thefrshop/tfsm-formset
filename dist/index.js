@@ -6720,8 +6720,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, TabTable))));
         } else if (item.format === 'Child') {
           _this.props.children.forEach(function (element) {
-            console.log(element.key);
-
             if (element.key === item.key) {
               ItemsTable.push( /*#__PURE__*/React.createElement("div", {
                 className: "ItemViewRow",

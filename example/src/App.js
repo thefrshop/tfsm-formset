@@ -3,6 +3,7 @@ import React from 'react';
 import { CreatePage, getStructFromFormat, getIDList, getIFList } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
 import './App.css';
+import { Tab, Tabs } from 'react-bootstrap';
 
 export default class App extends React.Component {
 	componentDidMount = () => {
@@ -16,25 +17,42 @@ export default class App extends React.Component {
 		console.log(data);
 	};
 
+	Test1 = () => {
+		return (
+			<CreatePage
+				DataStruct={ProductDataStruct}
+				onSubmit={this.onSubmit}
+				hierarchyData={{
+					Category: catdataSample,
+					Supply: catdataSample
+				}}
+				ListData={ListData}
+			>
+				<div key="Child1">Child1</div>
+				<div key="Child2">Child2</div>
+			</CreatePage>
+		);
+	};
+
 	render() {
 		return (
 			<div className="App">
-				<CreatePage
-					DataStruct={ProductDataStruct}
-					onSubmit={this.onSubmit}
-					hierarchyData={{
-						Category: catdataSample,
-						Supply: catdataSample
-					}}
-					ListData={ListData}
-				>
-					<div key="Child1">Child1</div>
-					<div key="Child2">Child2</div>
-				</CreatePage>
+				<Tabs defaultActiveKey="Test1">
+					<Tab eventKey="Test1" title="Test1">
+						{this.Test1()}
+					</Tab>
+					<Tab eventKey="Test2" title="Test2">
+						{this.Test1()}
+					</Tab>
+					<Tab eventKey="Test3" title="Test3">
+						{this.Test1()}
+					</Tab>
+				</Tabs>
 			</div>
 		);
 	}
 }
+
 const ListData = [ { Code: 'sss', Name: 'ss' } ];
 const CatSet_name = [ '대분류', '중분류', '소분류' ];
 const CatSet_orderField = 'Name';
