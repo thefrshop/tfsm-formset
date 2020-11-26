@@ -106,6 +106,7 @@ class CreatePage extends React.Component {
 								InitialValue={values[item.id]}
 								name={item.id}
 								onChange={handleChange}
+								prefix={item.prefix}
 							/>
 						</div>
 					</div>

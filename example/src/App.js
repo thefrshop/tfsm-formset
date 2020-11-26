@@ -61,7 +61,8 @@ const ProductDataStruct = {
 				{
 					id: 'ProductNum',
 					name: '상품번호',
-					format: 'CodeGen'
+					format: 'CodeGen',
+					prefix: 'C'
 				},
 				{
 					id: 'ProductName',

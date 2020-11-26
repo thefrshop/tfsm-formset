@@ -7,8 +7,12 @@ class ProductCodeGen extends React.Component {
 	constructor(props) {
 		super(props);
 
+		var prefix = this.props.prefix;
+		if (prefix === undefined) prefix = '';
+
 		this.state = {
-			Code: this.props.InitialValue
+			Code: this.props.InitialValue,
+			prefix: prefix
 		};
 	}
 
@@ -18,13 +22,13 @@ class ProductCodeGen extends React.Component {
 
 	GetValue = (ModifyMode) => {
 		if (ModifyMode !== true) {
-			var Code = moment().format('X');
+			var Code = this.state.prefix + moment().format('X');
 			this.setState({ Code: Code }, () => this.onChange());
 		}
 	};
 
 	RefreshNum = () => {
-		var Code = moment().format('X');
+		var Code = this.state.prefix + moment().format('X');
 		this.setState({ Code: Code }, () => this.onChange());
 	};
 

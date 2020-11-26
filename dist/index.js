@@ -5809,7 +5809,7 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
 
     _this.GetValue = function (ModifyMode) {
       if (ModifyMode !== true) {
-        var Code = moment$1().format('X');
+        var Code = _this.state.prefix + moment$1().format('X');
 
         _this.setState({
           Code: Code
@@ -5820,7 +5820,7 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.RefreshNum = function () {
-      var Code = moment$1().format('X');
+      var Code = _this.state.prefix + moment$1().format('X');
 
       _this.setState({
         Code: Code
@@ -5840,8 +5840,11 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
       }
     };
 
+    var prefix = _this.props.prefix;
+    if (prefix === undefined) prefix = '';
     _this.state = {
-      Code: _this.props.InitialValue
+      Code: _this.props.InitialValue,
+      prefix: prefix
     };
     return _this;
   }
@@ -6539,7 +6542,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           ModifyMode: _this.state.ModifyMode,
           InitialValue: values[item.id],
           name: item.id,
-          onChange: handleChange
+          onChange: handleChange,
+          prefix: item.prefix
         }))));else if (item.format === 'Text') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
           key: index
