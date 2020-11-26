@@ -13,6 +13,7 @@ class PopupCatSelect extends React.Component {
 		this.Table = [];
 
 		var CategorySelect = [];
+
 		var CategoryView = [];
 
 		var prev = [];

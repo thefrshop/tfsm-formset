@@ -10,19 +10,24 @@ class PopupListSelect extends React.Component {
 	constructor(props) {
 		super(props);
 
-		var ListData = this.props[this.props.dataprops];
-		if (ListData === undefined) {
-			ListData = [];
-		}
-
 		this.state = {
 			isloading: false,
-			ListData: ListData,
 			done: false
 		};
 	}
 
 	componentDidMount() {}
+
+	ListData = () => {
+		var ListData = this.props[this.props.dataprops];
+		if (ListData === undefined) {
+			ListData = [];
+		}
+
+		//console.log('ListData', ListData);
+
+		return ListData;
+	};
 
 	onSelect = (row) => {
 		this.setState({
@@ -57,7 +62,7 @@ class PopupListSelect extends React.Component {
 	render() {
 		return (
 			<div className="PopupCatSelect">
-				<Modal centered show={this.props.ispopup} size="md" onHide={this.onHide}>
+				<Modal centered show={this.props.ispopup} onHide={this.onHide}>
 					<Modal.Header closeButton>
 						<div className="PopHeader">
 							<div className="Title">{this.props.title}</div>
@@ -65,13 +70,7 @@ class PopupListSelect extends React.Component {
 					</Modal.Header>
 					<Modal.Body className="PopBody">
 						<div className="TableView">
-							<BootstrapTable
-								data={this.state.ListData}
-								keyField="Code"
-								orderField="Num"
-								columns={this.props.columns}
-								selectRow={this.selectRowProp()}
-							/>
+							<BootstrapTable {...this.props} data={this.ListData()} selectRow={this.selectRowProp()} />
 						</div>
 					</Modal.Body>
 					<Modal.Footer className="PopFooter">

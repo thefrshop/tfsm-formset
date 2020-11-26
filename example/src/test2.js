@@ -3,24 +3,17 @@ import React from 'react';
 import { CreatePage, getStructFromFormat, getIDList, getIFList } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
 import './App.css';
-import { Tab, Tabs } from 'react-bootstrap';
-import Test2 from './test2';
 
-export default class App extends React.Component {
-	componentDidMount = () => {
-		//console.log(getStructFromFormat(ProductDataStruct, 'UploadImage'));
-		//console.log(getStructFromFormat(ProductDataStruct, 'Price'));
-		//console.log(getIDList(ProductDataStruct));
-		//console.log(getIFList(ProductDataStruct));
-	};
-
+export default class test2 extends React.Component {
 	onSubmit = (data) => {
 		console.log(data);
 	};
 
-	Test1 = () => {
+	render() {
 		return (
 			<CreatePage
+				ModifyMode
+				InitData={InitData}
 				DataStruct={ProductDataStruct}
 				onSubmit={this.onSubmit}
 				hierarchyData={{
@@ -33,28 +26,23 @@ export default class App extends React.Component {
 				<div key="Child2">Child2</div>
 			</CreatePage>
 		);
-	};
-
-	render() {
-		return (
-			<div className="App">
-				<Tabs defaultActiveKey="Test1">
-					<Tab eventKey="Test1" title="Test1">
-						{this.Test1()}
-					</Tab>
-					<Tab eventKey="Test2" title="Test2">
-						<Test2 />
-					</Tab>
-					<Tab eventKey="Test3" title="Test3">
-						{this.Test1()}
-					</Tab>
-				</Tabs>
-			</div>
-		);
 	}
 }
+const InitData = {
+	ProductNum: 'C1606399705',
+	ProductName: '상품명',
+	Price: '1500',
+	SupplyPrice: '2000',
+	Tex: '비과세',
+	Category: [
+		{ Code: '1', Name: '1', lev: 0, pid: 0, key: 'sKItoqKJnAbTnGVP3mfM' },
+		{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
+		{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' }
+	],
+	Supply: { Code: 'sss', Name: 'ss' }
+};
 
-const ListData = [ { Code: 'sss1', Name: 'ss' }, { Code: 'sss2', Name: 'ss' }, { Code: 'sss3', Name: 'ss' } ];
+const ListData = [ { Code: 'sss', Name: 'ss' } ];
 const CatSet_name = [ '대분류', '중분류', '소분류' ];
 const CatSet_orderField = 'Name';
 const Listcolumns = [

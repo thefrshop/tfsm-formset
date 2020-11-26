@@ -5819,7 +5819,9 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
       }
     };
 
-    _this.RefreshNum = function () {
+    _this.RefreshNum = function (event) {
+      event.preventDefault();
+      event.stopPropagation();
       var Code = _this.state.prefix + moment$1().format('X');
 
       _this.setState({
@@ -6151,7 +6153,7 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
     _this.ViewSelected = function () {
       var table = [];
 
-      if (_this.state.CategorySelect !== undefined) {
+      if (_this.state.CategorySelect !== []) {
         _this.state.CategorySelect.forEach(function (item, catindex) {
           if (item !== null) table.push( /*#__PURE__*/React.createElement("div", {
             className: "ViewSelected",
@@ -6199,7 +6201,10 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
       });
     };
 
+    var _CategorySelect = [];
+    if (_this.props.InitialValue !== undefined) _CategorySelect = _this.props.InitialValue;
     _this.state = {
+      CategorySelect: _CategorySelect,
       ShowPopup: false
     };
     return _this;
@@ -6211,6 +6216,7 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
     return /*#__PURE__*/React.createElement("div", {
       className: "CatSelectView"
     }, /*#__PURE__*/React.createElement(PopupCatSelect, {
+      CategorySelect: this.props.CategorySelect,
       title: this.props.title,
       name: this.props.HierarchyNames,
       viewField: this.props.viewField,
@@ -6236,6 +6242,16 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     _this = _React$Component.call(this, props) || this;
+
+    _this.ListData = function () {
+      var ListData = _this.props[_this.props.dataprops];
+
+      if (ListData === undefined) {
+        ListData = [];
+      }
+
+      return ListData;
+    };
 
     _this.onSelect = function (row) {
       _this.setState({
@@ -6268,15 +6284,8 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
       _this.props.onHide();
     };
 
-    var ListData = _this.props[_this.props.dataprops];
-
-    if (ListData === undefined) {
-      ListData = [];
-    }
-
     _this.state = {
       isloading: false,
-      ListData: ListData,
       done: false
     };
     return _this;
@@ -6294,7 +6303,6 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
     }, /*#__PURE__*/React.createElement(reactBootstrap.Modal, {
       centered: true,
       show: this.props.ispopup,
-      size: "md",
       onHide: this.onHide
     }, /*#__PURE__*/React.createElement(reactBootstrap.Modal.Header, {
       closeButton: true
@@ -6306,13 +6314,10 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
       className: "PopBody"
     }, /*#__PURE__*/React.createElement("div", {
       className: "TableView"
-    }, /*#__PURE__*/React.createElement(BootstrapTable, {
-      data: this.state.ListData,
-      keyField: "Code",
-      orderField: "Num",
-      columns: this.props.columns,
+    }, /*#__PURE__*/React.createElement(BootstrapTable, _extends({}, this.props, {
+      data: this.ListData(),
       selectRow: this.selectRowProp()
-    }))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, {
+    })))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, {
       className: "PopFooter"
     }, /*#__PURE__*/React.createElement("div", {
       className: "DoneView"
@@ -6343,7 +6348,7 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
     _this = _React$Component.call(this, props) || this;
 
     _this.ViewSelected = function () {
-      if (_this.state.Selected !== undefined) {
+      if (_this.state.Selected !== '') {
         var name = '';
 
         _this.props.columns.forEach(function (element) {
@@ -6394,7 +6399,10 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
       });
     };
 
+    var _Selected = '';
+    if (_this.props.InitialValue !== undefined) _Selected = _this.props.InitialValue;
     _this.state = {
+      Selected: _Selected,
       ShowPopup: false
     };
     return _this;
@@ -6471,11 +6479,21 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       _this.Submitbtn.current.click();
     };
 
-    _this.InitDataSet = function (Struct) {
+    _this.InitDataSet = function (ModifyMode, Struct) {
       var InitData = {};
-      Struct.forEach(function (StructItems) {
-        InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
-      });
+
+      if (ModifyMode) {
+        Struct.forEach(function (StructItems) {
+          InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
+        });
+        InitData = Object.assign(InitData, _this.props.InitData);
+        console.log(InitData);
+      } else {
+        Struct.forEach(function (StructItems) {
+          InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
+        });
+      }
+
       return InitData;
     };
 
@@ -6552,6 +6570,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
         }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+          value: values[item.id],
           className: "TextInput",
           required: true,
           type: "text",
@@ -6565,6 +6584,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
         }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+          value: values[item.id],
           className: "TextInput",
           required: true,
           type: "text",
@@ -6578,6 +6598,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
         }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+          value: values[item.id],
           className: "TextInput",
           required: true,
           type: "number",
@@ -6591,6 +6612,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         }, item.name), /*#__PURE__*/React.createElement("div", {
           className: "ItemContent"
         }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+          value: values[item.id],
           className: "TextSelect",
           required: true,
           custom: true,
@@ -6606,6 +6628,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
           }, /*#__PURE__*/React.createElement(CatSelect, {
+            InitialValue: values[item.id],
             name: item.id,
             title: item.name,
             HierarchyNames: item.HierarchyData.name,
@@ -6625,6 +6648,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, item.name), /*#__PURE__*/React.createElement("div", {
             className: "ItemContent"
           }, /*#__PURE__*/React.createElement(ListSelected, _extends({}, _this.props, {
+            InitialValue: values[item.id],
             name: item.id,
             title: item.name,
             selected: values[item.id],
@@ -6639,6 +6663,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/React.createElement("div", {
             className: "ViewListformBox"
           }, /*#__PURE__*/React.createElement(ViewList, _extends({}, _this.props, {
+            InitialValue: values[item.id],
             name: item.id,
             title: item.name,
             selected: values[item.id],
@@ -6831,11 +6856,13 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     if (_this.props.Submit !== undefined) _this.props.Submit(function () {
       return _this.Submit();
     });
+    var _ModifyMode = _this.props.ModifyMode;
+    if (_ModifyMode === undefined) _ModifyMode = false;
     _this.state = {
-      ModifyMode: false,
+      ModifyMode: _ModifyMode,
       isloading: false,
       create_state: 0,
-      InitData: _this.InitDataSet(_this.props.DataStruct.Struct),
+      InitData: _this.InitDataSet(_ModifyMode, _this.props.DataStruct.Struct),
       imagefile: [],
       htmlfile: null,
       deleteimage: []

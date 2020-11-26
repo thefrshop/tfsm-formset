@@ -7,13 +7,17 @@ class ListSelected extends React.Component {
 	constructor(props) {
 		super(props);
 
+		var Selected = '';
+		if (this.props.InitialValue !== undefined) Selected = this.props.InitialValue;
+
 		this.state = {
+			Selected: Selected,
 			ShowPopup: false
 		};
 	}
 
 	ViewSelected = () => {
-		if (this.state.Selected !== undefined) {
+		if (this.state.Selected !== '') {
 			var name = '';
 			this.props.columns.forEach((element) => {
 				if (element.dataField === this.props.viewField) name = element.text;

@@ -18,11 +18,14 @@ class CreatePage extends React.Component {
 
 		if (this.props.Submit !== undefined) this.props.Submit(() => this.Submit());
 
+		var ModifyMode = this.props.ModifyMode;
+		if (ModifyMode === undefined) ModifyMode = false;
+
 		this.state = {
-			ModifyMode: false,
+			ModifyMode: ModifyMode,
 			isloading: false,
 			create_state: 0,
-			InitData: this.InitDataSet(this.props.DataStruct.Struct),
+			InitData: this.InitDataSet(ModifyMode, this.props.DataStruct.Struct),
 			imagefile: [],
 			htmlfile: null,
 			deleteimage: []
@@ -33,11 +36,21 @@ class CreatePage extends React.Component {
 	};
 
 	// 타입별 데이터 초기화
-	InitDataSet = (Struct) => {
+	InitDataSet = (ModifyMode, Struct) => {
 		var InitData = {};
-		Struct.forEach((StructItems) => {
-			InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
-		});
+		if (ModifyMode) {
+			Struct.forEach((StructItems) => {
+				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
+			});
+			InitData = Object.assign(InitData, this.props.InitData);
+
+			console.log(InitData);
+		} else {
+			Struct.forEach((StructItems) => {
+				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
+			});
+		}
+
 		return InitData;
 	};
 
@@ -117,6 +130,7 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<Form.Control
+								value={values[item.id]}
 								className="TextInput"
 								required
 								type="text"
@@ -132,6 +146,7 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<Form.Control
+								value={values[item.id]}
 								className="TextInput"
 								required
 								type="text"
@@ -147,6 +162,7 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<Form.Control
+								value={values[item.id]}
 								className="TextInput"
 								required
 								type="number"
@@ -162,6 +178,7 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<Form.Control
+								value={values[item.id]}
 								className="TextSelect"
 								required
 								custom
@@ -181,6 +198,7 @@ class CreatePage extends React.Component {
 						<div className="ItemTitle">{item.name}</div>
 						<div className="ItemContent">
 							<CatSelect
+								InitialValue={values[item.id]}
 								name={item.id}
 								title={item.name}
 								HierarchyNames={item.HierarchyData.name}
@@ -200,6 +218,7 @@ class CreatePage extends React.Component {
 							<div className="ItemContent">
 								<ListSelect
 									{...this.props}
+									InitialValue={values[item.id]}
 									name={item.id}
 									title={item.name}
 									selected={values[item.id]}
@@ -216,6 +235,7 @@ class CreatePage extends React.Component {
 							<div className="ViewListformBox">
 								<ViewList
 									{...this.props}
+									InitialValue={values[item.id]}
 									name={item.id}
 									title={item.name}
 									selected={values[item.id]}

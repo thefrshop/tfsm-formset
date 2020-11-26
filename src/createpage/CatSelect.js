@@ -7,7 +7,11 @@ class CatSelect extends React.Component {
 	constructor(props) {
 		super(props);
 
+		var CategorySelect = [];
+		if (this.props.InitialValue !== undefined) CategorySelect = this.props.InitialValue;
+
 		this.state = {
+			CategorySelect: CategorySelect,
 			ShowPopup: false
 		};
 	}
@@ -15,7 +19,7 @@ class CatSelect extends React.Component {
 	ViewSelected = () => {
 		//console.log(this.props.selected);
 		let table = [];
-		if (this.state.CategorySelect !== undefined) {
+		if (this.state.CategorySelect !== []) {
 			this.state.CategorySelect.forEach((item, catindex) => {
 				if (item !== null)
 					table.push(
@@ -67,6 +71,7 @@ class CatSelect extends React.Component {
 		return (
 			<div className="CatSelectView">
 				<PopupCatSelect
+					CategorySelect={this.props.CategorySelect}
 					title={this.props.title}
 					name={this.props.HierarchyNames}
 					viewField={this.props.viewField}

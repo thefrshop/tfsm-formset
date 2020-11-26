@@ -27,7 +27,10 @@ class ProductCodeGen extends React.Component {
 		}
 	};
 
-	RefreshNum = () => {
+	RefreshNum = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+
 		var Code = this.state.prefix + moment().format('X');
 		this.setState({ Code: Code }, () => this.onChange());
 	};
