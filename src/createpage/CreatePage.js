@@ -301,6 +301,20 @@ class CreatePage extends React.Component {
 						</div>
 					</div>
 				);
+			} else if (item.format === 'Child') {
+				this.props.children.forEach((element) => {
+					console.log(element.key);
+
+					if (element.key === item.key) {
+						ItemsTable.push(
+							<div className="ItemViewRow" key={index}>
+								<div className="ItemBody">
+									<div className="ViewListformBox">{element}</div>
+								</div>
+							</div>
+						);
+					}
+				});
 			}
 		});
 

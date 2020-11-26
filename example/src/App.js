@@ -27,7 +27,10 @@ export default class App extends React.Component {
 						Supply: catdataSample
 					}}
 					ListData={ListData}
-				/>
+				>
+					<div key="Child1">Child1</div>
+					<div key="Child2">Child2</div>
+				</CreatePage>
 			</div>
 		);
 	}
@@ -82,6 +85,11 @@ const ProductDataStruct = {
 					columns: Listcolumns,
 					keyField: 'Code',
 					viewField: 'Name'
+				},
+				{
+					id: 'ChildTest',
+					key: 'Child1',
+					format: 'Child'
 				}
 			]
 		},
@@ -105,6 +113,11 @@ const ProductDataStruct = {
 					id: 'SupplyPrice',
 					name: '공급단가',
 					format: 'Price'
+				},
+				{
+					id: 'ChildTest',
+					key: 'Child2',
+					format: 'Child'
 				}
 			]
 		},
