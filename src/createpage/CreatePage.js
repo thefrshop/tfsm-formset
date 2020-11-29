@@ -270,6 +270,17 @@ class CreatePage extends React.Component {
 						</div>
 					</div>
 				);
+			} else if (item.format === 'Imageset') {
+				ItemsTable.push(
+					<div className="ItemViewRow" key={index}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+						</div>
+						<div className="ItemBody">
+							<div className="ImageformBox">{this.ListImage(values, item)}</div>
+						</div>
+					</div>
+				);
 			} else if (item.format === 'UploadHtml')
 				ItemsTable.push(
 					<div className="ItemViewRow" key={index}>
@@ -372,6 +383,36 @@ class CreatePage extends React.Component {
 						className="ImageformXBTN"
 						onClick={() => {
 							this.remove(value, index);
+						}}
+					>
+						x
+					</Button>
+				</div>
+			);
+		});
+
+		return images;
+	};
+
+	ListImageRemove = (id, index) => {
+		this.setState({
+			InitData: update(this.state.InitData, {
+				[id]: { $splice: [ [ index, 1 ] ] }
+			})
+		});
+	};
+	// 이미지 리스트폼
+	ListImage = (values, item) => {
+		let images = [];
+		values[item.id].forEach((value, index) => {
+			images.push(
+				<div className="Imageform" key={index}>
+					<Image className="ImageformImage" variant="top" src={value} />
+					<div className="ImageformTitle">{value.name}</div>
+					<Button
+						className="ImageformXBTN"
+						onClick={() => {
+							this.ListImageRemove(item.id, index);
 						}}
 					>
 						x

@@ -38,7 +38,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<Tabs defaultActiveKey="Test1">
+				<Tabs defaultActiveKey="Test2">
 					<Tab eventKey="Test1" title="Test1">
 						{this.Test1()}
 					</Tab>

@@ -39,7 +39,13 @@ const InitData = {
 		{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
 		{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' }
 	],
-	Supply: { Code: 'sss', Name: 'ss' }
+	Supply: { Code: 'sss', Name: 'ss' },
+	Imageset: [
+		'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg',
+		'https://shop-phinf.pstatic.net/20200717_266/15949746704500kuIs_JPEG/32337004039335532_1333175870.jpg',
+		'https://shop-phinf.pstatic.net/20200717_40/1594974670728XHsTz_JPEG/32337004270315102_740479415.jpg',
+		'https://shop-phinf.pstatic.net/20200717_134/1594974670975548LS_JPEG/32337004565182638_1968441623.jpg'
+	]
 };
 
 const ListData = [ { Code: 'sss', Name: 'ss' } ];
@@ -126,6 +132,11 @@ const ProductDataStruct = {
 					id: 'ChildTest',
 					key: 'Child2',
 					format: 'Child'
+				},
+				{
+					id: 'Imageset',
+					name: '이미지셋',
+					format: 'Imageset'
 				}
 			]
 		},

@@ -102,11 +102,12 @@
 }
 
 .Imageform {
+	padding: 1px;
 	border: 1px solid #ced4da;
 	position: relative;
 	border-radius: .25rem;
 	margin: 5px;
-	width: 120px;
+	width: 124px;
 }
 
 .ImageformImage {

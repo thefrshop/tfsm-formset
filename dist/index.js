@@ -6695,6 +6695,19 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/React.createElement("div", {
             className: "ImageformBox"
           }, _this.GetImage(values, item)))));
+        } else if (item.format === 'Imageset') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name)), /*#__PURE__*/React.createElement("div", {
+            className: "ItemBody"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ImageformBox"
+          }, _this.ListImage(values, item)))));
         } else if (item.format === 'UploadHtml') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemViewRow",
           key: index
@@ -6798,6 +6811,38 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return images;
     };
 
+    _this.ListImageRemove = function (id, index) {
+      var _update;
+
+      _this.setState({
+        InitData: update(_this.state.InitData, (_update = {}, _update[id] = {
+          $splice: [[index, 1]]
+        }, _update))
+      });
+    };
+
+    _this.ListImage = function (values, item) {
+      var images = [];
+      values[item.id].forEach(function (value, index) {
+        images.push( /*#__PURE__*/React.createElement("div", {
+          className: "Imageform",
+          key: index
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+          className: "ImageformImage",
+          variant: "top",
+          src: value
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "ImageformTitle"
+        }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+          className: "ImageformXBTN",
+          onClick: function onClick() {
+            _this.ListImageRemove(item.id, index);
+          }
+        }, "x")));
+      });
+      return images;
+    };
+
     _this.ImageFileChange = function (e, item, value) {
       if (e.target.files) {
         [].forEach.call(e.target.files, function (file) {
@@ -6805,10 +6850,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           reader.readAsDataURL(file);
 
           reader.onloadend = function (e) {
-            var _update;
+            var _update2;
 
             _this.setState({
-              InitData: update(_this.state.InitData, (_update = {}, _update[item.id] = {
+              InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.id] = {
                 UploadInfo: {
                   $push: [{
                     name: file.name,
@@ -6818,7 +6863,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
                 FileList: {
                   $push: [file]
                 }
-              }, _update))
+              }, _update2))
             });
           };
         });
@@ -6843,12 +6888,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.handleChange = function (item) {
-      var _update2;
+      var _update3;
 
       _this.setState({
-        InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.target.name] = {
+        InitData: update(_this.state.InitData, (_update3 = {}, _update3[item.target.name] = {
           $set: item.target.value
-        }, _update2))
+        }, _update3))
       });
     };
 
