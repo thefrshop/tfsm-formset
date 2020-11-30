@@ -44,7 +44,7 @@ class CreatePage extends React.Component {
 			});
 			InitData = Object.assign(InitData, this.props.InitData);
 
-			console.log(InitData);
+			//console.log(InitData);
 		} else {
 			Struct.forEach((StructItems) => {
 				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));

@@ -6487,7 +6487,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
         });
         InitData = Object.assign(InitData, _this.props.InitData);
-        console.log(InitData);
       } else {
         Struct.forEach(function (StructItems) {
           InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
