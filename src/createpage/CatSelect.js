@@ -24,7 +24,7 @@ class CatSelect extends React.Component {
 				if (item !== null)
 					table.push(
 						<div className="ViewSelected" key={catindex}>
-							<div className="name">{this.props.title[catindex]} : </div>
+							<div className="name">{this.props.name[catindex]} : </div>
 							<div className="data">{item[this.props.viewField]}</div>
 						</div>
 					);
