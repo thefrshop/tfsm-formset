@@ -6479,14 +6479,22 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       _this.Submitbtn.current.click();
     };
 
-    _this.InitDataSet = function (ModifyMode, Struct) {
+    _this.UpdateData = function (Data) {
+      var InitData = _this.InitDataSet(_this.state.ModifyMode, _this.props.DataStruct.Struct, Data);
+
+      _this.setState({
+        InitData: InitData
+      });
+    };
+
+    _this.InitDataSet = function (ModifyMode, Struct, Data) {
       var InitData = {};
 
       if (ModifyMode) {
         Struct.forEach(function (StructItems) {
           InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
         });
-        InitData = Object.assign(InitData, _this.props.InitData);
+        InitData = Object.assign(InitData, Data);
       } else {
         Struct.forEach(function (StructItems) {
           InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
@@ -6821,6 +6829,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.ListImage = function (values, item) {
+      if (values[item.id] === undefined) values[item.id] = [];
       var images = [];
       values[item.id].forEach(function (value, index) {
         images.push( /*#__PURE__*/React.createElement("div", {
@@ -6900,13 +6909,16 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     if (_this.props.Submit !== undefined) _this.props.Submit(function () {
       return _this.Submit();
     });
+    if (_this.props.UpdateData !== undefined) _this.props.UpdateData(function (Data) {
+      return _this.UpdateData(Data);
+    });
     var _ModifyMode = _this.props.ModifyMode;
     if (_ModifyMode === undefined) _ModifyMode = false;
     _this.state = {
       ModifyMode: _ModifyMode,
       isloading: false,
       create_state: 0,
-      InitData: _this.InitDataSet(_ModifyMode, _this.props.DataStruct.Struct),
+      InitData: _this.InitDataSet(_ModifyMode, _this.props.DataStruct.Struct, _this.props.InitData),
       imagefile: [],
       htmlfile: null,
       deleteimage: []

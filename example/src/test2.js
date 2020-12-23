@@ -11,20 +11,32 @@ export default class test2 extends React.Component {
 
 	render() {
 		return (
-			<CreatePage
-				ModifyMode
-				InitData={InitData}
-				DataStruct={ProductDataStruct}
-				onSubmit={this.onSubmit}
-				hierarchyData={{
-					Category: catdataSample,
-					Supply: catdataSample
-				}}
-				ListData={ListData}
-			>
-				<div key="Child1">Child1</div>
-				<div key="Child2">Child2</div>
-			</CreatePage>
+			<div>
+				<CreatePage
+					ModifyMode
+					InitData={InitData}
+					DataStruct={ProductDataStruct}
+					onSubmit={this.onSubmit}
+					hierarchyData={{
+						Category: catdataSample,
+						Supply: catdataSample
+					}}
+					ListData={ListData}
+					UpdateData={(c) => {
+						this.UpdateData = c;
+					}}
+				>
+					<div key="Child1">Child1</div>
+					<div key="Child2">Child2</div>
+				</CreatePage>
+				<button
+					onClick={() => {
+						this.UpdateData(InitData);
+					}}
+				>
+					update
+				</button>
+			</div>
 		);
 	}
 }

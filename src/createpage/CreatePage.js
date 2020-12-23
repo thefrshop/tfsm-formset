@@ -17,6 +17,7 @@ class CreatePage extends React.Component {
 		this.Submitbtn = React.createRef();
 
 		if (this.props.Submit !== undefined) this.props.Submit(() => this.Submit());
+		if (this.props.UpdateData !== undefined) this.props.UpdateData((Data) => this.UpdateData(Data));
 
 		var ModifyMode = this.props.ModifyMode;
 		if (ModifyMode === undefined) ModifyMode = false;
@@ -25,7 +26,7 @@ class CreatePage extends React.Component {
 			ModifyMode: ModifyMode,
 			isloading: false,
 			create_state: 0,
-			InitData: this.InitDataSet(ModifyMode, this.props.DataStruct.Struct),
+			InitData: this.InitDataSet(ModifyMode, this.props.DataStruct.Struct, this.props.InitData),
 			imagefile: [],
 			htmlfile: null,
 			deleteimage: []
@@ -35,14 +36,25 @@ class CreatePage extends React.Component {
 		this.Submitbtn.current.click();
 	};
 
+	UpdateData = (Data) => {
+		//console.log('Data', Data);
+
+		var InitData = this.InitDataSet(this.state.ModifyMode, this.props.DataStruct.Struct, Data);
+		//console.log('UpdateData', InitData);
+
+		this.setState({
+			InitData: InitData
+		});
+	};
+
 	// 타입별 데이터 초기화
-	InitDataSet = (ModifyMode, Struct) => {
+	InitDataSet = (ModifyMode, Struct, Data) => {
 		var InitData = {};
 		if (ModifyMode) {
 			Struct.forEach((StructItems) => {
 				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
 			});
-			InitData = Object.assign(InitData, this.props.InitData);
+			InitData = Object.assign(InitData, Data);
 
 			//console.log(InitData);
 		} else {
@@ -104,8 +116,6 @@ class CreatePage extends React.Component {
 	};
 
 	ItemsView = (Struct, values, handleChange) => {
-		//console.log(Struct);
-
 		let ItemsTable = [];
 		Struct.forEach((item, index) => {
 			if (item.format === 'CodeGen')
@@ -403,6 +413,11 @@ class CreatePage extends React.Component {
 	};
 	// 이미지 리스트폼
 	ListImage = (values, item) => {
+		//console.log('ListImage', item.id);
+
+		//console.log('ListImage', values[item.id]);
+
+		if (values[item.id] === undefined) values[item.id] = [];
 		let images = [];
 		values[item.id].forEach((value, index) => {
 			images.push(
