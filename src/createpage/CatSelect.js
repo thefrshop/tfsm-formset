@@ -24,13 +24,12 @@ class CatSelect extends React.Component {
 				if (item !== null)
 					table.push(
 						<div className="ViewSelected" key={catindex}>
-							<div className="name">{this.props.name[catindex]} : </div>
+							<div className="name">{this.props.HierarchyNames[catindex]} : </div>
 							<div className="data">{item[this.props.viewField]}</div>
 						</div>
 					);
 			});
 		}
-
 		return table;
 	};
 
@@ -43,19 +42,19 @@ class CatSelect extends React.Component {
 	CatSelectOk = (CategorySelect) => {
 		this.setState(
 			{
-				CategorySelect: CategorySelect,
+				CategorySelect: this.props.InitialValue !== undefined ? CategorySelect : [],
 				ShowPopup: false
 			},
-			() => this.onChange()
+			() => this.onChange(CategorySelect)
 		);
 	};
 
-	onChange = () => {
+	onChange = (CategorySelect) => {
 		if (this.props.onChange !== undefined) {
 			this.props.onChange({
 				target: {
 					name: this.props.name,
-					value: this.state.CategorySelect
+					value: CategorySelect
 				}
 			});
 		}
@@ -78,7 +77,12 @@ class CatSelect extends React.Component {
 					hierarchyData={this.props.hierarchyData}
 					ispopup={this.state.ShowPopup}
 					onHide={this.hideCatSelect}
-					onOk={this.CatSelectOk}
+					onOk={(value) => {
+						return new Promise((resolve) => {
+							this.CatSelectOk(value);
+							resolve();
+						});
+					}}
 				/>
 
 				<Button variant="SelectPre" onClick={this.openCatSelect}>

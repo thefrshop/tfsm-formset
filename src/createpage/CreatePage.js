@@ -1,8 +1,10 @@
 import React from 'react';
 import update from 'react-addons-update';
-
+import DatePicker from 'react-datepicker';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import ProductCodeGen from './ProductCodeGen';
 import './CreatePage.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import CatSelect from './CatSelect';
 import ListSelect from './ListSelect';
@@ -116,6 +118,8 @@ class CreatePage extends React.Component {
 	};
 
 	ItemsView = (Struct, values, handleChange) => {
+		//console.log(Struct);
+
 		let ItemsTable = [];
 		Struct.forEach((item, index) => {
 			if (item.format === 'CodeGen')
@@ -203,23 +207,84 @@ class CreatePage extends React.Component {
 				);
 			else if (item.format === 'Hierarchy') {
 				//console.log(item.HierarchyData.name);
-				ItemsTable.push(
-					<div className="ItemView" key={index}>
-						<div className="ItemTitle">{item.name}</div>
-						<div className="ItemContent">
-							<CatSelect
-								InitialValue={values[item.id]}
-								name={item.id}
-								title={item.name}
-								HierarchyNames={item.HierarchyData.name}
-								viewField={item.HierarchyData.viewField}
-								hierarchyData={this.props.hierarchyData[item.id]}
-								selected={values[item.id]}
-								onChange={handleChange}
-							/>
+				if (item.Select === undefined) {
+					ItemsTable.push(
+						<div className="ItemView" key={index}>
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<CatSelect
+									InitialValue={values[item.id]}
+									name={item.id}
+									title={item.name}
+									HierarchyNames={item.HierarchyData.name}
+									viewField={item.HierarchyData.viewField}
+									hierarchyData={this.props.hierarchyData[item.id]}
+									selected={values[item.id]}
+									onChange={handleChange}
+								/>
+							</div>
 						</div>
-					</div>
-				);
+					);
+				} else if (item.Select === 'Multi') {
+					ItemsTable.push(
+						<div className="ItemViewRow" key={index}>
+							<div className="ItemHeader">
+								<div className="ItemTitle">{item.name}</div>
+								<div className="ItemContent">
+									<CatSelect
+										name={item.id}
+										title={item.name}
+										HierarchyNames={item.HierarchyData.name}
+										viewField={item.HierarchyData.viewField}
+										hierarchyData={this.props.hierarchyData[item.Selectid]}
+										selected={values[item.id]}
+										onChange={(e) => {
+											let dat = [];
+
+											if(this.state.InitData[item.Selectid] !== undefined) {
+												var bool = true;
+												dat = this.state.InitData[item.Selectid];
+												dat.forEach((val,ind)=> {
+													if(val[3].Code === e.target.value[3].Code) bool = false;
+												})
+												if(bool) dat.push(e.target.value);
+											} else {
+												dat.push(e.target.value);
+											}	
+
+											this.setState({
+												InitData: update(this.state.InitData, {
+													[item.Selectid]: { $set: dat }
+												})
+											});
+										}}
+									/>
+								</div>
+							</div>
+							<div className="ItemBody">
+								<div className="ViewListformBox">{this.GetHierarchy(values, item)}</div>
+							</div>
+						</div>
+					);
+				} else {
+					ItemsTable.push(
+						<div className="ItemView" key={index}>
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<CatSelect
+									InitialValue={values[item.id]}
+									name={item.id}
+									title={item.name}
+									HierarchyNames={item.HierarchyData.name}
+									viewField={item.HierarchyData.viewField}
+									hierarchyData={this.props.hierarchyData[item.id]}
+									selected={values[item.id]}
+									onChange={handleChange}
+								/>
+							</div>
+						</div>
+					);
+				}
 			} else if (item.format === 'ListSelect') {
 				ItemsTable.push(
 					<div className="ItemViewRow" key={index}>
@@ -241,20 +306,34 @@ class CreatePage extends React.Component {
 								/>
 							</div>
 						</div>
-						<div className="ItemBody">
-							<div className="ViewListformBox">
-								<ViewList
-									{...this.props}
-									InitialValue={values[item.id]}
-									name={item.id}
-									title={item.name}
-									selected={values[item.id]}
-									columns={item.columns}
-									keyField={item.keyField}
-									orderField={item.orderField}
-									viewField={item.viewField}
-								/>
+						{item.Viewhidden === undefined ? null : (
+							<div className="ItemBody">
+								<div className="ViewListformBox">
+									<ViewList
+										{...this.props}
+										InitialValue={values[item.id]}
+										name={item.id}
+										title={item.name}
+										selected={values[item.id]}
+										columns={item.columns}
+										keyField={item.keyField}
+										orderField={item.orderField}
+										viewField={item.viewField}
+									/>
+								</div>
 							</div>
+						)}
+					</div>
+				);
+			} else if (item.format === 'ImageSelect') {
+				ItemsTable.push(
+					<div className="ItemViewRow" key={index}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent" />
+						</div>
+						<div className="ItemBody">
+							<div className="ImageformBox">{this.ImageSelectList(values, item)}</div>
 						</div>
 					</div>
 				);
@@ -291,7 +370,7 @@ class CreatePage extends React.Component {
 						</div>
 					</div>
 				);
-			} else if (item.format === 'UploadHtml')
+			} else if (item.format === 'UploadHtml') {
 				ItemsTable.push(
 					<div className="ItemViewRow" key={index}>
 						<div className="ItemHeader">
@@ -313,7 +392,7 @@ class CreatePage extends React.Component {
 						</div>
 					</div>
 				);
-			else if (item.format === 'Tab') {
+			} else if (item.format === 'Tab') {
 				var FormViewTable = this.ItemsView(item.Items, values, handleChange);
 
 				let TabTable = [];
@@ -357,10 +436,243 @@ class CreatePage extends React.Component {
 						);
 					}
 				});
+			} else if (item.format === 'TimerSet') {
+				ItemsTable.push(
+					<div className="ItemViewRow" key={index} style={{ marginBottom: 20 }}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<DatePicker
+									name={item.id}
+									selected={values[item.id]}
+									dateFormat="yyyy-MM-dd HH:mm:ss"
+									onChange={(date) =>
+										this.setState({
+											InitData: update(this.state.InitData, {
+												[item.id]: { $set: date }
+											})
+										})}
+									showTimeSelect
+								/>
+							</div>
+						</div>
+					</div>
+				);
+			} else if (item.format === 'Switch') {
+				ItemsTable.push(
+					<div className="ItemViewRow" key={index} style={{ marginBottom: 20 }}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<BootstrapSwitchButton
+									checked={values[item.id]}
+									onChange={(value) =>
+										this.setState({
+											InitData: update(this.state.InitData, {
+												[item.id]: { $set: value }
+											})
+										})}
+								/>
+							</div>
+						</div>
+					</div>
+				);
+			} else if (item.format === 'Option') {
+				ItemsTable.push(
+					<div className="ItemViewRow" key={index}>
+						<div className="ItemHeader">
+							<div className="ItemTitle">{item.name}</div>
+							<div className="ItemContent">
+								<Form.Control
+									type={'text'}
+									value={values[item.id]}
+									className="TextInput"
+									name={item.id}
+									placeholder="쉼표(,)로 구분"
+									onChange={handleChange}
+								/>
+								<Button
+									style={{
+										top: 0,
+										right: 0,
+										margin: 0,
+										padding: 0,
+										width: 34,
+										height: 34,
+										fontSize: 10,
+										backgroundColor: '#555555'
+									}}
+									onClick={() => {
+										let dat = [];
+										var strArray = this.state.InitData[item.id].split(',');
+										strArray.forEach((value) => {
+											if (value.trim() !== '') dat.push({ name: value.trim(), price: 0 });
+										});
+										this.setState({
+											InitData: update(this.state.InitData, {
+												[item.Selectid]: { $set: dat }
+											})
+										});
+									}}
+								>
+									추가
+								</Button>
+							</div>
+						</div>
+						<div className="ItemBody">
+							<div className="ViewListformBox">{this.GetSetOption(values, item)}</div>
+						</div>
+					</div>
+				);
 			}
 		});
 
 		return ItemsTable;
+	};
+
+	GetHierarchy = (values, item) => {
+		let viewlist = [];
+
+		const onRemove = (Selvalue) => {
+			const RemoveData = values[item.Selectid].filter(arr => arr[3].Code !== Selvalue[3].Code);
+			console.log(RemoveData);
+			this.setState({
+				InitData: update(this.state.InitData, {
+					[item.Selectid]: { $set: RemoveData }
+				})
+			});
+			
+		}
+
+		function DataView(Selvalue) {
+			let table = '';
+			Selvalue.forEach((catitem, catindex) => {
+				if (catitem !== null) {
+					table += catitem[item.HierarchyData.viewField] + ' ';
+				}
+			});
+			return table;
+		}
+
+		if (values[item.Selectid] !== undefined) {
+			values[item.Selectid].forEach((Selvalue, Selindex) => {
+				console.log(Selvalue);
+				viewlist.push(
+					<div className="ViewList" key={Selindex}>
+						<div className="Viewitle">{Selindex + 1}</div>
+						<div className="ViewContent">{DataView(Selvalue)}</div>
+						<Button
+							style={{
+								top: 0,
+								right: 0,
+								margin: 0,
+								padding: 0,
+								width: 34,
+								height: 34,
+								fontSize: 10,
+								backgroundColor: '#555555'
+							}}
+							onClick={() => onRemove(Selvalue)}
+						>
+							삭제
+						</Button>
+					</div>
+				);
+			});
+		}
+
+		return viewlist;
+	};
+
+	GetSetOption = (values, item) => {
+		let viewlist = [];
+		if (values[item.Selectid] !== undefined) {
+			values[item.Selectid].forEach((Selvalue, Selindex) => {
+				viewlist.push(
+					<div className="ViewList" key={Selindex}>
+						<div className="ItemTitle">{Selvalue.name}</div>
+						<input
+							type={'number'}
+							className="TextInput"
+							required
+							value={Selvalue.price}
+							name={Selvalue.price}
+							onChange={(e) => {
+								this.setState({
+									InitData: update(this.state.InitData, {
+										[item.Selectid]: { [ind]: { price: { $set: e.target.value } } }
+									})
+								});
+							}}
+						/>
+					</div>
+				);
+			});
+		}
+		return viewlist;
+	};
+
+	ImageSelectList = (values, item) => {
+		let images = [];
+		if (item.Select === 'Multi') {
+			values[item.id].forEach((value, index) => {
+				const apple = this.state.InitData.image.find((element) => {
+					if (element === value) {
+						return true;
+					}
+				});
+				images.push(
+					<div
+						style={{ borderWidth: apple !== undefined ? 2 : 0, borderColor: '#1f8b3b' }}
+						onClick={() => {
+							if (apple !== undefined) {
+								var array = [ ...this.state.InitData[item.Selectid] ]; // make a separate copy of the array
+								var ind = array.indexOf(value);
+								if (ind !== -1) {
+									array.splice(ind, 1);
+									this.setState({
+										InitData: update(this.state.InitData, {
+											[item.Selectid]: { $set: array }
+										})
+									});
+								}
+							} else {
+								this.setState({
+									InitData: update(this.state.InitData, {
+										[item.Selectid]: { $push: [ value ] }
+									})
+								});
+							}
+						}}
+						className="Imageform"
+						key={index}
+					>
+						<Image className="ImageformImage" variant="top" src={value} />
+					</div>
+				);
+			});
+		} else {
+			values[item.id].forEach((value, index) => {
+				images.push(
+					<div
+						style={{ borderWidth: this.state.InitData.image[0] === value ? 2 : 0, borderColor: '#1f8b3b' }}
+						onClick={() => {
+							this.setState({
+								InitData: update(this.state.InitData, {
+									[item.Selectid]: { 0: { $set: value } }
+								})
+							});
+						}}
+						className="Imageform"
+						key={index}
+					>
+						<Image className="ImageformImage" variant="top" src={value} />
+					</div>
+				);
+			});
+		}
+
+		return images;
 	};
 
 	// 타입별 폼 생성
@@ -449,7 +761,7 @@ class CreatePage extends React.Component {
 					this.setState({
 						InitData: update(this.state.InitData, {
 							[item.id]: {
-								UploadInfo: { $push: [ { name: file.name, url: e.target.result } ] },
+								UploadInfo: { $push: [ { name: file.name, url: e.target.result, value: e.target.files } ] },
 								FileList: { $push: [ file ] }
 							}
 						})

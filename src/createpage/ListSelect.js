@@ -1,6 +1,6 @@
 import React from 'react';
 import './ListSelect.css';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 import PopupListSelect from './PopupListSelect';
 
 class ListSelected extends React.Component {

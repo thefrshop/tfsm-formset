@@ -240,7 +240,30 @@ class PopupCatSelect extends React.Component {
 								<Button
 									variant="Submit"
 									className="FooterButton"
-									onClick={() => this.props.onOk(this.state.CategorySelect)}
+									onClick={() =>
+										this.props.onOk(this.state.CategorySelect).then(() => {
+											var CategorySelect = [];
+											var prev = [];
+											var next = [];
+											var done = [];
+
+											for (var i = 0; i < this.props.name.length; i++) {
+												CategorySelect.push('');
+												prev.push(false);
+												next.push(false);
+												done.push(false);
+												this.Table.push(React.createRef());
+											}
+
+											this.setState({
+												index: 0,
+												direction: 0,
+												CategorySelect: CategorySelect,
+												prev: prev,
+												next: next,
+												done: done
+											});
+										})}
 								>
 									완료
 								</Button>
