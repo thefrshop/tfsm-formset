@@ -2,8 +2,11 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var update = _interopDefault(require('react-addons-update'));
+var DatePicker = _interopDefault(require('react-datepicker'));
+var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 var moment$1 = _interopDefault(require('moment-timezone'));
 var go = require('react-icons/go');
+require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 
@@ -6120,7 +6123,30 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
-        return _this2.props.onOk(_this2.state.CategorySelect);
+        return _this2.props.onOk(_this2.state.CategorySelect).then(function () {
+          var CategorySelect = [];
+          var prev = [];
+          var next = [];
+          var done = [];
+
+          for (var i = 0; i < _this2.props.name.length; i++) {
+            CategorySelect.push('');
+            prev.push(false);
+            next.push(false);
+            done.push(false);
+
+            _this2.Table.push(React.createRef());
+          }
+
+          _this2.setState({
+            index: 0,
+            direction: 0,
+            CategorySelect: CategorySelect,
+            prev: prev,
+            next: next,
+            done: done
+          });
+        });
       }
     }, "\uC644\uB8CC")), /*#__PURE__*/React.createElement("div", {
       className: "MoveView"
@@ -6160,7 +6186,7 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
             key: catindex
           }, /*#__PURE__*/React.createElement("div", {
             className: "name"
-          }, _this.props.name[catindex], " : "), /*#__PURE__*/React.createElement("div", {
+          }, _this.props.HierarchyNames[catindex], " : "), /*#__PURE__*/React.createElement("div", {
             className: "data"
           }, item[_this.props.viewField])));
         });
@@ -6177,19 +6203,19 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
 
     _this.CatSelectOk = function (CategorySelect) {
       _this.setState({
-        CategorySelect: CategorySelect,
+        CategorySelect: _this.props.InitialValue !== undefined ? CategorySelect : [],
         ShowPopup: false
       }, function () {
-        return _this.onChange();
+        return _this.onChange(CategorySelect);
       });
     };
 
-    _this.onChange = function () {
+    _this.onChange = function (CategorySelect) {
       if (_this.props.onChange !== undefined) {
         _this.props.onChange({
           target: {
             name: _this.props.name,
-            value: _this.state.CategorySelect
+            value: CategorySelect
           }
         });
       }
@@ -6213,6 +6239,8 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
   var _proto = CatSelect.prototype;
 
   _proto.render = function render() {
+    var _this2 = this;
+
     return /*#__PURE__*/React.createElement("div", {
       className: "CatSelectView"
     }, /*#__PURE__*/React.createElement(PopupCatSelect, {
@@ -6223,7 +6251,13 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
       hierarchyData: this.props.hierarchyData,
       ispopup: this.state.ShowPopup,
       onHide: this.hideCatSelect,
-      onOk: this.CatSelectOk
+      onOk: function onOk(value) {
+        return new Promise(function (resolve) {
+          _this2.CatSelectOk(value);
+
+          resolve();
+        });
+      }
     }), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
       variant: "SelectPre",
       onClick: this.openCatSelect
@@ -6627,23 +6661,87 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           name: item.id,
           onChange: handleChange
         }, _this.GetOption(item.SelectText)))));else if (item.format === 'Hierarchy') {
-          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
-            className: "ItemView",
-            key: index
-          }, /*#__PURE__*/React.createElement("div", {
-            className: "ItemTitle"
-          }, item.name), /*#__PURE__*/React.createElement("div", {
-            className: "ItemContent"
-          }, /*#__PURE__*/React.createElement(CatSelect, {
-            InitialValue: values[item.id],
-            name: item.id,
-            title: item.name,
-            HierarchyNames: item.HierarchyData.name,
-            viewField: item.HierarchyData.viewField,
-            hierarchyData: _this.props.hierarchyData[item.id],
-            selected: values[item.id],
-            onChange: handleChange
-          }))));
+          if (item.Select === undefined) {
+            ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+              className: "ItemView",
+              key: index
+            }, /*#__PURE__*/React.createElement("div", {
+              className: "ItemTitle"
+            }, item.name), /*#__PURE__*/React.createElement("div", {
+              className: "ItemContent"
+            }, /*#__PURE__*/React.createElement(CatSelect, {
+              InitialValue: values[item.id],
+              name: item.id,
+              title: item.name,
+              HierarchyNames: item.HierarchyData.name,
+              viewField: item.HierarchyData.viewField,
+              hierarchyData: _this.props.hierarchyData[item.id],
+              selected: values[item.id],
+              onChange: handleChange
+            }))));
+          } else if (item.Select === 'Multi') {
+            ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+              className: "ItemViewRow",
+              key: index
+            }, /*#__PURE__*/React.createElement("div", {
+              className: "ItemHeader"
+            }, /*#__PURE__*/React.createElement("div", {
+              className: "ItemTitle"
+            }, item.name), /*#__PURE__*/React.createElement("div", {
+              className: "ItemContent"
+            }, /*#__PURE__*/React.createElement(CatSelect, {
+              name: item.id,
+              title: item.name,
+              HierarchyNames: item.HierarchyData.name,
+              viewField: item.HierarchyData.viewField,
+              hierarchyData: _this.props.hierarchyData[item.Selectid],
+              selected: values[item.id],
+              onChange: function onChange(e) {
+                var _update;
+
+                var dat = [];
+
+                if (_this.state.InitData[item.Selectid] !== undefined) {
+                  var bool = true;
+                  dat = _this.state.InitData[item.Selectid];
+                  dat.forEach(function (val, ind) {
+                    if (val[3].Code === e.target.value[3].Code) bool = false;
+                  });
+                  if (bool) dat.push(e.target.value);
+                } else {
+                  dat.push(e.target.value);
+                }
+
+                _this.setState({
+                  InitData: update(_this.state.InitData, (_update = {}, _update[item.Selectid] = {
+                    $set: dat
+                  }, _update))
+                });
+              }
+            }))), /*#__PURE__*/React.createElement("div", {
+              className: "ItemBody"
+            }, /*#__PURE__*/React.createElement("div", {
+              className: "ViewListformBox"
+            }, _this.GetHierarchy(values, item)))));
+          } else {
+            ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+              className: "ItemView",
+              key: index
+            }, /*#__PURE__*/React.createElement("div", {
+              className: "ItemTitle"
+            }, item.name), /*#__PURE__*/React.createElement("div", {
+              className: "ItemContent"
+            }, /*#__PURE__*/React.createElement(CatSelect, {
+              InitialValue: values[item.id],
+              name: item.id,
+              title: item.name,
+              HierarchyNames: item.HierarchyData.name,
+              viewField: item.HierarchyData.viewField,
+              hierarchyData: _this.props.hierarchyData[item.id],
+              selected: values[item.id],
+              onChange: handleChange
+            }))));
+          }
         } else if (item.format === 'ListSelect') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemViewRow",
@@ -6665,7 +6763,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             keyField: item.keyField,
             orderField: item.orderField,
             viewField: item.viewField
-          })))), /*#__PURE__*/React.createElement("div", {
+          })))), item.Viewhidden === undefined ? null : /*#__PURE__*/React.createElement("div", {
             className: "ItemBody"
           }, /*#__PURE__*/React.createElement("div", {
             className: "ViewListformBox"
@@ -6679,6 +6777,21 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             orderField: item.orderField,
             viewField: item.viewField
           }))))));
+        } else if (item.format === 'ImageSelect') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          })), /*#__PURE__*/React.createElement("div", {
+            className: "ItemBody"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ImageformBox"
+          }, _this.ImageSelectList(values, item)))));
         } else if (item.format === 'UploadImage') {
           ItemsTable.push( /*#__PURE__*/React.createElement("div", {
             className: "ItemViewRow",
@@ -6715,28 +6828,30 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/React.createElement("div", {
             className: "ImageformBox"
           }, _this.ListImage(values, item)))));
-        } else if (item.format === 'UploadHtml') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
-          className: "ItemViewRow",
-          key: index
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "ItemHeader"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "ItemTitle"
-        }, item.name), /*#__PURE__*/React.createElement("div", {
-          className: "ItemContent"
-        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
-          label: values[item.id].UploadInfo.length + "\uAC1C",
-          "data-browse": "+",
-          onChange: function onChange(e) {
-            _this.ImageFileChange(e, item, values);
-          },
-          multiple: true,
-          custom: true
-        }))), /*#__PURE__*/React.createElement("div", {
-          className: "ItemBody"
-        }, /*#__PURE__*/React.createElement("div", {
-          className: "ImageformBox"
-        }, _this.GetImage(values, item)))));else if (item.format === 'Tab') {
+        } else if (item.format === 'UploadHtml') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
+            label: values[item.id].UploadInfo.length + "\uAC1C",
+            "data-browse": "+",
+            onChange: function onChange(e) {
+              _this.ImageFileChange(e, item, values);
+            },
+            multiple: true,
+            custom: true
+          }))), /*#__PURE__*/React.createElement("div", {
+            className: "ItemBody"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ImageformBox"
+          }, _this.GetImage(values, item)))));
+        } else if (item.format === 'Tab') {
           var FormViewTable = _this.ItemsView(item.Items, values, handleChange);
 
           var TabTable = [];
@@ -6776,9 +6891,289 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
               }, element))));
             }
           });
+        } else if (item.format === 'TimerSet') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index,
+            style: {
+              marginBottom: 20
+            }
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          }, /*#__PURE__*/React.createElement(DatePicker, {
+            name: item.id,
+            selected: values[item.id],
+            dateFormat: "yyyy-MM-dd HH:mm:ss",
+            onChange: function onChange(date) {
+              var _update2;
+
+              return _this.setState({
+                InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.id] = {
+                  $set: date
+                }, _update2))
+              });
+            },
+            showTimeSelect: true
+          })))));
+        } else if (item.format === 'Switch') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index,
+            style: {
+              marginBottom: 20
+            }
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          }, /*#__PURE__*/React.createElement(BootstrapSwitchButton, {
+            checked: values[item.id],
+            onChange: function onChange(value) {
+              var _update3;
+
+              return _this.setState({
+                InitData: update(_this.state.InitData, (_update3 = {}, _update3[item.id] = {
+                  $set: value
+                }, _update3))
+              });
+            }
+          })))));
+        } else if (item.format === 'Option') {
+          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+            className: "ItemViewRow",
+            key: index
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemHeader"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, item.name), /*#__PURE__*/React.createElement("div", {
+            className: "ItemContent"
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+            type: 'text',
+            value: values[item.id],
+            className: "TextInput",
+            name: item.id,
+            placeholder: "\uC27C\uD45C(,)\uB85C \uAD6C\uBD84",
+            onChange: handleChange
+          }), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+            style: {
+              top: 0,
+              right: 0,
+              margin: 0,
+              padding: 0,
+              width: 34,
+              height: 34,
+              fontSize: 10,
+              backgroundColor: '#555555'
+            },
+            onClick: function onClick() {
+              var _update4;
+
+              var dat = [];
+
+              var strArray = _this.state.InitData[item.id].split(',');
+
+              strArray.forEach(function (value) {
+                if (value.trim() !== '') dat.push({
+                  name: value.trim(),
+                  price: 0
+                });
+              });
+
+              _this.setState({
+                InitData: update(_this.state.InitData, (_update4 = {}, _update4[item.Selectid] = {
+                  $set: dat
+                }, _update4))
+              });
+            }
+          }, "\uCD94\uAC00"))), /*#__PURE__*/React.createElement("div", {
+            className: "ItemBody"
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ViewListformBox"
+          }, _this.GetSetOption(values, item)))));
         }
       });
       return ItemsTable;
+    };
+
+    _this.GetHierarchy = function (values, item) {
+      var viewlist = [];
+
+      var onRemove = function onRemove(Selvalue) {
+        var _update5;
+
+        var RemoveData = values[item.Selectid].filter(function (arr) {
+          return arr[3].Code !== Selvalue[3].Code;
+        });
+        console.log(RemoveData);
+
+        _this.setState({
+          InitData: update(_this.state.InitData, (_update5 = {}, _update5[item.Selectid] = {
+            $set: RemoveData
+          }, _update5))
+        });
+      };
+
+      function DataView(Selvalue) {
+        var table = '';
+        Selvalue.forEach(function (catitem, catindex) {
+          if (catitem !== null) {
+            table += catitem[item.HierarchyData.viewField] + ' ';
+          }
+        });
+        return table;
+      }
+
+      if (values[item.Selectid] !== undefined) {
+        values[item.Selectid].forEach(function (Selvalue, Selindex) {
+          console.log(Selvalue);
+          viewlist.push( /*#__PURE__*/React.createElement("div", {
+            className: "ViewList",
+            key: Selindex
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "Viewitle"
+          }, Selindex + 1), /*#__PURE__*/React.createElement("div", {
+            className: "ViewContent"
+          }, DataView(Selvalue)), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+            style: {
+              top: 0,
+              right: 0,
+              margin: 0,
+              padding: 0,
+              width: 34,
+              height: 34,
+              fontSize: 10,
+              backgroundColor: '#555555'
+            },
+            onClick: function onClick() {
+              return onRemove(Selvalue);
+            }
+          }, "\uC0AD\uC81C")));
+        });
+      }
+
+      return viewlist;
+    };
+
+    _this.GetSetOption = function (values, item) {
+      var viewlist = [];
+
+      if (values[item.Selectid] !== undefined) {
+        values[item.Selectid].forEach(function (Selvalue, Selindex) {
+          viewlist.push( /*#__PURE__*/React.createElement("div", {
+            className: "ViewList",
+            key: Selindex
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "ItemTitle"
+          }, Selvalue.name), /*#__PURE__*/React.createElement("input", {
+            type: 'number',
+            className: "TextInput",
+            required: true,
+            value: Selvalue.price,
+            name: Selvalue.price,
+            onChange: function onChange(e) {
+              var _item$Selectid, _update6;
+
+              _this.setState({
+                InitData: update(_this.state.InitData, (_update6 = {}, _update6[item.Selectid] = (_item$Selectid = {}, _item$Selectid[ind] = {
+                  price: {
+                    $set: e.target.value
+                  }
+                }, _item$Selectid), _update6))
+              });
+            }
+          })));
+        });
+      }
+
+      return viewlist;
+    };
+
+    _this.ImageSelectList = function (values, item) {
+      var images = [];
+
+      if (item.Select === 'Multi') {
+        values[item.id].forEach(function (value, index) {
+          var apple = _this.state.InitData.image.find(function (element) {
+            if (element === value) {
+              return true;
+            }
+          });
+
+          images.push( /*#__PURE__*/React.createElement("div", {
+            style: {
+              borderWidth: apple !== undefined ? 2 : 0,
+              borderColor: '#1f8b3b'
+            },
+            onClick: function onClick() {
+              if (apple !== undefined) {
+                var array = [].concat(_this.state.InitData[item.Selectid]);
+                var ind = array.indexOf(value);
+
+                if (ind !== -1) {
+                  var _update7;
+
+                  array.splice(ind, 1);
+
+                  _this.setState({
+                    InitData: update(_this.state.InitData, (_update7 = {}, _update7[item.Selectid] = {
+                      $set: array
+                    }, _update7))
+                  });
+                }
+              } else {
+                var _update8;
+
+                _this.setState({
+                  InitData: update(_this.state.InitData, (_update8 = {}, _update8[item.Selectid] = {
+                    $push: [value]
+                  }, _update8))
+                });
+              }
+            },
+            className: "Imageform",
+            key: index
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+            className: "ImageformImage",
+            variant: "top",
+            src: value
+          })));
+        });
+      } else {
+        values[item.id].forEach(function (value, index) {
+          images.push( /*#__PURE__*/React.createElement("div", {
+            style: {
+              borderWidth: _this.state.InitData.image[0] === value ? 2 : 0,
+              borderColor: '#1f8b3b'
+            },
+            onClick: function onClick() {
+              var _update9;
+
+              _this.setState({
+                InitData: update(_this.state.InitData, (_update9 = {}, _update9[item.Selectid] = {
+                  0: {
+                    $set: value
+                  }
+                }, _update9))
+              });
+            },
+            className: "Imageform",
+            key: index
+          }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+            className: "ImageformImage",
+            variant: "top",
+            src: value
+          })));
+        });
+      }
+
+      return images;
     };
 
     _this.FormView = function (Struct, values, handleChange) {
@@ -6819,12 +7214,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.ListImageRemove = function (id, index) {
-      var _update;
+      var _update10;
 
       _this.setState({
-        InitData: update(_this.state.InitData, (_update = {}, _update[id] = {
+        InitData: update(_this.state.InitData, (_update10 = {}, _update10[id] = {
           $splice: [[index, 1]]
-        }, _update))
+        }, _update10))
       });
     };
 
@@ -6858,20 +7253,21 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           reader.readAsDataURL(file);
 
           reader.onloadend = function (e) {
-            var _update2;
+            var _update11;
 
             _this.setState({
-              InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.id] = {
+              InitData: update(_this.state.InitData, (_update11 = {}, _update11[item.id] = {
                 UploadInfo: {
                   $push: [{
                     name: file.name,
-                    url: e.target.result
+                    url: e.target.result,
+                    value: e.target.files
                   }]
                 },
                 FileList: {
                   $push: [file]
                 }
-              }, _update2))
+              }, _update11))
             });
           };
         });
@@ -6896,12 +7292,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.handleChange = function (item) {
-      var _update3;
+      var _update12;
 
       _this.setState({
-        InitData: update(_this.state.InitData, (_update3 = {}, _update3[item.target.name] = {
+        InitData: update(_this.state.InitData, (_update12 = {}, _update12[item.target.name] = {
           $set: item.target.value
-        }, _update3))
+        }, _update12))
       });
     };
 
