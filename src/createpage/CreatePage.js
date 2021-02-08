@@ -154,6 +154,22 @@ class CreatePage extends React.Component {
 						</div>
 					</div>
 				);
+			else if (item.format === 'Date')
+				ItemsTable.push(
+					<div className="ItemView" key={index}>
+						<div className="ItemTitle">{item.name}</div>
+						<div className="ItemContent">
+							<Form.Control
+								value={values[item.id] || ''}
+								className="TextInput"
+								required
+								type="date"
+								name={item.id}
+								onChange={handleChange}
+							/>
+						</div>
+					</div>
+				);
 			else if (item.format === 'Textline')
 				ItemsTable.push(
 					<div className="ItemView" key={index}>
@@ -241,16 +257,16 @@ class CreatePage extends React.Component {
 										onChange={(e) => {
 											let dat = [];
 
-											if(this.state.InitData[item.Selectid] !== undefined) {
+											if (this.state.InitData[item.Selectid] !== undefined) {
 												var bool = true;
 												dat = this.state.InitData[item.Selectid];
-												dat.forEach((val,ind)=> {
-													if(val[3].Code === e.target.value[3].Code) bool = false;
-												})
-												if(bool) dat.push(e.target.value);
+												dat.forEach((val, ind) => {
+													if (val[3].Code === e.target.value[3].Code) bool = false;
+												});
+												if (bool) dat.push(e.target.value);
 											} else {
 												dat.push(e.target.value);
-											}	
+											}
 
 											this.setState({
 												InitData: update(this.state.InitData, {
@@ -534,15 +550,14 @@ class CreatePage extends React.Component {
 		let viewlist = [];
 
 		const onRemove = (Selvalue) => {
-			const RemoveData = values[item.Selectid].filter(arr => arr[3].Code !== Selvalue[3].Code);
+			const RemoveData = values[item.Selectid].filter((arr) => arr[3].Code !== Selvalue[3].Code);
 			console.log(RemoveData);
 			this.setState({
 				InitData: update(this.state.InitData, {
 					[item.Selectid]: { $set: RemoveData }
 				})
 			});
-			
-		}
+		};
 
 		function DataView(Selvalue) {
 			let table = '';
@@ -761,7 +776,9 @@ class CreatePage extends React.Component {
 					this.setState({
 						InitData: update(this.state.InitData, {
 							[item.id]: {
-								UploadInfo: { $push: [ { name: file.name, url: e.target.result, value: e.target.files } ] },
+								UploadInfo: {
+									$push: [ { name: file.name, url: e.target.result, value: e.target.files } ]
+								},
 								FileList: { $push: [ file ] }
 							}
 						})

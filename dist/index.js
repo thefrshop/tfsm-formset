@@ -6617,6 +6617,20 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           type: "text",
           name: item.id,
           onChange: handleChange
+        }))));else if (item.format === 'Date') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+          className: "ItemView",
+          key: index
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "ItemTitle"
+        }, item.name), /*#__PURE__*/React.createElement("div", {
+          className: "ItemContent"
+        }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+          value: values[item.id] || '',
+          className: "TextInput",
+          required: true,
+          type: "date",
+          name: item.id,
+          onChange: handleChange
         }))));else if (item.format === 'Textline') ItemsTable.push( /*#__PURE__*/React.createElement("div", {
           className: "ItemView",
           key: index
