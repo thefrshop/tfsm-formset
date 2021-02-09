@@ -12,6 +12,10 @@ import ViewList from './ViewList';
 
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 
+import * as UploadImage from './module/UploadImage';
+
+import { InitItemsSet } from './asset/InitItemsSet';
+
 class CreatePage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -54,51 +58,17 @@ class CreatePage extends React.Component {
 		var InitData = {};
 		if (ModifyMode) {
 			Struct.forEach((StructItems) => {
-				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
+				InitData = Object.assign(InitData, InitItemsSet(StructItems.Items));
 			});
 			InitData = Object.assign(InitData, Data);
 
 			//console.log(InitData);
 		} else {
 			Struct.forEach((StructItems) => {
-				InitData = Object.assign(InitData, this.InitItemsSet(StructItems.Items));
+				InitData = Object.assign(InitData, InitItemsSet(StructItems.Items));
 			});
 		}
 
-		return InitData;
-	};
-
-	// 타입별 아이템 초기화
-	InitItemsSet = (Struct) => {
-		var InitData = {};
-		Struct.forEach((item) => {
-			if (item.format === 'Text') {
-				InitData[item.id] = '';
-			} else if (item.format === 'UploadImage') {
-				InitData[item.id] = {
-					UploadInfo: [],
-					FileList: []
-				};
-			} else if (item.format === 'Hierarchy') {
-				InitData[item.id] = [];
-			} else if (item.format === 'ListSelect') {
-				InitData[item.id] = '';
-			} else if (item.format === 'UploadHtml') {
-				InitData[item.id] = {
-					UploadInfo: [],
-					FileList: []
-				};
-			} else if (item.format === 'Price') {
-				InitData[item.id] = '';
-			} else if (item.format === 'Tab') {
-				var TabData = this.InitItemsSet(item.Items);
-				InitData = Object.assign(InitData, TabData);
-			} else if (item.format === 'Textline') {
-				InitData[item.id] = '';
-			} else if (item.format === 'Select') {
-				InitData[item.id] = item.SelectText[0];
-			}
-		});
 		return InitData;
 	};
 
@@ -363,7 +333,7 @@ class CreatePage extends React.Component {
 									label={`${values[item.id].UploadInfo.length}개`}
 									data-browse="+"
 									onChange={(e) => {
-										this.ImageFileChange(e, item, values);
+										this.ImageFileChange(e, item.id);
 									}}
 									multiple
 									custom
@@ -396,7 +366,7 @@ class CreatePage extends React.Component {
 									label={`${values[item.id].UploadInfo.length}개`}
 									data-browse="+"
 									onChange={(e) => {
-										this.ImageFileChange(e, item, values);
+										this.ImageFileChange(e, item.id);
 									}}
 									multiple
 									custom
@@ -711,7 +681,9 @@ class CreatePage extends React.Component {
 	// 업로드 이미지폼
 	GetImage = (values, item) => {
 		let images = [];
-		values[item.id].UploadInfo.forEach((value, index) => {
+		var UploadInfo = values[item.id].UploadInfo;
+
+		UploadInfo.forEach((value, index) => {
 			images.push(
 				<div className="Imageform" key={index}>
 					<Image className="ImageformImage" variant="top" src={value.url} />
@@ -727,7 +699,6 @@ class CreatePage extends React.Component {
 				</div>
 			);
 		});
-
 		return images;
 	};
 
@@ -767,7 +738,7 @@ class CreatePage extends React.Component {
 	};
 
 	//이미지 체인지
-	ImageFileChange = (e, item, value) => {
+	ImageFileChange = (e, id) => {
 		if (e.target.files) {
 			[].forEach.call(e.target.files, (file) => {
 				let reader = new FileReader();
@@ -775,7 +746,7 @@ class CreatePage extends React.Component {
 				reader.onloadend = (e) => {
 					this.setState({
 						InitData: update(this.state.InitData, {
-							[item.id]: {
+							[id]: {
 								UploadInfo: {
 									$push: [ { name: file.name, url: e.target.result, value: e.target.files } ]
 								},

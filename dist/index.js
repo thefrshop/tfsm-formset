@@ -6501,6 +6501,168 @@ var ViewList = /*#__PURE__*/function (_React$Component) {
   return ViewList;
 }(React.Component);
 
+var InitData = function InitData() {
+  return {
+    UploadInfo: [],
+    FileList: []
+  };
+};
+
+var M_UploadImage = {
+  __proto__: null,
+  InitData: InitData
+};
+
+var InitData$1 = function InitData() {
+  return '';
+};
+
+var M_Option = {
+  __proto__: null,
+  InitData: InitData$1
+};
+
+var InitData$2 = function InitData() {
+  return '';
+};
+
+var M_Text = {
+  __proto__: null,
+  InitData: InitData$2
+};
+
+var InitData$3 = function InitData() {
+  return '';
+};
+
+var M_Textline = {
+  __proto__: null,
+  InitData: InitData$3
+};
+
+var InitData$4 = function InitData() {
+  return '';
+};
+
+var M_Price = {
+  __proto__: null,
+  InitData: InitData$4
+};
+
+var InitData$5 = function InitData(item) {
+  return item.SelectText[0];
+};
+
+var M_Select = {
+  __proto__: null,
+  InitData: InitData$5
+};
+
+var InitData$6 = function InitData() {
+  return [];
+};
+
+var M_Hierarchy = {
+  __proto__: null,
+  InitData: InitData$6
+};
+
+var InitData$7 = function InitData() {
+  return '';
+};
+
+var M_ListSelect = {
+  __proto__: null,
+  InitData: InitData$7
+};
+
+
+
+var M_Imageset = {
+  __proto__: null
+};
+
+var InitData$8 = function InitData(item) {
+  var TabData = InitItemsSet(item.Items);
+  Object.assign(InitData, TabData);
+  return TabData;
+};
+
+var M_Tab = {
+  __proto__: null,
+  InitData: InitData$8
+};
+
+var FormatSet = [{
+  name: 'CodeGen',
+  module: M_Option
+}, {
+  name: 'Text',
+  module: M_Text
+}, {
+  name: 'Date',
+  module: M_Option
+}, {
+  name: 'Textline',
+  module: M_Textline
+}, {
+  name: 'Price',
+  module: M_Price
+}, {
+  name: 'Select',
+  module: M_Select
+}, {
+  name: 'Hierarchy',
+  module: M_Hierarchy
+}, {
+  name: 'ListSelect',
+  module: M_ListSelect
+}, {
+  name: 'ImageSelect',
+  module: M_Option
+}, {
+  name: 'UploadImage',
+  module: M_UploadImage
+}, {
+  name: 'Imageset',
+  module: M_Imageset
+}, {
+  name: 'UploadHtml',
+  module: M_Option
+}, {
+  name: 'Tab',
+  module: M_Tab
+}, {
+  name: 'Child',
+  module: M_Option
+}, {
+  name: 'TimerSet',
+  module: M_Option
+}, {
+  name: 'Switch',
+  module: M_Option
+}, {
+  name: 'Option',
+  module: M_Option
+}];
+var GetModule = function GetModule(format) {
+  return FormatSet.find(function (m) {
+    return m.name === format;
+  }).module;
+};
+var InitData$9 = function InitData(item) {
+  return GetModule(item.format).InitData(item);
+};
+
+var InitItemsSet = function InitItemsSet(Struct) {
+  var InitData = {};
+  Struct.forEach(function (item) {
+    InitData[item.id] = InitData$9(item);
+    console.log(item.id, item.format, InitData[item.id]);
+  });
+  return InitData;
+};
+
 var CreatePage = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(CreatePage, _React$Component);
 
@@ -6526,49 +6688,15 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
       if (ModifyMode) {
         Struct.forEach(function (StructItems) {
-          InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
+          InitData = Object.assign(InitData, InitItemsSet(StructItems.Items));
         });
         InitData = Object.assign(InitData, Data);
       } else {
         Struct.forEach(function (StructItems) {
-          InitData = Object.assign(InitData, _this.InitItemsSet(StructItems.Items));
+          InitData = Object.assign(InitData, InitItemsSet(StructItems.Items));
         });
       }
 
-      return InitData;
-    };
-
-    _this.InitItemsSet = function (Struct) {
-      var InitData = {};
-      Struct.forEach(function (item) {
-        if (item.format === 'Text') {
-          InitData[item.id] = '';
-        } else if (item.format === 'UploadImage') {
-          InitData[item.id] = {
-            UploadInfo: [],
-            FileList: []
-          };
-        } else if (item.format === 'Hierarchy') {
-          InitData[item.id] = [];
-        } else if (item.format === 'ListSelect') {
-          InitData[item.id] = '';
-        } else if (item.format === 'UploadHtml') {
-          InitData[item.id] = {
-            UploadInfo: [],
-            FileList: []
-          };
-        } else if (item.format === 'Price') {
-          InitData[item.id] = '';
-        } else if (item.format === 'Tab') {
-          var TabData = _this.InitItemsSet(item.Items);
-
-          InitData = Object.assign(InitData, TabData);
-        } else if (item.format === 'Textline') {
-          InitData[item.id] = '';
-        } else if (item.format === 'Select') {
-          InitData[item.id] = item.SelectText[0];
-        }
-      });
       return InitData;
     };
 
@@ -6820,7 +6948,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             label: values[item.id].UploadInfo.length + "\uAC1C",
             "data-browse": "+",
             onChange: function onChange(e) {
-              _this.ImageFileChange(e, item, values);
+              _this.ImageFileChange(e, item.id);
             },
             multiple: true,
             custom: true
@@ -6856,7 +6984,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             label: values[item.id].UploadInfo.length + "\uAC1C",
             "data-browse": "+",
             onChange: function onChange(e) {
-              _this.ImageFileChange(e, item, values);
+              _this.ImageFileChange(e, item.id);
             },
             multiple: true,
             custom: true
@@ -7207,7 +7335,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     _this.GetImage = function (values, item) {
       var images = [];
-      values[item.id].UploadInfo.forEach(function (value, index) {
+      var UploadInfo = values[item.id].UploadInfo;
+      UploadInfo.forEach(function (value, index) {
         images.push( /*#__PURE__*/React.createElement("div", {
           className: "Imageform",
           key: index
@@ -7260,7 +7389,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return images;
     };
 
-    _this.ImageFileChange = function (e, item, value) {
+    _this.ImageFileChange = function (e, id) {
       if (e.target.files) {
         [].forEach.call(e.target.files, function (file) {
           var reader = new FileReader();
@@ -7270,7 +7399,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             var _update11;
 
             _this.setState({
-              InitData: update(_this.state.InitData, (_update11 = {}, _update11[item.id] = {
+              InitData: update(_this.state.InitData, (_update11 = {}, _update11[id] = {
                 UploadInfo: {
                   $push: [{
                     name: file.name,
