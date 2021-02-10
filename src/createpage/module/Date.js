@@ -13,10 +13,10 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 			<div className="ItemTitle">{item.name}</div>
 			<div className="ItemContent">
 				<Form.Control
-					value={values[item.id]}
+					value={values[item.id] || ''}
 					className="TextInput"
 					required
-					type="number"
+					type="date"
 					name={item.id}
 					onChange={handleChange}
 				/>

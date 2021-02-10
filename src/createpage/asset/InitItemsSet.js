@@ -4,8 +4,9 @@ import * as FormFormat from '../asset/FormFormat';
 export const InitItemsSet = (Struct) => {
 	var InitData = {};
 	Struct.forEach((item) => {
-		InitData[item.id] = FormFormat.InitData(item);
-		console.log(item.id, item.format, InitData[item.id]);
+		if (item.format === 'Tab') Object.assign(InitData, FormFormat.InitData(item));
+		else InitData[item.id] = FormFormat.InitData(item);
+		//console.log(item.id, item.format, InitData[item.id]);
 	});
 	return InitData;
 };

@@ -116,6 +116,11 @@ const ProductDataStruct = {
 					id: 'ChildTest',
 					key: 'Child1',
 					format: 'Child'
+				},
+				{
+					id: 'ChildTest',
+					key: 'Child1',
+					format: 'Switch'
 				}
 			]
 		},
