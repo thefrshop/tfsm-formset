@@ -6,6 +6,7 @@ import './App.css';
 import { Tab, Tabs } from 'react-bootstrap';
 import * as ex from './exampleList';
 import ReactJson from 'react-json-view';
+import Highlight from 'react-highlight';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -28,6 +29,22 @@ export default class App extends React.Component {
 	Test = (name, struct, InitData, child, HierarchySample, ListData) => {
 		return (
 			<Tab eventKey={name} title={name}>
+				<h5>Code</h5>
+				<Highlight className="consoleView" language="javascript">
+					{`
+<CreatePage 
+	ModifyMode={false} 
+	DataStruct={struct}
+	onSubmit={this.onSubmitDefault}
+	hierarchyData={HierarchySample}
+	ListData={ListData}>
+		<ChildComponent/>
+		<ChildComponent/>
+		<ChildComponent/>
+</CreatePage>
+					`}
+				</Highlight>
+
 				<h5>Struct</h5>
 				<div className="consoleView">
 					<ReactJson src={struct.Struct} theme="ocean" name={'Struct'} />
