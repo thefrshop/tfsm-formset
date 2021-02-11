@@ -1,30 +1,33 @@
 import React from 'react';
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
+import * as _ from 'lodash';
 
 //초기화
 export const InitData = () => {
-	return '';
+	return [];
 };
 
 //뷰
-export const ItemsView = (M, index, item, values, handleChange, ModifyMode, ViewCallback) => {
+export const ItemsView = (M, index, item, values, handleChange, ModifyMode, UpdateInitData) => {
+	//console.log('ListImage', values);
+
 	return (
 		<div className="ItemViewRow" key={index}>
 			<div className="ItemHeader">
 				<div className="ItemTitle">{item.name}</div>
 			</div>
 			<div className="ItemBody">
-				<div className="ImageformBox">{ListImage(values, item, ViewCallback)}</div>
+				<div className="ImageformBox">{ListImage(values, item, UpdateInitData)}</div>
 			</div>
 		</div>
 	);
 };
 
 // 이미지 리스트폼
-ListImage = (values, item, ViewCallback) => {
+ListImage = (values, item, UpdateInitData) => {
 	//console.log('ListImage', item.id);
 
-	//console.log('ListImage', values[item.id]);
+	console.log('ListImage', values);
 
 	if (values[item.id] === undefined) values[item.id] = [];
 	let images = [];
@@ -36,7 +39,12 @@ ListImage = (values, item, ViewCallback) => {
 				<Button
 					className="ImageformXBTN"
 					onClick={() => {
-						ViewCallback(item.id, [ index, 1 ], 'splice');
+						var data = _.concat(values[item.id]);
+						data.splice(index, 1);
+
+						UpdateInitData(item.id, data);
+
+						//UpdateInitData(item.id, [ index, 1 ], 'splice');
 					}}
 				>
 					x

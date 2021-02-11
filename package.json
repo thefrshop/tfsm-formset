@@ -60,6 +60,7 @@
   "keywords": [],
   "dependencies": {
     "bootstrap-switch-button-react": "^1.1.0",
+    "lodash": "^4.17.20",
     "moment-timezone": "^0.5.31",
     "react-addons-update": "^15.6.2",
     "react-bootstrap": "^1.4.0",

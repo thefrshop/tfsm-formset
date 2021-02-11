@@ -2,6 +2,7 @@ import React from 'react';
 //import * as ImageFile from './asset/ImageFile';
 import update from 'react-addons-update';
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
+import * as _ from 'lodash';
 
 //초기화
 export const InitData = () => {
@@ -51,8 +52,8 @@ const GetImage = (values, item, UpdateInitData) => {
 				<Button
 					className="ImageformXBTN"
 					onClick={() => {
-						var Up = values[item.id].UploadInfo;
-						var Fi = values[item.id].FileList;
+						var Up = _.concat(values[item.id].UploadInfo);
+						var Fi = _.concat(values[item.id].FileList);
 						Up.splice(index, 1);
 						Fi.splice(index, 1);
 						var data = {

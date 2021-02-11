@@ -1,6 +1,5 @@
 import React from 'react';
 import update from 'react-addons-update';
-import DatePicker from 'react-datepicker';
 import './CreatePage.css';
 import 'react-datepicker/dist/react-datepicker.css';
 

@@ -2,3 +2,10 @@
 	padding: 30px 50px;
 	background: #f4f8fb;
 }
+
+.consoleView {
+	padding: 10px;
+	max-width: 1000px;
+	border: 1px solid #eee;
+	background: rgb(43, 48, 59);
+}

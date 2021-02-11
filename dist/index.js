@@ -2,12 +2,13 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var update$1 = _interopDefault(require('react-addons-update'));
-require('react-datepicker');
 require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var moment$1 = _interopDefault(require('moment-timezone'));
 var go = require('react-icons/go');
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
+var _ = require('lodash');
+var DatePicker = _interopDefault(require('react-datepicker'));
 var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 
 function _extends() {
@@ -6946,8 +6947,10 @@ var GetImage = function GetImage(values, item, UpdateInitData) {
     }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
       className: "ImageformXBTN",
       onClick: function onClick() {
-        var Up = values[item.id].UploadInfo;
-        var Fi = values[item.id].FileList;
+        var Up = _.concat(values[item.id].UploadInfo);
+
+        var Fi = _.concat(values[item.id].FileList);
+
         Up.splice(index, 1);
         Fi.splice(index, 1);
         var data = {
@@ -6993,9 +6996,9 @@ var M_UploadImage = {
 };
 
 var InitData$a = function InitData() {
-  return '';
+  return [];
 };
-var ItemsView$a = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
+var ItemsView$a = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   return /*#__PURE__*/React.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -7007,10 +7010,11 @@ var ItemsView$a = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemBody"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ImageformBox"
-  }, ListImage(values, item, ViewCallback))));
+  }, ListImage(values, item, UpdateInitData))));
 };
 
-ListImage = function ListImage(values, item, ViewCallback) {
+ListImage = function ListImage(values, item, UpdateInitData) {
+  console.log('ListImage', values);
   if (values[item.id] === undefined) values[item.id] = [];
   var images = [];
   values[item.id].forEach(function (value, index) {
@@ -7026,7 +7030,10 @@ ListImage = function ListImage(values, item, ViewCallback) {
     }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
       className: "ImageformXBTN",
       onClick: function onClick() {
-        ViewCallback(item.id, [index, 1], 'splice');
+        var data = _.concat(values[item.id]);
+
+        data.splice(index, 1);
+        UpdateInitData(item.id, data);
       }
     }, "x")));
   });
@@ -7146,7 +7153,7 @@ var M_Child = {
 var InitData$e = function InitData() {
   return '';
 };
-var ItemsView$e = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
+var ItemsView$e = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   return /*#__PURE__*/React.createElement("div", {
     className: "ItemViewRow",
     key: index,
@@ -7164,13 +7171,7 @@ var ItemsView$e = function ItemsView(M, index, item, values, handleChange, Modif
     selected: values[item.id],
     dateFormat: "yyyy-MM-dd HH:mm:ss",
     onChange: function onChange(date) {
-      var _update;
-
-      return M.setState({
-        InitData: update(M.state.InitData, (_update = {}, _update[item.id] = {
-          $set: date
-        }, _update))
-      });
+      return UpdateInitData(item.id, date);
     },
     showTimeSelect: true
   }))));
@@ -7232,7 +7233,7 @@ var ItemsView$g = function ItemsView(M, index, item, values, handleChange, Modif
     name: item.id,
     placeholder: "\uC27C\uD45C(,)\uB85C \uAD6C\uBD84",
     onChange: handleChange
-  }), /*#__PURE__*/React.createElement(Button, {
+  }), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
     style: {
       top: 0,
       right: 0,

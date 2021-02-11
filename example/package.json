@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
+    "react-json-view": "^1.21.1",
     "react-scripts": "link:../node_modules/react-scripts",
     "tfsm-formset": "link:.."
   },

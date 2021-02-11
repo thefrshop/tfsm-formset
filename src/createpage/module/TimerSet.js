@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 
 //초기화
 export const InitData = () => {
@@ -7,7 +8,7 @@ export const InitData = () => {
 };
 
 //뷰
-export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
+export const ItemsView = (M, index, item, values, handleChange, ModifyMode, UpdateInitData) => {
 	return (
 		<div className="ItemViewRow" key={index} style={{ marginBottom: 20 }}>
 			<div className="ItemHeader">
@@ -17,12 +18,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 						name={item.id}
 						selected={values[item.id]}
 						dateFormat="yyyy-MM-dd HH:mm:ss"
-						onChange={(date) =>
-							M.setState({
-								InitData: update(M.state.InitData, {
-									[item.id]: { $set: date }
-								})
-							})}
+						onChange={(date) => UpdateInitData(item.id, date)}
 						showTimeSelect
 					/>
 				</div>
