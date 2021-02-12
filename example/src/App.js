@@ -29,22 +29,6 @@ export default class App extends React.Component {
 	Test = (name, struct, InitData, child, HierarchySample, ListData) => {
 		return (
 			<Tab eventKey={name} title={name}>
-				<h5>Code</h5>
-				<Highlight className="consoleView" language="javascript">
-					{`
-<CreatePage 
-	ModifyMode={false} 
-	DataStruct={struct}
-	onSubmit={this.onSubmitDefault}
-	hierarchyData={HierarchySample}
-	ListData={ListData}>
-		<ChildComponent/>
-		<ChildComponent/>
-		<ChildComponent/>
-</CreatePage>
-					`}
-				</Highlight>
-
 				<h5>Struct</h5>
 				<div className="consoleView">
 					<ReactJson src={struct.Struct} theme="ocean" name={'Struct'} />
@@ -101,7 +85,7 @@ export default class App extends React.Component {
 						<Tabs>
 							{this.Test('CodeGen', ex.CodeGen, ex.CodeGenInit)}
 							{this.Test('Text', ex.Text, ex.TextInit)}
-							{this.Test('Price(add원)', ex.Price, ex.PriceInit)}
+							{this.Test('Price', ex.Price, ex.PriceInit)}
 							{this.Test('Hierarchy', ex.Hierarchy, ex.HierarchyInit, null, ex.HierarchySample)}
 							{this.Test('ListSelect-오류', ex.ListSelect, ex.ListSelectInit, null, ex.ListData)}
 							{this.Test('Child', ex.Child, null, [
@@ -121,7 +105,23 @@ export default class App extends React.Component {
 							{this.Test('TimerSet-오류', ex.TimerSet, ex.TimerSetInit)}
 						</Tabs>
 					</Tab>
-					<Tab eventKey="DOC" title="DOC" />
+					<Tab eventKey="DOC" title="DOC">
+						<h5>Code</h5>
+						<Highlight className="consoleView" language="javascript">
+							{`
+<CreatePage 
+	ModifyMode={false} 
+	DataStruct={struct}
+	onSubmit={this.onSubmitDefault}
+	hierarchyData={HierarchySample}
+	ListData={ListData}>
+		<ChildComponent/>
+		<ChildComponent/>
+		<ChildComponent/>
+</CreatePage>
+					`}
+						</Highlight>
+					</Tab>
 				</Tabs>
 			</div>
 		);

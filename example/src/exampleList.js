@@ -48,7 +48,9 @@ export const Price = {
 				{
 					id: 'Price',
 					name: '상품가격',
-					format: 'Price'
+					format: 'Price',
+					suffix: '원',
+					Separator: true
 				}
 			]
 		}

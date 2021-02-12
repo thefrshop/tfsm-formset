@@ -6,6 +6,7 @@ require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var moment$1 = _interopDefault(require('moment-timezone'));
 var go = require('react-icons/go');
+var NumberFormat = _interopDefault(require('react-number-format'));
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 var _ = require('lodash');
 var DatePicker = _interopDefault(require('react-datepicker'));
@@ -5986,6 +5987,16 @@ var M_Textline = {
 var InitData$4 = function InitData() {
   return '';
 };
+
+var _onValueChange = function onValueChange(id, value, handleChange) {
+  handleChange({
+    target: {
+      name: id,
+      value: value.value
+    }
+  });
+};
+
 var ItemsView$4 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   return /*#__PURE__*/React.createElement("div", {
     className: "ItemView",
@@ -5994,13 +6005,15 @@ var ItemsView$4 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
-    value: values[item.id],
-    className: "TextInput",
+  }, /*#__PURE__*/React.createElement(NumberFormat, {
     required: true,
-    type: "number",
-    name: item.id,
-    onChange: handleChange
+    "class": "TextInput form-control",
+    value: values[item.id],
+    thousandSeparator: item.Separator,
+    suffix: item.suffix,
+    onValueChange: function onValueChange(value) {
+      return _onValueChange(item.id, value, handleChange);
+    }
   })));
 };
 
