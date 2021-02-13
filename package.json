@@ -1,6 +1,6 @@
 {
   "name": "tfsm-formset",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "tfsm-formset",
   "author": "thefreshop",
   "license": "MIT",
@@ -50,7 +50,6 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1"
   },
-  
   "files": [
     "dist"
   ],
