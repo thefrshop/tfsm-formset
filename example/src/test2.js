@@ -185,7 +185,7 @@ const ProductDataStruct = {
 						{
 							id: 'DetailHtml',
 							name: 'HTML',
-							format: 'UploadHtml'
+							format: 'HtmlEditer'
 						}
 					]
 				},

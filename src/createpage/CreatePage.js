@@ -76,40 +76,11 @@ class CreatePage extends React.Component {
 	};
 
 	ItemsView = (Struct, values, handleChange) => {
-		//console.log(Struct);
+		//console.log(this.props);
 
 		let ItemsTable = [];
 		Struct.forEach((item, index) => {
-			if (item.format === 'Tab') {
-				var FormViewTable = this.ItemsView(item.Items, values, handleChange);
-				let TabTable = [];
-				FormViewTable.forEach((TabItem, Tabindex) => {
-					TabTable.push(
-						<Tab
-							key={Tabindex}
-							className="ImageformBox"
-							eventKey={item.Items[TabItem.key].id}
-							title={item.Items[TabItem.key].name}
-						>
-							{TabItem}
-						</Tab>
-					);
-				});
-
-				ItemsTable.push(
-					<div className="ItemViewRow" key={index}>
-						<div className="ItemHeader">
-							<div className="ItemTitle">{item.name}</div>
-							<div className="ItemContent" />
-						</div>
-						<div className="ItemBody">
-							<Tabs defaultActiveKey={item.Items[0].id} id="noanim-tab-example">
-								{TabTable}
-							</Tabs>
-						</div>
-					</div>
-				);
-			} else if (item.format === 'Child') {
+			if (item.format === 'Child') {
 				this.props.children.forEach((element) => {
 					//console.log(element.key);
 

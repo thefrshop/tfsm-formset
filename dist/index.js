@@ -1,14 +1,21 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var React = _interopDefault(require('react'));
+var React = require('react');
+var React__default = _interopDefault(React);
 var update$1 = _interopDefault(require('react-addons-update'));
 require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var moment$1 = _interopDefault(require('moment-timezone'));
 var go = require('react-icons/go');
+var TextareaAutosize = _interopDefault(require('react-textarea-autosize'));
 var NumberFormat = _interopDefault(require('react-number-format'));
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 var _ = require('lodash');
+var reactDraftWysiwyg = require('react-draft-wysiwyg');
+var draftJs = require('draft-js');
+require('react-draft-wysiwyg/dist/react-draft-wysiwyg.css');
+var draftToHtml = _interopDefault(require('draftjs-to-html'));
+var htmlToDraft = _interopDefault(require('html-to-draftjs'));
 var DatePicker = _interopDefault(require('react-datepicker'));
 var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 
@@ -5859,35 +5866,35 @@ var ProductCodeGen = /*#__PURE__*/function (_React$Component) {
   var _proto = ProductCodeGen.prototype;
 
   _proto.render = function render() {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "CodeGen"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "CodeGenText"
-    }, this.state.Code), this.props.ModifyMode ? null : /*#__PURE__*/React.createElement("button", {
+    }, this.state.Code), this.props.ModifyMode ? null : /*#__PURE__*/React__default.createElement("button", {
       size: "sm",
       className: "btn-SelectEnd",
       onClick: this.RefreshNum
-    }, /*#__PURE__*/React.createElement(go.GoSync, {
+    }, /*#__PURE__*/React__default.createElement(go.GoSync, {
       color: "#1f8b3b",
       size: "1.5em"
     })));
   };
 
   return ProductCodeGen;
-}(React.Component);
+}(React__default.Component);
 
 var InitData = function InitData() {
   return '';
 };
 var ItemsView = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(ProductCodeGen, {
+  }, /*#__PURE__*/React__default.createElement(ProductCodeGen, {
     key: index,
     ModifyMode: ModifyMode,
     InitialValue: values[item.id],
@@ -5907,17 +5914,17 @@ var InitData$1 = function InitData() {
   return '';
 };
 var ItemsView$1 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
     value: values[item.id],
     className: "TextInput",
-    required: true,
+    required: item.required,
     type: "text",
     name: item.id,
     onChange: handleChange
@@ -5934,17 +5941,17 @@ var InitData$2 = function InitData() {
   return '';
 };
 var ItemsView$2 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
     value: values[item.id] || '',
     className: "TextInput",
-    required: true,
+    required: item.required,
     type: "date",
     name: item.id,
     onChange: handleChange
@@ -5961,20 +5968,21 @@ var InitData$3 = function InitData() {
   return '';
 };
 var ItemsView$3 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(TextareaAutosize, {
     value: values[item.id],
     className: "TextInput",
-    required: true,
-    type: "text",
+    required: item.required,
     name: item.id,
-    onChange: handleChange
+    onChange: handleChange,
+    minRows: 5,
+    maxRows: 10
   })));
 };
 
@@ -5998,16 +6006,16 @@ var _onValueChange = function onValueChange(id, value, handleChange) {
 };
 
 var ItemsView$4 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(NumberFormat, {
-    required: true,
-    "class": "TextInput form-control",
+  }, /*#__PURE__*/React__default.createElement(NumberFormat, {
+    required: item.required,
+    className: "TextInput form-control",
     value: values[item.id],
     thousandSeparator: item.Separator,
     suffix: item.suffix,
@@ -6027,17 +6035,17 @@ var InitData$5 = function InitData(item) {
   return item.SelectText[0];
 };
 var ItemsView$5 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemView",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
     value: values[item.id],
     className: "TextSelect",
-    required: true,
+    required: item.required,
     custom: true,
     as: "select",
     name: item.id,
@@ -6048,7 +6056,7 @@ var ItemsView$5 = function ItemsView(M, index, item, values, handleChange, Modif
 GetOption = function GetOption(SelectText) {
   var opt = [];
   SelectText.forEach(function (SelectText, index) {
-    opt.push( /*#__PURE__*/React.createElement("option", {
+    opt.push( /*#__PURE__*/React__default.createElement("option", {
       key: index
     }, SelectText));
   });
@@ -6102,12 +6110,12 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       var table = [];
 
       _this.props.name.forEach(function (item, catindex) {
-        table.push( /*#__PURE__*/React.createElement(reactBootstrap.Carousel.Item, {
+        table.push( /*#__PURE__*/React__default.createElement(reactBootstrap.Carousel.Item, {
           className: "TableView",
           key: catindex
-        }, /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React__default.createElement("div", {
           className: "TableTitle"
-        }, item), /*#__PURE__*/React.createElement(BootstrapTable, {
+        }, item), /*#__PURE__*/React__default.createElement(BootstrapTable, {
           ref: _this.Table[catindex],
           data: CategoryView[catindex],
           keyField: "Code",
@@ -6117,7 +6125,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
         })));
       });
 
-      return /*#__PURE__*/React.createElement(reactBootstrap.Carousel, {
+      return /*#__PURE__*/React__default.createElement(reactBootstrap.Carousel, {
         activeIndex: _this.state.index,
         direction: _this.state.direction,
         onSelect: _this.handleSelect,
@@ -6214,28 +6222,28 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       if (_this.state.CategorySelect !== undefined) {
         _this.state.CategorySelect.forEach(function (item, catindex) {
           if (catindex === _this.state.index) {
-            table.push( /*#__PURE__*/React.createElement("div", {
+            table.push( /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedContents",
               key: catindex
-            }, /*#__PURE__*/React.createElement("div", {
+            }, /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedTitleCurrent"
-            }, _this.props.name[catindex]), /*#__PURE__*/React.createElement("div", {
+            }, _this.props.name[catindex]), /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedBodyCurrent"
             }, item[_this.props.viewField])));
           } else {
-            table.push( /*#__PURE__*/React.createElement("div", {
+            table.push( /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedContents",
               key: catindex
-            }, /*#__PURE__*/React.createElement("div", {
+            }, /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedTitle"
-            }, _this.props.name[catindex]), /*#__PURE__*/React.createElement("div", {
+            }, _this.props.name[catindex]), /*#__PURE__*/React__default.createElement("div", {
               className: "SelectedBody"
             }, item[_this.props.viewField])));
           }
         });
       }
 
-      return /*#__PURE__*/React.createElement("div", {
+      return /*#__PURE__*/React__default.createElement("div", {
         className: "SelectedView"
       }, table);
     };
@@ -6256,7 +6264,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       next.push(false);
       done.push(false);
 
-      _this.Table.push(React.createRef());
+      _this.Table.push(React__default.createRef());
     }
 
     _this.state = {
@@ -6281,32 +6289,32 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this2 = this;
 
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "PopupCatSelect"
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal, {
       centered: true,
       show: this.props.ispopup,
       size: "md",
       onHide: this.onHide
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal.Header, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Header, {
       closeButton: true
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "PopHeader"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "Title"
-    }, this.props.title))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Body, {
+    }, this.props.title))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Body, {
       className: "PopBody"
-    }, this.ViewSelected(), this.ViewTable()), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, {
+    }, this.ViewSelected(), this.ViewTable()), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Footer, {
       className: "PopFooter"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "MoveView"
-    }, !this.state.prev[this.state.index] ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, !this.state.prev[this.state.index] ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "Move",
       className: "FooterButton",
       onClick: function onClick() {
         return _this2.onPrev();
       }
-    }, "\uC774\uC804")), /*#__PURE__*/React.createElement("div", null, !this.state.done[this.state.index] ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, "\uC774\uC804")), /*#__PURE__*/React__default.createElement("div", null, !this.state.done[this.state.index] ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
@@ -6322,7 +6330,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
             next.push(false);
             done.push(false);
 
-            _this2.Table.push(React.createRef());
+            _this2.Table.push(React__default.createRef());
           }
 
           _this2.setState({
@@ -6335,15 +6343,15 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
           });
         });
       }
-    }, "\uC644\uB8CC")), /*#__PURE__*/React.createElement("div", {
+    }, "\uC644\uB8CC")), /*#__PURE__*/React__default.createElement("div", {
       className: "MoveView"
-    }, !this.state.next[this.state.index] ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, !this.state.next[this.state.index] ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "Move",
       className: "FooterButton",
       onClick: function onClick() {
         return _this2.onNext();
       }
-    }, "\uB2E4\uC74C")), !this.state.isloading ? null : /*#__PURE__*/React.createElement(reactBootstrap.Spinner, {
+    }, "\uB2E4\uC74C")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
       as: "span",
       animation: "grow",
       size: "sm",
@@ -6353,7 +6361,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
   };
 
   return PopupCatSelect;
-}(React.Component);
+}(React__default.Component);
 
 var CatSelect = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(CatSelect, _React$Component);
@@ -6368,12 +6376,12 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
 
       if (_this.state.CategorySelect !== []) {
         _this.state.CategorySelect.forEach(function (item, catindex) {
-          if (item !== null) table.push( /*#__PURE__*/React.createElement("div", {
+          if (item !== null) table.push( /*#__PURE__*/React__default.createElement("div", {
             className: "ViewSelected",
             key: catindex
-          }, /*#__PURE__*/React.createElement("div", {
+          }, /*#__PURE__*/React__default.createElement("div", {
             className: "name"
-          }, _this.props.HierarchyNames[catindex], " : "), /*#__PURE__*/React.createElement("div", {
+          }, _this.props.HierarchyNames[catindex], " : "), /*#__PURE__*/React__default.createElement("div", {
             className: "data"
           }, item[_this.props.viewField])));
         });
@@ -6428,9 +6436,9 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this2 = this;
 
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "CatSelectView"
-    }, /*#__PURE__*/React.createElement(PopupCatSelect, {
+    }, /*#__PURE__*/React__default.createElement(PopupCatSelect, {
       CategorySelect: this.props.CategorySelect,
       title: this.props.title,
       name: this.props.HierarchyNames,
@@ -6445,16 +6453,16 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
           resolve();
         });
       }
-    }), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "SelectPre",
       onClick: this.openCatSelect
-    }, "\uC120\uD0DD"), /*#__PURE__*/React.createElement("div", {
+    }, "\uC120\uD0DD"), /*#__PURE__*/React__default.createElement("div", {
       className: "CatSelectContent"
     }, this.ViewSelected()));
   };
 
   return CatSelect;
-}(React.Component);
+}(React__default.Component);
 
 var _this = undefined;
 var InitData$6 = function InitData() {
@@ -6462,14 +6470,14 @@ var InitData$6 = function InitData() {
 };
 var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   if (item.Select === undefined) {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "ItemView",
       key: index
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ItemTitle"
-    }, item.name), /*#__PURE__*/React.createElement("div", {
+    }, item.name), /*#__PURE__*/React__default.createElement("div", {
       className: "ItemContent"
-    }, /*#__PURE__*/React.createElement(CatSelect, {
+    }, /*#__PURE__*/React__default.createElement(CatSelect, {
       InitialValue: values[item.id],
       name: item.id,
       title: item.name,
@@ -6480,16 +6488,16 @@ var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, Modif
       onChange: handleChange
     })));
   } else if (item.Select === 'Multi') {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "ItemViewRow",
       key: index
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ItemHeader"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ItemTitle"
-    }, item.name), /*#__PURE__*/React.createElement("div", {
+    }, item.name), /*#__PURE__*/React__default.createElement("div", {
       className: "ItemContent"
-    }, /*#__PURE__*/React.createElement(CatSelect, {
+    }, /*#__PURE__*/React__default.createElement(CatSelect, {
       name: item.id,
       title: item.name,
       HierarchyNames: item.HierarchyData.name,
@@ -6518,20 +6526,20 @@ var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, Modif
           }, _update))
         });
       }
-    }))), /*#__PURE__*/React.createElement("div", {
+    }))), /*#__PURE__*/React__default.createElement("div", {
       className: "ItemBody"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ViewListformBox"
     }, GetHierarchy(values, item))));
   } else {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "ItemView",
       key: index
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ItemTitle"
-    }, item.name), /*#__PURE__*/React.createElement("div", {
+    }, item.name), /*#__PURE__*/React__default.createElement("div", {
       className: "ItemContent"
-    }, /*#__PURE__*/React.createElement(CatSelect, {
+    }, /*#__PURE__*/React__default.createElement(CatSelect, {
       InitialValue: values[item.id],
       name: item.id,
       title: item.name,
@@ -6575,14 +6583,14 @@ var GetHierarchy = function GetHierarchy(values, item) {
   if (values[item.Selectid] !== undefined) {
     values[item.Selectid].forEach(function (Selvalue, Selindex) {
       console.log(Selvalue);
-      viewlist.push( /*#__PURE__*/React.createElement("div", {
+      viewlist.push( /*#__PURE__*/React__default.createElement("div", {
         className: "ViewList",
         key: Selindex
-      }, /*#__PURE__*/React.createElement("div", {
+      }, /*#__PURE__*/React__default.createElement("div", {
         className: "Viewitle"
-      }, Selindex + 1), /*#__PURE__*/React.createElement("div", {
+      }, Selindex + 1), /*#__PURE__*/React__default.createElement("div", {
         className: "ViewContent"
-      }, DataView(Selvalue)), /*#__PURE__*/React.createElement(Button, {
+      }, DataView(Selvalue)), /*#__PURE__*/React__default.createElement(Button, {
         style: {
           top: 0,
           right: 0,
@@ -6672,36 +6680,36 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this2 = this;
 
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "PopupCatSelect"
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal, {
       centered: true,
       show: this.props.ispopup,
       onHide: this.onHide
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Modal.Header, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Header, {
       closeButton: true
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "PopHeader"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "Title"
-    }, this.props.title))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Body, {
+    }, this.props.title))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Body, {
       className: "PopBody"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "TableView"
-    }, /*#__PURE__*/React.createElement(BootstrapTable, _extends({}, this.props, {
+    }, /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({}, this.props, {
       data: this.ListData(),
       selectRow: this.selectRowProp()
-    })))), /*#__PURE__*/React.createElement(reactBootstrap.Modal.Footer, {
+    })))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Footer, {
       className: "PopFooter"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "DoneView"
-    }, !this.state.done ? null : /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, !this.state.done ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
         return _this2.props.onOk(_this2.state.Selected);
       }
-    }, "\uC644\uB8CC")), !this.state.isloading ? null : /*#__PURE__*/React.createElement(reactBootstrap.Spinner, {
+    }, "\uC644\uB8CC")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
       as: "span",
       animation: "grow",
       size: "sm",
@@ -6711,7 +6719,7 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
   };
 
   return PopupListSelect;
-}(React.Component);
+}(React__default.Component);
 
 var ListSelected = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(ListSelected, _React$Component);
@@ -6729,11 +6737,11 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
           if (element.dataField === _this.props.viewField) name = element.text;
         });
 
-        return /*#__PURE__*/React.createElement("div", {
+        return /*#__PURE__*/React__default.createElement("div", {
           className: "ViewSelected"
-        }, /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React__default.createElement("div", {
           className: "name"
-        }, name, " : "), /*#__PURE__*/React.createElement("div", {
+        }, name, " : "), /*#__PURE__*/React__default.createElement("div", {
           className: "data"
         }, _this.state.Selected[_this.props.viewField]));
       }
@@ -6785,22 +6793,22 @@ var ListSelected = /*#__PURE__*/function (_React$Component) {
   var _proto = ListSelected.prototype;
 
   _proto.render = function render() {
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "CatSelectView"
-    }, /*#__PURE__*/React.createElement(PopupListSelect, _extends({}, this.props, {
+    }, /*#__PURE__*/React__default.createElement(PopupListSelect, _extends({}, this.props, {
       ispopup: this.state.ShowPopup,
       onHide: this.hideCatSelect,
       onOk: this.onSelectOk
-    })), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "SelectPre",
       onClick: this.openSelect
-    }, "\uC120\uD0DD"), /*#__PURE__*/React.createElement("div", {
+    }, "\uC120\uD0DD"), /*#__PURE__*/React__default.createElement("div", {
       className: "CatSelectContent"
     }, this.ViewSelected()));
   };
 
   return ListSelected;
-}(React.Component);
+}(React__default.Component);
 
 var ViewList = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(ViewList, _React$Component);
@@ -6815,12 +6823,12 @@ var ViewList = /*#__PURE__*/function (_React$Component) {
 
       if (_this.props.selected !== '') {
         _this.props.columns.forEach(function (item, index) {
-          viewlist.push( /*#__PURE__*/React.createElement("div", {
+          viewlist.push( /*#__PURE__*/React__default.createElement("div", {
             className: "ViewList",
             key: index
-          }, /*#__PURE__*/React.createElement("div", {
+          }, /*#__PURE__*/React__default.createElement("div", {
             className: "Viewitle"
-          }, item.text, " "), /*#__PURE__*/React.createElement("div", {
+          }, item.text, " "), /*#__PURE__*/React__default.createElement("div", {
             className: "ViewContent"
           }, _this.props.selected[item.dataField])));
         });
@@ -6839,22 +6847,22 @@ var ViewList = /*#__PURE__*/function (_React$Component) {
   };
 
   return ViewList;
-}(React.Component);
+}(React__default.Component);
 
 var InitData$7 = function InitData() {
   return '';
 };
 var ItemsView$7 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(ListSelected, {
+  }, /*#__PURE__*/React__default.createElement(ListSelected, _extends({}, M.props, {
     InitialValue: values[item.id],
     name: item.id,
     title: item.name,
@@ -6865,11 +6873,11 @@ var ItemsView$7 = function ItemsView(M, index, item, values, handleChange, Modif
     keyField: item.keyField,
     orderField: item.orderField,
     viewField: item.viewField
-  }))), item.Viewhidden === undefined ? null : /*#__PURE__*/React.createElement("div", {
+  })))), item.Viewhidden ? null : /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ViewListformBox"
-  }, /*#__PURE__*/React.createElement(ViewList, {
+  }, /*#__PURE__*/React__default.createElement(ViewList, {
     InitialValue: values[item.id],
     name: item.id,
     title: item.name,
@@ -6891,18 +6899,18 @@ var InitData$8 = function InitData() {
   return '';
 };
 var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ImageformBox"
   }, M.ImageSelectList(values, item))));
 };
@@ -6915,59 +6923,162 @@ var M_ImageSelect = {
 
 var InitData$9 = function InitData() {
   return {
-    UploadInfo: [],
-    FileList: []
+    FileList: [],
+    UrlList: []
   };
 };
 var ItemsView$9 = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
-  return /*#__PURE__*/React.createElement("div", {
+  if (values[item.id].FileList === undefined) values[item.id].FileList = [];
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
-    label: values[item.id].UploadInfo.length + "\uAC1C",
-    "data-browse": "+",
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.File, {
+    label: values[item.id].FileList.length + "\uAC1C",
+    "data-browse": "\uD30C\uC77C \uCD94\uAC00",
     onChange: function onChange(e) {
       ImageFileChange(e, item.id, UpdateInitData, values);
     },
     multiple: true,
     custom: true
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }))), !ModifyMode ? /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemBody2"
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ImageformBox"
-  }, GetImage(values, item, UpdateInitData))));
+  }, /*#__PURE__*/React__default.createElement(GetUploagImage, {
+    values: values,
+    item: item,
+    UpdateInitData: UpdateInitData
+  }))) : /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemBody2"
+  }, /*#__PURE__*/React__default.createElement("br", null), /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      paddingBottom: '10px'
+    }
+  }, "\uAE30\uC874 \uC774\uBBF8\uC9C0"), /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformBox"
+  }, /*#__PURE__*/React__default.createElement(GetCurrentImage, {
+    values: values,
+    item: item,
+    UpdateInitData: UpdateInitData
+  })), /*#__PURE__*/React__default.createElement("br", null), /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      paddingBottom: '10px'
+    }
+  }, "\uC0C8 \uC774\uBBF8\uC9C0"), /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformBox"
+  }, /*#__PURE__*/React__default.createElement(GetUploagImage, {
+    values: values,
+    item: item,
+    UpdateInitData: UpdateInitData
+  }))));
 };
 
-var GetImage = function GetImage(values, item, UpdateInitData) {
+var GetUploagImage = function GetUploagImage(props) {
+  var values = props.values,
+      item = props.item,
+      UpdateInitData = props.UpdateInitData;
+
+  var _useState = React.useState(false),
+      isShown = _useState[0],
+      setIsShown = _useState[1];
+
   var images = [];
-  var UploadInfo = values[item.id].UploadInfo;
-  UploadInfo.forEach(function (value, index) {
-    images.push( /*#__PURE__*/React.createElement("div", {
+  var FileList = values[item.id].FileList;
+  FileList.forEach(function (value, index) {
+    images.push( /*#__PURE__*/React__default.createElement("div", {
       className: "Imageform",
-      key: index
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+      key: 'UP' + index
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       className: "ImageformImage",
       variant: "top",
-      src: value.url
-    }), /*#__PURE__*/React.createElement("div", {
+      src: value.url,
+      onMouseEnter: function onMouseEnter() {
+        return setIsShown('UP' + index);
+      },
+      onMouseLeave: function onMouseLeave() {
+        return setIsShown(false);
+      }
+    }), /*#__PURE__*/React__default.createElement("div", {
       className: "ImageformTitle"
-    }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, value.file.name), isShown === 'UP' + index && /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformPop"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      variant: "top",
+      src: value.url
+    }), /*#__PURE__*/React__default.createElement("div", null, value.file.name)), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       className: "ImageformXBTN",
       onClick: function onClick() {
-        var Up = _.concat(values[item.id].UploadInfo);
-
         var Fi = _.concat(values[item.id].FileList);
+
+        var Ur = _.concat(values[item.id].UrlList);
 
         Up.splice(index, 1);
         Fi.splice(index, 1);
         var data = {
-          UploadInfo: Up,
+          UrlList: Ur,
+          FileList: Fi
+        };
+        UpdateInitData(item.id, data);
+      }
+    }, "x")));
+  });
+  return images;
+};
+
+getFilename = function getFilename(url) {
+  var ext = url.split('/').pop();
+  if (ext === url) return '';
+  return ext;
+};
+
+var GetCurrentImage = function GetCurrentImage(props) {
+  var values = props.values,
+      item = props.item,
+      UpdateInitData = props.UpdateInitData;
+
+  var _useState2 = React.useState(false),
+      isShown = _useState2[0],
+      setIsShown = _useState2[1];
+
+  var images = [];
+  var UrlList = values[item.id].UrlList;
+  UrlList.forEach(function (value, index) {
+    images.push( /*#__PURE__*/React__default.createElement("div", {
+      className: "Imageform",
+      key: 'UR' + index
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      className: "ImageformImage",
+      variant: "top",
+      src: value,
+      onMouseEnter: function onMouseEnter() {
+        return setIsShown('UR' + index);
+      },
+      onMouseLeave: function onMouseLeave() {
+        return setIsShown(false);
+      }
+    }), /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformTitle"
+    }, getFilename(value)), isShown === 'UR' + index && /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformPop"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      variant: "top",
+      src: value
+    }), /*#__PURE__*/React__default.createElement("div", null, value)), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      className: "ImageformXBTN",
+      onClick: function onClick() {
+        var Fi = _.concat(values[item.id].FileList);
+
+        var Ur = _.concat(values[item.id].UrlList);
+
+        Ur.splice(index, 1);
+        var data = {
+          UrlList: Ur,
           FileList: Fi
         };
         UpdateInitData(item.id, data);
@@ -6985,15 +7096,11 @@ var ImageFileChange = function ImageFileChange(e, id, UpdateInitData, values) {
 
       reader.onloadend = function (e) {
         var data = update$1(values[id], {
-          UploadInfo: {
-            $push: [{
-              name: file.name,
-              url: e.target.result,
-              value: e.target.files
-            }]
-          },
           FileList: {
-            $push: [file]
+            $push: [{
+              file: file,
+              url: e.target.result
+            }]
           }
         });
         UpdateInitData(id, data);
@@ -7012,35 +7119,34 @@ var InitData$a = function InitData() {
   return [];
 };
 var ItemsView$a = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name)), /*#__PURE__*/React.createElement("div", {
+  }, item.name)), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ImageformBox"
   }, ListImage(values, item, UpdateInitData))));
 };
 
 ListImage = function ListImage(values, item, UpdateInitData) {
-  console.log('ListImage', values);
   if (values[item.id] === undefined) values[item.id] = [];
   var images = [];
   values[item.id].forEach(function (value, index) {
-    images.push( /*#__PURE__*/React.createElement("div", {
+    images.push( /*#__PURE__*/React__default.createElement("div", {
       className: "Imageform",
       key: index
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       className: "ImageformImage",
       variant: "top",
       src: value
-    }), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React__default.createElement("div", {
       className: "ImageformTitle"
-    }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, value.name), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       className: "ImageformXBTN",
       onClick: function onClick() {
         var data = _.concat(values[item.id]);
@@ -7060,81 +7166,134 @@ var M_Imageset = {
 };
 
 var InitData$b = function InitData() {
-  return {
-    UploadInfo: [],
-    FileList: []
-  };
+  return '';
 };
 var ItemsView$b = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
-    className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.File, {
-    label: values[item.id].UploadInfo.length + "\uAC1C",
-    "data-browse": "+",
-    onChange: function onChange(e) {},
-    multiple: true,
-    custom: true
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ImageformBox"
-  }, GetImage$1(values, item))));
+  }, item.name), /*#__PURE__*/React__default.createElement("br", null), /*#__PURE__*/React__default.createElement(UploadBoard, {
+    InitData: values[item.id],
+    onValueChange: function onValueChange(value) {
+      return handleChange({
+        target: {
+          name: item.id,
+          value: value
+        }
+      });
+    }
+  }));
 };
 
-var GetImage$1 = function GetImage(values, item) {
-  var images = [];
-  var UploadInfo = values[item.id].UploadInfo;
-  UploadInfo.forEach(function (value, index) {
-    images.push( /*#__PURE__*/React.createElement("div", {
-      className: "Imageform",
-      key: index
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
-      className: "ImageformImage",
-      variant: "top",
-      src: value.url
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "ImageformTitle"
-    }, value.name), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
-      className: "ImageformXBTN",
-      onClick: function onClick() {}
-    }, "x")));
-  });
-  return images;
-};
+var UploadBoard = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(UploadBoard, _React$Component);
 
-var M_UploadHtml = {
+  function UploadBoard(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.onEditorStateChange = function (editorState) {
+      _this.setState({
+        editorState: editorState
+      });
+
+      var value = draftToHtml(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
+
+      _this.props.onValueChange(value);
+    };
+
+    var contentBlock = htmlToDraft(_this.props.InitData);
+
+    if (contentBlock) {
+      var contentState = draftJs.ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      var editorState = draftJs.EditorState.createWithContent(contentState);
+      _this.state = {
+        editorState: editorState
+      };
+    }
+
+    return _this;
+  }
+
+  var _proto = UploadBoard.prototype;
+
+  _proto.render = function render() {
+    return /*#__PURE__*/React__default.createElement(reactDraftWysiwyg.Editor, {
+      defaultEditorState: this.state.editorState,
+      toolbarClassName: "editorToolbar",
+      wrapperClassName: "editorWrapper",
+      editorClassName: "editorBox",
+      onEditorStateChange: this.onEditorStateChange,
+      localization: {
+        locale: 'ko'
+      }
+    });
+  };
+
+  return UploadBoard;
+}(React__default.Component);
+
+var M_HtmlEditer = {
   __proto__: null,
   InitData: InitData$b,
   ItemsView: ItemsView$b
 };
 
 var InitData$c = function InitData(item) {
+  var _Object$assign;
+
+  if (item["default"] === undefined) item["default"] = item.Items[0].id;
   var TabData = InitItemsSet(item.Items);
+  Object.assign(TabData, (_Object$assign = {}, _Object$assign[item.id] = item["default"], _Object$assign));
   return TabData;
 };
-var ItemsView$c = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+var ItemsView$c = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+  var ItemsTable = [];
+  var FormViewTable = [];
+  item.Items.forEach(function (Tabitem, index) {
+    FormViewTable.push(ItemsView$h(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
+  });
+  var TabTable = [];
+  FormViewTable.forEach(function (TabItem, Tabindex) {
+    TabTable.push( /*#__PURE__*/React__default.createElement(reactBootstrap.Tab, {
+      key: Tabindex,
+      className: "ImageformBox",
+      eventKey: item.Items[TabItem.key].id,
+      title: item.Items[TabItem.key].name
+    }, TabItem));
+  });
+  if (item["default"] === undefined) item["default"] = item.Items[0].id;
+  ItemsTable.push( /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement(Tabs, {
-    defaultActiveKey: item.Items[0].id,
-    id: "noanim-tab-example"
-  }, TabTable)));
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Tabs, {
+    defaultActiveKey: item["default"],
+    id: "noanim-tab-example",
+    onSelect: function onSelect(value) {
+      return onValueChange(item.id, value, handleChange);
+    }
+  }, TabTable))));
+  return ItemsTable;
+};
+
+var onValueChange = function onValueChange(id, value, handleChange) {
+  handleChange({
+    target: {
+      name: id,
+      value: value
+    }
+  });
 };
 
 var M_Tab = {
@@ -7147,12 +7306,12 @@ var InitData$d = function InitData() {
   return '';
 };
 var ItemsView$d = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ViewListformBox"
   }, element)));
 };
@@ -7167,30 +7326,32 @@ var InitData$e = function InitData() {
   return '';
 };
 var ItemsView$e = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
-  return /*#__PURE__*/React.createElement("div", {
+  var selected;
+  if (values[item.id]) selected = new Date(values[item.id]);
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index,
     style: {
       marginBottom: 20
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(DatePicker, {
+  }, /*#__PURE__*/React__default.createElement(DatePicker, {
     name: item.id,
-    selected: values[item.id],
-    dateFormat: "yyyy-MM-dd HH:mm:ss",
+    selected: selected,
+    dateFormat: item.dateFormat,
     onChange: function onChange(date) {
       return UpdateInitData(item.id, date);
     },
-    showTimeSelect: true
+    showTimeSelect: item.showTimeSelect
   }))));
 };
 
-var M_TimerSet = {
+var M_DatePicker = {
   __proto__: null,
   InitData: InitData$e,
   ItemsView: ItemsView$e
@@ -7199,23 +7360,23 @@ var M_TimerSet = {
 var InitData$f = function InitData() {
   return '';
 };
-var ItemsView$f = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
-  return /*#__PURE__*/React.createElement("div", {
+var ItemsView$f = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index,
     style: {
       marginBottom: 20
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(BootstrapSwitchButton, {
+  }, /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
     checked: values[item.id],
     onChange: function onChange(value) {
-      return ViewCallback(item.id, value);
+      return UpdateInitData(item.id, value);
     }
   }))));
 };
@@ -7230,23 +7391,23 @@ var InitData$g = function InitData() {
   return '';
 };
 var ItemsView$g = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemHeader"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React.createElement("div", {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
     type: 'text',
     value: values[item.id],
     className: "TextInput",
     name: item.id,
     placeholder: "\uC27C\uD45C(,)\uB85C \uAD6C\uBD84",
     onChange: handleChange
-  }), /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+  }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
     style: {
       top: 0,
       right: 0,
@@ -7268,9 +7429,9 @@ var ItemsView$g = function ItemsView(M, index, item, values, handleChange, Modif
       });
       ViewCallback(item.Selectid, dat);
     }
-  }, "\uCD94\uAC00"))), /*#__PURE__*/React.createElement("div", {
+  }, "\uCD94\uAC00"))), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ViewListformBox"
   }, M.GetSetOption(values, item))));
 };
@@ -7315,8 +7476,8 @@ var FormatSet = [{
   name: 'Imageset',
   module: M_Imageset
 }, {
-  name: 'UploadHtml',
-  module: M_UploadHtml
+  name: 'HtmlEditer',
+  module: M_HtmlEditer
 }, {
   name: 'Tab',
   module: M_Tab
@@ -7324,8 +7485,8 @@ var FormatSet = [{
   name: 'Child',
   module: M_Child
 }, {
-  name: 'TimerSet',
-  module: M_TimerSet
+  name: 'DatePicker',
+  module: M_DatePicker
 }, {
   name: 'Switch',
   module: M_Switch
@@ -7401,42 +7562,15 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     _this.ItemsView = function (Struct, values, handleChange) {
       var ItemsTable = [];
       Struct.forEach(function (item, index) {
-        if (item.format === 'Tab') {
-          var FormViewTable = _this.ItemsView(item.Items, values, handleChange);
-
-          var TabTable = [];
-          FormViewTable.forEach(function (TabItem, Tabindex) {
-            TabTable.push( /*#__PURE__*/React.createElement(reactBootstrap.Tab, {
-              key: Tabindex,
-              className: "ImageformBox",
-              eventKey: item.Items[TabItem.key].id,
-              title: item.Items[TabItem.key].name
-            }, TabItem));
-          });
-          ItemsTable.push( /*#__PURE__*/React.createElement("div", {
-            className: "ItemViewRow",
-            key: index
-          }, /*#__PURE__*/React.createElement("div", {
-            className: "ItemHeader"
-          }, /*#__PURE__*/React.createElement("div", {
-            className: "ItemTitle"
-          }, item.name), /*#__PURE__*/React.createElement("div", {
-            className: "ItemContent"
-          })), /*#__PURE__*/React.createElement("div", {
-            className: "ItemBody"
-          }, /*#__PURE__*/React.createElement(reactBootstrap.Tabs, {
-            defaultActiveKey: item.Items[0].id,
-            id: "noanim-tab-example"
-          }, TabTable))));
-        } else if (item.format === 'Child') {
+        if (item.format === 'Child') {
           _this.props.children.forEach(function (element) {
             if (element.key === item.key) {
-              ItemsTable.push( /*#__PURE__*/React.createElement("div", {
+              ItemsTable.push( /*#__PURE__*/React__default.createElement("div", {
                 className: "ItemViewRow",
                 key: index
-              }, /*#__PURE__*/React.createElement("div", {
+              }, /*#__PURE__*/React__default.createElement("div", {
                 className: "ItemBody"
-              }, /*#__PURE__*/React.createElement("div", {
+              }, /*#__PURE__*/React__default.createElement("div", {
                 className: "ViewListformBox"
               }, element))));
             }
@@ -7463,12 +7597,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
       if (values[item.Selectid] !== undefined) {
         values[item.Selectid].forEach(function (Selvalue, Selindex) {
-          viewlist.push( /*#__PURE__*/React.createElement("div", {
+          viewlist.push( /*#__PURE__*/React__default.createElement("div", {
             className: "ViewList",
             key: Selindex
-          }, /*#__PURE__*/React.createElement("div", {
+          }, /*#__PURE__*/React__default.createElement("div", {
             className: "ItemTitle"
-          }, Selvalue.name), /*#__PURE__*/React.createElement("input", {
+          }, Selvalue.name), /*#__PURE__*/React__default.createElement("input", {
             type: 'number',
             className: "TextInput",
             required: true,
@@ -7503,7 +7637,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             }
           });
 
-          images.push( /*#__PURE__*/React.createElement("div", {
+          images.push( /*#__PURE__*/React__default.createElement("div", {
             style: {
               borderWidth: apple !== undefined ? 2 : 0,
               borderColor: '#1f8b3b'
@@ -7536,7 +7670,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             },
             className: "Imageform",
             key: index
-          }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+          }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
             className: "ImageformImage",
             variant: "top",
             src: value
@@ -7544,7 +7678,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
         });
       } else {
         values[item.id].forEach(function (value, index) {
-          images.push( /*#__PURE__*/React.createElement("div", {
+          images.push( /*#__PURE__*/React__default.createElement("div", {
             style: {
               borderWidth: _this.state.InitData.image[0] === value ? 2 : 0,
               borderColor: '#1f8b3b'
@@ -7562,7 +7696,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             },
             className: "Imageform",
             key: index
-          }, /*#__PURE__*/React.createElement(reactBootstrap.Image, {
+          }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
             className: "ImageformImage",
             variant: "top",
             src: value
@@ -7576,12 +7710,12 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     _this.FormView = function (Struct, values, handleChange) {
       var FormTable = [];
       Struct.forEach(function (item, index) {
-        if (item.format === 'Titletext') FormTable.push( /*#__PURE__*/React.createElement("div", {
+        if (item.format === 'Titletext') FormTable.push( /*#__PURE__*/React__default.createElement("div", {
           className: "FormView",
           key: index
-        }, /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React__default.createElement("div", {
           className: "FormViewTitle"
-        }, item.name), /*#__PURE__*/React.createElement("div", {
+        }, item.name), /*#__PURE__*/React__default.createElement("div", {
           className: "FormViewPage"
         }, _this.ItemsView(item.Items, values, handleChange))));
       });
@@ -7605,7 +7739,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       });
     };
 
-    _this.Submitbtn = React.createRef();
+    _this.Submitbtn = React__default.createRef();
     if (_this.props.Submit !== undefined) _this.props.Submit(function () {
       return _this.Submit();
     });
@@ -7641,16 +7775,16 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       };
     }
 
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreatePage"
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Form, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form, {
       onSubmit: this.onSubmit
-    }, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreateView"
-    }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React.createElement("div", {
+    }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreateFooter",
       style: bt_style
-    }, /*#__PURE__*/React.createElement(reactBootstrap.Button, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       ref: this.Submitbtn,
       type: "submit",
       variant: "Submit",
@@ -7659,7 +7793,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
   };
 
   return CreatePage;
-}(React.Component);
+}(React__default.Component);
 
 var getStructFromFormat = function getStructFromFormat(DataStruct, FormatName) {
   return getFormat(DataStruct.Struct, FormatName);
@@ -7723,7 +7857,7 @@ var getIF = function getIF(DataStruct) {
 
 var ExampleComponent = function ExampleComponent(_ref) {
   var text = _ref.text;
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React__default.createElement("div", {
     className: undefined.test
   }, "Example Component: ", text);
 };

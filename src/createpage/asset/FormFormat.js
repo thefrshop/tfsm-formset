@@ -9,10 +9,10 @@ import * as M_ListSelect from '../module/ListSelect';
 import * as M_ImageSelect from '../module/ImageSelect';
 import * as M_UploadImage from '../module/UploadImage';
 import * as M_Imageset from '../module/Imageset';
-import * as M_UploadHtml from '../module/UploadHtml';
+import * as M_HtmlEditer from '../module/HtmlEditer';
 import * as M_Tab from '../module/Tab';
 import * as M_Child from '../module/Child.js';
-import * as M_TimerSet from '../module/TimerSet';
+import * as M_DatePicker from '../module/DatePicker';
 import * as M_Switch from '../module/Switch';
 import * as M_Option from '../module/Option';
 
@@ -28,10 +28,10 @@ const FormatSet = [
 	{ name: 'ImageSelect', module: M_ImageSelect },
 	{ name: 'UploadImage', module: M_UploadImage },
 	{ name: 'Imageset', module: M_Imageset },
-	{ name: 'UploadHtml', module: M_UploadHtml },
+	{ name: 'HtmlEditer', module: M_HtmlEditer },
 	{ name: 'Tab', module: M_Tab },
 	{ name: 'Child', module: M_Child },
-	{ name: 'TimerSet', module: M_TimerSet },
+	{ name: 'DatePicker', module: M_DatePicker },
 	{ name: 'Switch', module: M_Switch },
 	{ name: 'Option', module: M_Option }
 ];

@@ -16,6 +16,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 				<div className="ItemTitle">{item.name}</div>
 				<div className="ItemContent">
 					<ListSelect
+						{...M.props}
 						InitialValue={values[item.id]}
 						name={item.id}
 						title={item.name}
@@ -29,7 +30,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 					/>
 				</div>
 			</div>
-			{item.Viewhidden === undefined ? null : (
+			{item.Viewhidden ? null : (
 				<div className="ItemBody">
 					<div className="ViewListformBox">
 						<ViewList

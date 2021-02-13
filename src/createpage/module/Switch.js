@@ -7,7 +7,7 @@ export const InitData = () => {
 };
 
 //뷰
-export const ItemsView = (M, index, item, values, handleChange, ModifyMode, ViewCallback) => {
+export const ItemsView = (M, index, item, values, handleChange, ModifyMode, UpdateInitData) => {
 	return (
 		<div className="ItemViewRow" key={index} style={{ marginBottom: 20 }}>
 			<div className="ItemHeader">
@@ -15,7 +15,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, View
 				<div className="ItemContent">
 					<BootstrapSwitchButton
 						checked={values[item.id]}
-						onChange={(value) => ViewCallback(item.id, value)}
+						onChange={(value) => UpdateInitData(item.id, value)}
 					/>
 				</div>
 			</div>

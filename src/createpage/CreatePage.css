@@ -49,6 +49,16 @@
 }
 
 .ProductCreateView .ItemBody {
+	font-size: 15px;
+	color: #777777;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.ProductCreateView .ItemBody2 {
+	font-size: 15px;
+	color: #777777;
+	margin-left: 120px;
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
@@ -116,6 +126,8 @@
 .ImageformTitle {
 	margin: 5px;
 	font-size: 12px;
+	line-height: 12px;
+	overflow: hidden;
 }
 
 .ImageformXBTN {
@@ -127,6 +139,22 @@
 	height: 20px;
 	padding: 0;
 	background: #555555;
+	position: relative;
+}
+.ImageformPop {
+	width: 500px;
+	padding: 2px;
+	position: absolute;
+	background: #fff;
+	border: 1px solid #555;
+	z-index: 100;
+	font-size: 11px;
+}
+.ImageformPop img {
+	width: 100%;
+}
+.ImageformPop div {
+	padding: 5px;
 }
 
 .ProductCreateView .CreateArea {

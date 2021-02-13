@@ -27,7 +27,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 ListImage = (values, item, UpdateInitData) => {
 	//console.log('ListImage', item.id);
 
-	console.log('ListImage', values);
+	//console.log('ListImage', values);
 
 	if (values[item.id] === undefined) values[item.id] = [];
 	let images = [];

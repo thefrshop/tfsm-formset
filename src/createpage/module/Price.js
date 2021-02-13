@@ -23,8 +23,8 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 			<div className="ItemTitle">{item.name}</div>
 			<div className="ItemContent">
 				<NumberFormat
-					required
-					class="TextInput form-control"
+					required={item.required}
+					className="TextInput form-control"
 					value={values[item.id]}
 					thousandSeparator={item.Separator}
 					suffix={item.suffix}

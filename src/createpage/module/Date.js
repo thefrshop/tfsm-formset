@@ -15,7 +15,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 				<Form.Control
 					value={values[item.id] || ''}
 					className="TextInput"
-					required
+					required={item.required}
 					type="date"
 					name={item.id}
 					onChange={handleChange}

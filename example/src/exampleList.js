@@ -201,12 +201,14 @@ export const UploadImage = {
 };
 
 export const UploadImageInit = {
-	TitleImage__: [
-		'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg',
-		'https://shop-phinf.pstatic.net/20200717_266/15949746704500kuIs_JPEG/32337004039335532_1333175870.jpg',
-		'https://shop-phinf.pstatic.net/20200717_40/1594974670728XHsTz_JPEG/32337004270315102_740479415.jpg',
-		'https://shop-phinf.pstatic.net/20200717_134/1594974670975548LS_JPEG/32337004565182638_1968441623.jpg'
-	]
+	TitleImage: {
+		UrlList: [
+			'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg',
+			'https://shop-phinf.pstatic.net/20200717_266/15949746704500kuIs_JPEG/32337004039335532_1333175870.jpg',
+			'https://shop-phinf.pstatic.net/20200717_40/1594974670728XHsTz_JPEG/32337004270315102_740479415.jpg',
+			'https://shop-phinf.pstatic.net/20200717_134/1594974670975548LS_JPEG/32337004565182638_1968441623.jpg'
+		]
+	}
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 export const Imageset = {
@@ -243,9 +245,10 @@ export const Tab = {
 			format: 'Titletext',
 			Items: [
 				{
-					id: 'DetailPage',
+					id: 'TabPage',
 					name: 'Tab페이지',
 					format: 'Tab',
+					default: 'Tab2',
 					Items: [
 						{
 							id: 'Tab1',
@@ -341,47 +344,44 @@ export const Switch = {
 
 export const SwitchInit = { Switch: true };
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TimerSet = {
+export const DatePicker = {
 	Struct: [
 		{
 			id: 'BasicInfo',
-			name: 'TimerSet',
+			name: 'DatePicker',
 			format: 'Titletext',
 			Items: [
 				{
-					id: 'TimerSet',
+					id: 'DatePicker',
 					name: '타이머',
-					format: 'TimerSet'
+					format: 'DatePicker',
+					showTimeSelect: true,
+					dateFormat: 'yyyy-MM-dd HH:mm:ss'
 				}
 			]
 		}
 	]
 };
 
-export const TimerSetInit = { TimerSet: '' };
+export const DatePickerInit = { DatePicker: '2021-02-14 04:00:00' };
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-export const UploadHtml = {
+export const HtmlEditer = {
 	Struct: [
 		{
 			id: 'BasicInfo',
-			name: 'UploadHtml',
+			name: 'HtmlEditer',
 			format: 'Titletext',
 			Items: [
 				{
-					id: 'UploadHtml',
-					name: '대표 이미지',
-					format: 'UploadHtml'
+					id: 'HtmlEditer',
+					name: 'Html',
+					format: 'HtmlEditer'
 				}
 			]
 		}
 	]
 };
 
-export const UploadHtmlInit = {
-	TitleImage__: [
-		'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg',
-		'https://shop-phinf.pstatic.net/20200717_266/15949746704500kuIs_JPEG/32337004039335532_1333175870.jpg',
-		'https://shop-phinf.pstatic.net/20200717_40/1594974670728XHsTz_JPEG/32337004270315102_740479415.jpg',
-		'https://shop-phinf.pstatic.net/20200717_134/1594974670975548LS_JPEG/32337004565182638_1968441623.jpg'
-	]
+export const HtmlEditerInit = {
+	HtmlEditer: '<p><strong>안녕하세요.</strong></p>↵<p>테스트 입니다.</p>'
 };

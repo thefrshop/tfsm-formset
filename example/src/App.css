@@ -8,4 +8,5 @@
 	max-width: 1000px;
 	border: 1px solid #eee;
 	background: rgb(43, 48, 59);
+	overflow: hidden;
 }

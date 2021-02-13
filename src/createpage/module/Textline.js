@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import TextareaAutosize from 'react-textarea-autosize';
 
 //초기화
 export const InitData = () => {
@@ -12,13 +12,14 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 		<div className="ItemView" key={index}>
 			<div className="ItemTitle">{item.name}</div>
 			<div className="ItemContent">
-				<Form.Control
+				<TextareaAutosize
 					value={values[item.id]}
 					className="TextInput"
-					required
-					type="text"
+					required={item.required}
 					name={item.id}
 					onChange={handleChange}
+					minRows={5}
+					maxRows={10}
 				/>
 			</div>
 		</div>

@@ -15,7 +15,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 				<Form.Control
 					value={values[item.id]}
 					className="TextSelect"
-					required
+					required={item.required}
 					custom
 					as="select"
 					name={item.id}
