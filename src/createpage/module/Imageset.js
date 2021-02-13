@@ -24,7 +24,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 };
 
 // 이미지 리스트폼
-ListImage = (values, item, UpdateInitData) => {
+const ListImage = (values, item, UpdateInitData) => {
 	//console.log('ListImage', item.id);
 
 	//console.log('ListImage', values);

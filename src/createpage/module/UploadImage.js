@@ -109,7 +109,7 @@ const GetUploagImage = (props) => {
 	return images;
 };
 
-getFilename = (url) => {
+const getFilename = (url) => {
 	var ext = url.split('/').pop();
 	if (ext === url) return '';
 	return ext;

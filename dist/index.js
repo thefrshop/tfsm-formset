@@ -7031,7 +7031,7 @@ var GetUploagImage = function GetUploagImage(props) {
   return images;
 };
 
-getFilename = function getFilename(url) {
+var getFilename = function getFilename(url) {
   var ext = url.split('/').pop();
   if (ext === url) return '';
   return ext;
@@ -7133,7 +7133,7 @@ var ItemsView$a = function ItemsView(M, index, item, values, handleChange, Modif
   }, ListImage(values, item, UpdateInitData))));
 };
 
-ListImage = function ListImage(values, item, UpdateInitData) {
+var ListImage = function ListImage(values, item, UpdateInitData) {
   if (values[item.id] === undefined) values[item.id] = [];
   var images = [];
   values[item.id].forEach(function (value, index) {
