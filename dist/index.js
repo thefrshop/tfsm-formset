@@ -6053,7 +6053,7 @@ var ItemsView$5 = function ItemsView(M, index, item, values, handleChange, Modif
   }, GetOption(item.SelectText))));
 };
 
-GetOption = function GetOption(SelectText) {
+var GetOption = function GetOption(SelectText) {
   var opt = [];
   SelectText.forEach(function (SelectText, index) {
     opt.push( /*#__PURE__*/React__default.createElement("option", {

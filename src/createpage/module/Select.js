@@ -29,7 +29,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 };
 
 // 옵션폼
-GetOption = (SelectText) => {
+const GetOption = (SelectText) => {
 	let opt = [];
 	SelectText.forEach((SelectText, index) => {
 		opt.push(<option key={index}>{SelectText}</option>);
