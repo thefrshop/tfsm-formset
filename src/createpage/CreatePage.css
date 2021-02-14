@@ -123,10 +123,21 @@
 .ImageformImage {
 	width: 120px;
 }
+
+.ImageformSingle {
+	padding: 1px;
+	border: 1px solid #ced4da;
+	position: relative;
+	border-radius: .25rem;
+	margin: 5px;
+}
+.ImageformSingleImage {
+	height: 300px;
+}
+
 .ImageformTitle {
 	margin: 5px;
 	font-size: 12px;
-	line-height: 12px;
 	overflow: hidden;
 }
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { CreatePage } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
 import './App.css';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Button, Tab, Tabs } from 'react-bootstrap';
 import * as ex from './exampleList';
 import ReactJson from 'react-json-view';
 import Highlight from 'react-highlight';
@@ -47,6 +47,17 @@ export default class App extends React.Component {
 				<br />
 				<div className="consoleView">
 					<ReactJson src={this.state.defaultdata} theme="ocean" name={'Output'} />
+					<div className="consoleBtSection">
+						<Button
+							style={{ padding: '2px 5px' }}
+							variant="light"
+							onClick={() => {
+								console.log(this.state.defaultdata);
+							}}
+						>
+							> Console
+						</Button>
+					</div>
 				</div>
 				{!InitData ? null : (
 					<div>
@@ -65,8 +76,30 @@ export default class App extends React.Component {
 						<br />
 						<div className="consoleView">
 							<ReactJson src={InitData} theme="ocean" name={'Input'} />
+							<div className="consoleBtSection">
+								<Button
+									style={{ padding: '2px 5px' }}
+									variant="light"
+									onClick={() => {
+										console.log(InitData);
+									}}
+								>
+									> Console
+								</Button>
+							</div>
 
 							<ReactJson src={this.state.modifidata} theme="ocean" name={'Output'} />
+							<div className="consoleBtSection">
+								<Button
+									style={{ padding: '2px 5px' }}
+									variant="light"
+									onClick={() => {
+										console.log(this.state.modifidata);
+									}}
+								>
+									> Console
+								</Button>
+							</div>
 						</div>
 						<br />
 					</div>
@@ -82,7 +115,7 @@ export default class App extends React.Component {
 				<br />
 				<Tabs>
 					<Tab eventKey="API" title="API">
-						<Tabs defaultActiveKey="DatePicker">
+						<Tabs defaultActiveKey="UploadImageSingle">
 							{this.Test('CodeGen', ex.CodeGen, ex.CodeGenInit)}
 							{this.Test('Text', ex.Text, ex.TextInit)}
 							{this.Test('Price', ex.Price, ex.PriceInit)}
@@ -94,6 +127,7 @@ export default class App extends React.Component {
 							])}
 							{this.Test('Select', ex.Select, ex.SelectInit)}
 							{this.Test('UploadImage', ex.UploadImage, ex.UploadImageInit)}
+							{this.Test('UploadImageSingle', ex.UploadImageSingle, ex.UploadImageSingleInit)}
 							{this.Test('HtmlEditer', ex.HtmlEditer, ex.HtmlEditerInit)}
 
 							{this.Test('Imageset', ex.Imageset, ex.ImagesetInit)}

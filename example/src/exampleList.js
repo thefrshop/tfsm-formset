@@ -385,3 +385,26 @@ export const HtmlEditer = {
 export const HtmlEditerInit = {
 	HtmlEditer: '<p><strong>안녕하세요.</strong></p>↵<p>테스트 입니다.</p>'
 };
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+export const UploadImageSingle = {
+	Struct: [
+		{
+			id: 'BasicInfo',
+			name: 'UploadImageSingle',
+			format: 'Titletext',
+			Items: [
+				{
+					id: 'SingleImage',
+					name: '대표 이미지',
+					format: 'UploadImageSingle'
+				}
+			]
+		}
+	]
+};
+
+export const UploadImageSingleInit = {
+	SingleImage: {
+		Url: 'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg'
+	}
+};

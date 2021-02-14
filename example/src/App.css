@@ -10,3 +10,8 @@
 	background: rgb(43, 48, 59);
 	overflow: hidden;
 }
+
+.consoleBtSection {
+	width: 100%;
+	text-align: right;
+}

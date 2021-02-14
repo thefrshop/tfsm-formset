@@ -7254,7 +7254,7 @@ var ItemsView$c = function ItemsView(M, index, item, values, handleChange, Modif
   var ItemsTable = [];
   var FormViewTable = [];
   item.Items.forEach(function (Tabitem, index) {
-    FormViewTable.push(ItemsView$h(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
+    FormViewTable.push(ItemsView$i(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
   });
   var TabTable = [];
   FormViewTable.forEach(function (TabItem, Tabindex) {
@@ -7442,6 +7442,116 @@ var M_Option = {
   ItemsView: ItemsView$g
 };
 
+var InitData$h = function InitData() {
+  return {
+    File: '',
+    Url: ''
+  };
+};
+var ItemsView$h = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+  var File = values[item.id].File;
+  var Url = values[item.id].Url;
+  var name = '';
+  var browseText = '이미지 추가';
+
+  if (File !== '' && File !== undefined) {
+    name = File.name;
+  }
+
+  if (Url !== '' && Url !== undefined) {
+    browseText = '이미지 교체';
+  }
+
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemViewRow",
+    key: index
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemHeader"
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemTitle"
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemContent"
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.File, {
+    label: name,
+    "data-browse": browseText,
+    onChange: function onChange(e) {
+      ImageFileChange$1(e, item.id, UpdateInitData);
+    },
+    custom: true
+  }))), /*#__PURE__*/React__default.createElement(GetUploagImage$1, {
+    values: values,
+    item: item,
+    UpdateInitData: UpdateInitData
+  }));
+};
+
+var GetUploagImage$1 = function GetUploagImage(props) {
+  var values = props.values,
+      item = props.item;
+
+  var _useState = React.useState(false),
+      isShown = _useState[0],
+      setIsShown = _useState[1];
+
+  var images = '';
+  var File = values[item.id].File;
+  var Url = values[item.id].Url;
+  var name = '';
+  if (Url !== '' && Url !== undefined) name = Url;
+  if (File !== '' && File !== undefined) name = File.name;
+  if (Url !== '' && Url !== undefined) images = /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformSingle"
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+    className: "ImageformSingleImage",
+    variant: "top",
+    src: Url,
+    onMouseEnter: function onMouseEnter() {
+      return setIsShown('UP');
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setIsShown(false);
+    }
+  }), isShown === 'UP' && /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformPop"
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+    variant: "top",
+    src: Url
+  }), /*#__PURE__*/React__default.createElement("div", null, name)));
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemBody2"
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformBox",
+    style: {
+      flexDirection: 'column'
+    }
+  }, images, /*#__PURE__*/React__default.createElement("div", {
+    className: "ImageformTitle"
+  }, name)));
+};
+
+var ImageFileChange$1 = function ImageFileChange(e, id, UpdateInitData, values) {
+  if (e.target.files) {
+    [].forEach.call(e.target.files, function (file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = function (e) {
+        var data = {
+          File: file,
+          Url: e.target.result
+        };
+        UpdateInitData(id, data);
+      };
+    });
+  }
+};
+
+var M_UploadImageSingle = {
+  __proto__: null,
+  InitData: InitData$h,
+  ItemsView: ItemsView$h
+};
+
 var FormatSet = [{
   name: 'CodeGen',
   module: M_CodeGen
@@ -7493,23 +7603,26 @@ var FormatSet = [{
 }, {
   name: 'Option',
   module: M_Option
+}, {
+  name: 'UploadImageSingle',
+  module: M_UploadImageSingle
 }];
 var GetModule = function GetModule(format) {
   return FormatSet.find(function (m) {
     return m.name === format;
   }).module;
 };
-var InitData$h = function InitData(item) {
+var InitData$i = function InitData(item) {
   return GetModule(item.format).InitData(item);
 };
-var ItemsView$h = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
+var ItemsView$i = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
   return GetModule(item.format).ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback);
 };
 
 var InitItemsSet = function InitItemsSet(Struct) {
   var InitData = {};
   Struct.forEach(function (item) {
-    if (item.format === 'Tab') Object.assign(InitData, InitData$h(item));else InitData[item.id] = InitData$h(item);
+    if (item.format === 'Tab') Object.assign(InitData, InitData$i(item));else InitData[item.id] = InitData$i(item);
   });
   return InitData;
 };
@@ -7576,7 +7689,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             }
           });
         } else {
-          ItemsTable.push(ItemsView$h(_assertThisInitialized(_this), index, item, values, handleChange, _this.state.ModifyMode, _this.UpdateInitData));
+          ItemsTable.push(ItemsView$i(_assertThisInitialized(_this), index, item, values, handleChange, _this.state.ModifyMode, _this.UpdateInitData));
         }
       });
       return ItemsTable;
