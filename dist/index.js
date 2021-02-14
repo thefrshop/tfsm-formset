@@ -7374,6 +7374,10 @@ var ItemsView$f = function ItemsView(M, index, item, values, handleChange, Modif
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
   }, /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
+    onlabel: item.onlabel,
+    onstyle: item.onstyle,
+    offlabel: item.offlabel,
+    offstyle: item.offstyle,
     checked: values[item.id],
     onChange: function onChange(value) {
       return UpdateInitData(item.id, value);

@@ -335,7 +335,11 @@ export const Switch = {
 				{
 					id: 'Switch',
 					name: '스위치',
-					format: 'Switch'
+					format: 'Switch',
+					onlabel: '켬',
+					offlabel: '끔',
+					onstyle: 'success',
+					offstyle: 'warning'
 				}
 			]
 		}

@@ -15,6 +15,10 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 				<div className="ItemTitle">{item.name}</div>
 				<div className="ItemContent">
 					<BootstrapSwitchButton
+						onlabel={item.onlabel}
+						onstyle={item.onstyle}
+						offlabel={item.offlabel}
+						offstyle={item.offstyle}
 						checked={values[item.id]}
 						onChange={(value) => UpdateInitData(item.id, value)}
 					/>

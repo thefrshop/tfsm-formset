@@ -115,7 +115,7 @@ export default class App extends React.Component {
 				<br />
 				<Tabs>
 					<Tab eventKey="API" title="Form API">
-						<Tabs defaultActiveKey="UploadImageSingle">
+						<Tabs defaultActiveKey="Switch">
 							{this.Test('CodeGen', ex.CodeGen, ex.CodeGenInit)}
 							{this.Test('Text', ex.Text, ex.TextInit)}
 							{this.Test('Price', ex.Price, ex.PriceInit)}
