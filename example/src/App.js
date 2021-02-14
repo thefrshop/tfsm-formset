@@ -114,7 +114,7 @@ export default class App extends React.Component {
 				<h3>tfsm-formset 예제</h3>
 				<br />
 				<Tabs>
-					<Tab eventKey="API" title="API">
+					<Tab eventKey="API" title="Form API">
 						<Tabs defaultActiveKey="UploadImageSingle">
 							{this.Test('CodeGen', ex.CodeGen, ex.CodeGenInit)}
 							{this.Test('Text', ex.Text, ex.TextInit)}
@@ -139,6 +139,7 @@ export default class App extends React.Component {
 							{this.Test('DatePicker', ex.DatePicker, ex.DatePickerInit)}
 						</Tabs>
 					</Tab>
+					<Tab eventKey="Table" title="Table API" />
 					<Tab eventKey="DOC" title="DOC">
 						<h5>Code</h5>
 						<Highlight className="consoleView" language="javascript">
