@@ -7173,8 +7173,12 @@ var ItemsView$b = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemViewRow",
     key: index
   }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemHeader"
+  }, /*#__PURE__*/React__default.createElement("div", {
     className: "ItemTitle"
-  }, item.name), /*#__PURE__*/React__default.createElement("br", null), /*#__PURE__*/React__default.createElement(UploadBoard, {
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemContent"
+  }, /*#__PURE__*/React__default.createElement(UploadBoard, {
     InitData: values[item.id],
     onValueChange: function onValueChange(value) {
       return handleChange({
@@ -7184,7 +7188,7 @@ var ItemsView$b = function ItemsView(M, index, item, values, handleChange, Modif
         }
       });
     }
-  }));
+  }))));
 };
 
 var UploadBoard = /*#__PURE__*/function (_React$Component) {
@@ -7229,6 +7233,9 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
       onEditorStateChange: this.onEditorStateChange,
       localization: {
         locale: 'ko'
+      },
+      toolbar: {
+        options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'textAlign', 'colorPicker', 'emoji']
       }
     });
   };
@@ -7379,6 +7386,10 @@ var ItemsView$f = function ItemsView(M, index, item, values, handleChange, Modif
     offlabel: item.offlabel,
     offstyle: item.offstyle,
     checked: values[item.id],
+    width: item.width,
+    height: item.height,
+    size: item.size,
+    style: item.style,
     onChange: function onChange(value) {
       return UpdateInitData(item.id, value);
     }

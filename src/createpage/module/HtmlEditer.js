@@ -15,12 +15,15 @@ export const InitData = () => {
 export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 	return (
 		<div className="ItemViewRow" key={index}>
-			<div className="ItemTitle">{item.name}</div>
-			<br />
-			<UploadBoard
-				InitData={values[item.id]}
-				onValueChange={(value) => handleChange({ target: { name: item.id, value: value } })}
-			/>
+			<div className="ItemHeader">
+				<div className="ItemTitle">{item.name}</div>
+				<div className="ItemContent">
+					<UploadBoard
+						InitData={values[item.id]}
+						onValueChange={(value) => handleChange({ target: { name: item.id, value: value } })}
+					/>
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -57,6 +60,9 @@ class UploadBoard extends React.Component {
 				onEditorStateChange={this.onEditorStateChange}
 				localization={{
 					locale: 'ko'
+				}}
+				toolbar={{
+					options: [ 'inline', 'blockType', 'fontSize', 'fontFamily', 'textAlign', 'colorPicker', 'emoji' ]
 				}}
 			/>
 		);

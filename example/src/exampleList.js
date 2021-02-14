@@ -339,7 +339,9 @@ export const Switch = {
 					onlabel: '켬',
 					offlabel: '끔',
 					onstyle: 'success',
-					offstyle: 'warning'
+					offstyle: 'warning',
+					size: 'sm',
+					width: 80
 				}
 			]
 		}

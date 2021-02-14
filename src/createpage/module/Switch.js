@@ -20,6 +20,10 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 						offlabel={item.offlabel}
 						offstyle={item.offstyle}
 						checked={values[item.id]}
+						width={item.width}
+						height={item.height}
+						size={item.size}
+						style={item.style}
 						onChange={(value) => UpdateInitData(item.id, value)}
 					/>
 				</div>
