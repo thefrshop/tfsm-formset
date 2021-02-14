@@ -7357,8 +7357,8 @@ var M_DatePicker = {
   ItemsView: ItemsView$e
 };
 
-var InitData$f = function InitData() {
-  return '';
+var InitData$f = function InitData(item) {
+  if (item["default"] === undefined) return false;else return item["default"];
 };
 var ItemsView$f = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   return /*#__PURE__*/React__default.createElement("div", {

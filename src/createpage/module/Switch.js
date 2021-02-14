@@ -2,8 +2,9 @@ import React from 'react';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
 //초기화
-export const InitData = () => {
-	return '';
+export const InitData = (item) => {
+	if (item.default === undefined) return false;
+	else return item.default;
 };
 
 //뷰
