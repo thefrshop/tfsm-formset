@@ -94,11 +94,13 @@ const GetHierarchy = (values, item) => {
 	const onRemove = (Selvalue) => {
 		const RemoveData = values[item.Selectid].filter((arr) => arr[3].Code !== Selvalue[3].Code);
 		console.log(RemoveData);
+		/*
 		this.setState({
 			InitData: update(this.state.InitData, {
 				[item.Selectid]: { $set: RemoveData }
 			})
 		});
+		*/
 	};
 
 	function DataView(Selvalue) {

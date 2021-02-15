@@ -39,7 +39,7 @@ const FormatSet = [
 ];
 
 export const GetModule = (format) => {
-	return FormatSet.find((m) => m.name === format).module;
+	return FormatSet.find((m) => m.name.toLowerCase() === format.toLowerCase()).module;
 };
 
 export const InitData = (item) => {

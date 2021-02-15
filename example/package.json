@@ -12,9 +12,9 @@
   "dependencies": {
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-highlight": "^0.13.0",
     "react-json-view": "^1.21.1",
     "react-scripts": "link:../node_modules/react-scripts",
+    "react-syntax-highlighter": "^15.4.3",
     "tfsm-formset": "link:.."
   },
   "devDependencies": {

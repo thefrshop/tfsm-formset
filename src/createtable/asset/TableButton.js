@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaAngleDoubleUp, FaAngleUp, FaAngleDoubleDown, FaAngleDown } from 'react-icons/fa';
-import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 export default class TableButton extends React.Component {
 	render() {
@@ -35,29 +34,6 @@ export default class TableButton extends React.Component {
 						<button className="TButton" onClick={() => this.props.Modify()}>
 							수정
 						</button>
-					</div>
-				)}
-				{this.props.setTelecom && (
-					<div className="TableButtonGroup">
-						{this.props.setBT && <div className="Split" />}
-						{this.props.disableAll && (
-							<ToggleButtonGroup
-								type="radio"
-								name="options"
-								defaultValue={2}
-								onChange={this.props.TelecomChange}
-							>
-								<ToggleButton className="TButton" value={2}>
-									SK
-								</ToggleButton>
-								<ToggleButton className="TButton" value={3}>
-									KT
-								</ToggleButton>
-								<ToggleButton className="TButton" value={4}>
-									LG
-								</ToggleButton>
-							</ToggleButtonGroup>
-						)}
 					</div>
 				)}
 			</div>

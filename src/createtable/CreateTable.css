@@ -185,12 +185,6 @@
 	font-size: 0.8rem;
 }
 
-.btn-success {
-	background: #eee;
-	border-color: #eee;
-	color: #238b23;
-}
-
 .imageHoverView {
 	position: absolute;
 	z-index: 99;
@@ -230,5 +224,6 @@
 }
 
 .Caret {
-	font-size: 10px;
+	padding-left: 2px;
+	font-size: 15px;
 }
