@@ -18,6 +18,10 @@ var draftToHtml = _interopDefault(require('draftjs-to-html'));
 var htmlToDraft = _interopDefault(require('html-to-draftjs'));
 var DatePicker = _interopDefault(require('react-datepicker'));
 var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
+var fa = require('react-icons/fa');
+var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
+var ToolkitProvider = require('react-bootstrap-table2-toolkit');
+var ToolkitProvider__default = _interopDefault(ToolkitProvider);
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -7923,6 +7927,540 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
   return CreatePage;
 }(React__default.Component);
 
+var TableButton = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(TableButton, _React$Component);
+
+  function TableButton() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = TableButton.prototype;
+
+  _proto.render = function render() {
+    var _this = this;
+
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonSet"
+    }, this.props.UpDownBT && /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonGroup"
+    }, /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.DoubleUp();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleUp, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Up();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleUp, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Down();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDown, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.DoubleDown();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleDown, {
+      className: "bannerIcons"
+    }))), this.props.setBT && /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonGroup"
+    }, /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Remove();
+      }
+    }, "\uC120\uD0DD \uC0AD\uC81C"), /*#__PURE__*/React__default.createElement("div", {
+      className: "Split"
+    }), /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Add();
+      }
+    }, "\uB4F1\uB85D"), /*#__PURE__*/React__default.createElement("button", {
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Modify();
+      }
+    }, "\uC218\uC815")), this.props.setTelecom && /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonGroup"
+    }, this.props.setBT && /*#__PURE__*/React__default.createElement("div", {
+      className: "Split"
+    }), this.props.disableAll && /*#__PURE__*/React__default.createElement(reactBootstrap.ToggleButtonGroup, {
+      type: "radio",
+      name: "options",
+      defaultValue: 2,
+      onChange: this.props.TelecomChange
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.ToggleButton, {
+      className: "TButton",
+      value: 2
+    }, "SK"), /*#__PURE__*/React__default.createElement(reactBootstrap.ToggleButton, {
+      className: "TButton",
+      value: 3
+    }, "KT"), /*#__PURE__*/React__default.createElement(reactBootstrap.ToggleButton, {
+      className: "TButton",
+      value: 4
+    }, "LG"))));
+  };
+
+  return TableButton;
+}(React__default.Component);
+
+var CreateTable = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(CreateTable, _React$Component);
+
+  function CreateTable(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.dataChange = function (data) {
+      _this.setState({
+        Tabledata: data
+      });
+    };
+
+    _this.GetRow = function () {
+      return _this.Table.current.selectionContext.selected;
+    };
+
+    _this.GetRowSelectedData = function () {
+      var rowKeys = _this.Table.current.selectionContext.selected;
+      var rowData = [];
+      rowKeys.forEach(function (num) {
+        rowData.push(_this.props.data.find(function (item) {
+          return item[_this.props.keyField] === num;
+        }));
+      });
+      return rowData;
+    };
+
+    _this.InitColumns = function (propscolumns) {
+      var columns = [];
+      propscolumns.forEach(function (item) {
+        var c_item = item;
+
+        if (c_item['format'] === 'Link') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.linkFormatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        } else if (c_item['format'] === 'switch') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.switchFormatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        } else if (c_item['format'] === 'Time') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Time_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: c_item['viewField']
+            }
+          });
+        } else if (c_item['format'] === 'Number') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Num_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: c_item['viewField']
+            }
+          });
+        } else if (c_item['format'] === 'toString') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.toString_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: c_item['viewField']
+            }
+          });
+        } else if (c_item['format'] === 'image') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Img_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        } else if (c_item['format'] === 'images') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Imgs_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        } else if (c_item['format'] === 'button') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Button_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: {
+                dataField: item['dataField'],
+                setView: item['setView']
+              }
+            }
+          });
+        } else if (c_item['format'] === 'htmlfile') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Htmlfile_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        } else if (c_item['format'] === 'color') {
+          c_item = update$1(c_item, {
+            formatter: {
+              $set: _this.Color_Formatter
+            }
+          });
+          c_item = update$1(c_item, {
+            formatExtraData: {
+              $set: item['dataField']
+            }
+          });
+        }
+
+        columns.push(c_item);
+      });
+      return columns;
+    };
+
+    _this.onUnload = function () {
+      _this.setState(function (state) {
+        return _extends({}, state, {
+          showModal: false,
+          showImgPreview: false,
+          showDataPreview: false
+        });
+      });
+    };
+
+    _this.toString_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      return JSON.stringify(cell);
+    };
+
+    _this.Htmlfile_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement("div", {
+        target: "_blank",
+        href: cell
+      }, cell);
+    };
+
+    _this.Color_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      var ColorFormat = {
+        color: cell
+      };
+      return /*#__PURE__*/React__default.createElement("div", {
+        style: ColorFormat
+      }, cell);
+    };
+
+    _this.Button_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement("div", null);
+    };
+
+    _this.Imgs_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      var celldata = [];
+
+      try {
+        celldata = JSON.parse(cell);
+      } catch (exception) {
+        celldata = [];
+      }
+
+      return /*#__PURE__*/React__default.createElement("div", null, celldata.map(function (value, index) {
+        return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+          key: index,
+          style: {
+            margin: 5
+          },
+          src: value,
+          width: 50,
+          height: 50
+        });
+      }));
+    };
+
+    _this.Img_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+        src: cell,
+        width: 50,
+        height: 50
+      });
+    };
+
+    _this.Num_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement(NumberFormat, {
+        value: cell,
+        displayType: 'text',
+        thousandSeparator: true,
+        suffix: '원',
+        renderText: function renderText(value) {
+          return /*#__PURE__*/React__default.createElement("div", null, value);
+        }
+      });
+    };
+
+    _this.switchFormatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
+        size: "xs",
+        checked: Boolean(cell),
+        onChange: function onChange(checked) {
+          return _this.props.switchChange(checked, row);
+        }
+      });
+    };
+
+    _this.linkFormatter = function (cell, row, rowIndex, formatExtraData) {
+      return /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+        className: "TableLinkButton",
+        variant: "outline-dark",
+        onClick: function onClick() {
+          return _this.props.GoLink(cell, row);
+        }
+      }, cell);
+    };
+
+    _this.Time_Formatter = function (cell, row, rowIndex, formatExtraData) {
+      var OutDate = moment$1(cell).tz('Asia/Seoul').locale('ko');
+      return /*#__PURE__*/React__default.createElement("div", null, OutDate.format('YY-MM-D a h:mm:ss'));
+    };
+
+    _this.Table = React__default.createRef();
+    _this.SearchBar = React__default.createRef();
+    _this.state = {
+      Tabledata: _this.props.data
+    };
+    return _this;
+  }
+
+  var _proto = CreateTable.prototype;
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    var ToggleList = ToolkitProvider.ColumnToggle.ToggleList;
+
+    var customTotal = function customTotal(from, to, size) {
+      return /*#__PURE__*/React__default.createElement("span", {
+        className: "react-bootstrap-table-pagination-total"
+      }, "\uC804\uCCB4 (", size, "\uAC1C) : ", from, " \uBD80\uD130 ", to, " \uAE4C\uC9C0");
+    };
+
+    var options = {
+      paginationSize: 10,
+      pageStartIndex: 1,
+      alwaysShowAllBtns: true,
+      withFirstAndLast: true,
+      firstPageText: '<<',
+      prePageText: '<',
+      nextPageText: '>',
+      lastPageText: '>>',
+      nextPageTitle: '처음 페이지',
+      prePageTitle: '이전 페이지',
+      firstPageTitle: '다음 페이지',
+      lastPageTitle: '마지막 페이지',
+      showTotal: true,
+      paginationTotalRenderer: customTotal,
+      sizePerPageList: [{
+        text: '20개',
+        value: 20
+      }, {
+        text: '50개',
+        value: 50
+      }, {
+        text: '100개',
+        value: 100
+      }, {
+        text: '200개',
+        value: 200
+      }, {
+        text: '500개',
+        value: 500
+      }, {
+        text: '전체',
+        value: this.props.data.length
+      }]
+    };
+    this.props.selectRow.bgColor = '#ffffe0';
+    return /*#__PURE__*/React__default.createElement("div", null, this.state.showImageHover ? /*#__PURE__*/React__default.createElement("img", {
+      className: "imageHoverView",
+      alt: "",
+      src: this.state.hoversrc
+    }) : null, /*#__PURE__*/React__default.createElement(ToolkitProvider__default, {
+      keyField: this.props.keyField,
+      data: this.props.data,
+      columns: this.InitColumns(this.props.columns),
+      onTableChange: this.onTableChange,
+      search: true,
+      columnToggle: true
+    }, function (props) {
+      return /*#__PURE__*/React__default.createElement("div", {
+        className: "Table_main"
+      }, _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(ToggleList, _extends({
+        contextual: "success",
+        className: "ToggleList",
+        btnClassName: "ToggleListBtn"
+      }, props.columnToggleProps)) : null, /*#__PURE__*/React__default.createElement("div", {
+        className: "THeader"
+      }, /*#__PURE__*/React__default.createElement(TableButton, {
+        UpDownBT: _this2.props.UpDownBT,
+        setBT: _this2.props.setBT,
+        setMoveBT: _this2.props.setMoveBT,
+        setTelecom: _this2.props.setTelecom,
+        Code: "Top",
+        Add: _this2.props.Add,
+        Remove: _this2.props.Remove,
+        Modify: _this2.props.Modify,
+        Process: _this2.props.Process,
+        MoveDB: _this2.props.MoveDB,
+        CollectDB: _this2.props.CollectDB,
+        TelecomChange: _this2.props.TelecomChange,
+        disableAll: _this2.props.disableAll
+      }), _this2.props.searchBar ? /*#__PURE__*/React__default.createElement(SearchForm, _extends({}, props.searchProps, {
+        ref: _this2.SearchBar,
+        SendSearch: _this2.props.SendSearch
+      })) : null), /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({}, props.baseProps, {
+        selectRow: _this2.props.selectRow,
+        ref: _this2.Table,
+        rowEvents: _this2.props.rowEvents,
+        pagination: !_this2.props.pagination ? null : paginationFactory(options)
+      })));
+    }));
+  };
+
+  return CreateTable;
+}(React__default.Component);
+
+var SearchForm = /*#__PURE__*/function (_React$Component2) {
+  _inheritsLoose(SearchForm, _React$Component2);
+
+  function SearchForm(props) {
+    var _this3;
+
+    _this3 = _React$Component2.call(this, props) || this;
+
+    _this3.SendSearch = function (input) {
+      _this3.props.onSearch(input);
+    };
+
+    _this3.SearchClick = function () {
+      _this3.props.onSearch(_this3.state.input);
+    };
+
+    _this3.ClearClick = function () {
+      _this3.setState(function () {
+        return {
+          input: ''
+        };
+      });
+
+      _this3.props.onSearch('');
+    };
+
+    _this3.SearchTable = function (item) {
+      _this3.setState(function () {
+        return {
+          input: item
+        };
+      });
+
+      _this3.props.onSearch(item);
+    };
+
+    _this3.FormChange = function (e) {
+      var in_text = e.target.value;
+
+      _this3.setState(function () {
+        return {
+          input: in_text
+        };
+      });
+    };
+
+    _this3.appKeyPress = function (e) {
+      if (e.key === 'Enter') {
+        _this3.SearchClick();
+      }
+    };
+
+    _this3.state = {
+      input: ''
+    };
+    return _this3;
+  }
+
+  var _proto2 = SearchForm.prototype;
+
+  _proto2.render = function render() {
+    var _this4 = this;
+
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "TopSearchBar"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Prepend, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      className: "ClearBT",
+      onClick: this.ClearClick
+    }, "Clear")), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
+      className: "SearchForm",
+      onChange: function onChange(e) {
+        return _this4.FormChange(e);
+      },
+      value: this.state.input,
+      onKeyPress: function onKeyPress(e) {
+        return _this4.appKeyPress(e);
+      }
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Append, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      className: "SearchBT",
+      onClick: this.SearchClick
+    }, "\uAC80\uC0C9"))));
+  };
+
+  return SearchForm;
+}(React__default.Component);
+
 var getStructFromFormat = function getStructFromFormat(DataStruct, FormatName) {
   return getFormat(DataStruct.Struct, FormatName);
 };
@@ -7991,6 +8529,7 @@ var ExampleComponent = function ExampleComponent(_ref) {
 };
 
 exports.CreatePage = CreatePage;
+exports.CreateTable = CreateTable;
 exports.ExampleComponent = ExampleComponent;
 exports.getIDList = getIDList;
 exports.getIFList = getIFList;

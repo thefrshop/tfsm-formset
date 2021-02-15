@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { CreatePage } from 'tfsm-formset/dist';
-import 'tfsm-formset/dist/index.css';
+import { CreatePage, CreateTable } from 'tfsm-formset/dist';
+import 'tfsm-formset/dist/indexL.css';
 import './App.css';
 import { Button, Tab, Tabs } from 'react-bootstrap';
-import * as ex from './exampleList';
+import * as exL from './exampleList';
+import * as exT from './exampleTable';
 import ReactJson from 'react-json-view';
 import Highlight from 'react-highlight';
 
@@ -108,38 +109,42 @@ export default class App extends React.Component {
 		);
 	};
 
+	TestTable = () => {};
+
 	render() {
 		return (
 			<div className="App">
 				<h3>tfsm-formset 예제</h3>
 				<br />
-				<Tabs>
+				<Tabs defaultActiveKey="Table">
 					<Tab eventKey="API" title="Form API">
 						<Tabs defaultActiveKey="CodeGen">
-							{this.Test('CodeGen', ex.CodeGen, ex.CodeGenInit)}
-							{this.Test('Text', ex.Text, ex.TextInit)}
-							{this.Test('Price', ex.Price, ex.PriceInit)}
-							{this.Test('Hierarchy', ex.Hierarchy, ex.HierarchyInit, null, ex.HierarchySample)}
-							{this.Test('ListSelect', ex.ListSelect, ex.ListSelectInit, null, null, ex.ListData)}
-							{this.Test('Child', ex.Child, null, [
+							{this.Test('CodeGen', exL.CodeGen, exL.CodeGenInit)}
+							{this.Test('Text', exL.Text, exL.TextInit)}
+							{this.Test('Price', exL.Price, exL.PriceInit)}
+							{this.Test('Hierarchy', exL.Hierarchy, exL.HierarchyInit, null, exL.HierarchySample)}
+							{this.Test('ListSelect', exL.ListSelect, exL.ListSelectInit, null, null, exL.ListData)}
+							{this.Test('Child', exL.Child, null, [
 								<div key="Child1">Child1</div>,
 								<div key="Child2">Child2</div>
 							])}
-							{this.Test('Select', ex.Select, ex.SelectInit)}
-							{this.Test('UploadImage', ex.UploadImage, ex.UploadImageInit)}
-							{this.Test('UploadImageSingle', ex.UploadImageSingle, ex.UploadImageSingleInit)}
-							{this.Test('HtmlEditer', ex.HtmlEditer, ex.HtmlEditerInit)}
+							{this.Test('Select', exL.Select, exL.SelectInit)}
+							{this.Test('UploadImage', exL.UploadImage, exL.UploadImageInit)}
+							{this.Test('UploadImageSingle', exL.UploadImageSingle, exL.UploadImageSingleInit)}
+							{this.Test('HtmlEditer', exL.HtmlEditer, exL.HtmlEditerInit)}
 
-							{this.Test('Imageset', ex.Imageset, ex.ImagesetInit)}
-							{this.Test('Tab', ex.Tab, null)}
-							{this.Test('Textline', ex.Textline, ex.TextlineInit)}
-							{this.Test('Date', ex.Date, ex.DateInit)}
-							{this.Test('Option-오류', ex.Option, ex.OptionInit)}
-							{this.Test('Switch', ex.Switch, ex.SwitchInit)}
-							{this.Test('DatePicker', ex.DatePicker, ex.DatePickerInit)}
+							{this.Test('Imageset', exL.Imageset, exL.ImagesetInit)}
+							{this.Test('Tab', exL.Tab, null)}
+							{this.Test('Textline', exL.Textline, exL.TextlineInit)}
+							{this.Test('Date', exL.Date, exL.DateInit)}
+							{this.Test('Option-오류', exL.Option, exL.OptionInit)}
+							{this.Test('Switch', exL.Switch, exL.SwitchInit)}
+							{this.Test('DatePicker', exL.DatePicker, exL.DatePickerInit)}
 						</Tabs>
 					</Tab>
-					<Tab eventKey="Table" title="Table API" />
+					<Tab eventKey="Table" title="Table API">
+						{this.TestTable()}
+					</Tab>
 					<Tab eventKey="DOC" title="DOC">
 						<h5>Code</h5>
 						<Highlight className="consoleView" language="javascript">

@@ -1,0 +1,234 @@
+.Table_main {
+	text-align: start;
+}
+.Table_main tbody {
+	background: #fff;
+}
+
+.react-bootstrap-table-pagination .dropdown .btn {
+	font-size: 14px;
+	width: 60px;
+	border: 0px;
+	border-radius: 0;
+	height: 32px;
+}
+
+.react-bootstrap-table-pagination div {
+	text-align: left;
+}
+
+.react-bootstrap-table-pagination .dropdown-item {
+	text-align: left;
+	font-size: 13px;
+}
+
+.react-bootstrap-table-pagination-total {
+	margin-left: 10px;
+	font-size: 13px;
+}
+
+.TableLinkButton {
+	border: 0px;
+	font-size: 0.8rem;
+	padding: 4px;
+}
+
+.TableButtonSet {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.TableButtonGroup {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.THeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.TButton {
+	min-width: 90px !important;
+	border-radius: 0 !important;
+	height: 30px !important;
+	padding: 4px 15px !important;
+	margin-right: 10px !important;
+	background: #fff !important;
+	border: 1px solid #dbdde2 !important;
+	color: #666 !important;
+	font-size: 12px !important;
+	cursor: pointer !important;
+}
+
+.TableButtonSet .active {
+	background: #238b23 !important;
+	color: #fff !important;
+}
+
+.TableButtonSet .Split {
+	background-color: #dbdde2;
+	height: 20px;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 15px;
+	width: 2px;
+	font-size: 0;
+	border: 1px solid #dbdde2;
+}
+
+.TableButtonSet .TButton:hover {
+	background: #efefef;
+	border: 1px solid #666;
+}
+
+.TableImage:hover {
+	cursor: pointer;
+}
+
+.TopSearchBar .input-group {
+	margin-top: 0;
+}
+
+.TopSearchBar .ClearBT {
+	margin-top: 0;
+	background: #fff;
+	border: 1px solid #dbdde2;
+	border-radius: 0;
+	height: 30px;
+	color: #666;
+	font-size: 12px;
+}
+
+.TopSearchBar .SearchForm {
+	background: #fff;
+	border: 1px solid #dbdde2;
+	border-radius: 0;
+	height: 30px;
+	color: #666;
+	font-size: 12px;
+}
+
+.TopSearchBar .SearchBT {
+	background: #238b23;
+	border: 1px solid #238b23;
+	border-radius: 0;
+	height: 30px;
+	color: #fff;
+	font-size: 12px;
+}
+
+.BT_jarr {
+	background: #fff;
+	border: 1px solid #238b23;
+	border-radius: 5;
+	width: 60px;
+	height: 20px;
+	float: left;
+	margin: 0 10px 0px 0;
+	color: #238b23;
+}
+.BT_jarr:hover {
+	cursor: pointer;
+	background-color: #238b23;
+	color: #fff;
+}
+
+.BT_GoStore {
+	background: #fff;
+	border: 1px solid #238b23;
+	border-radius: 5;
+	width: 40px;
+	height: 20px;
+	color: #238b23;
+}
+.BT_GoStore:hover {
+	cursor: pointer;
+	background-color: #238b23;
+	color: #fff;
+}
+
+.table td,
+.table th {
+	color: #555;
+	font-size: 13px;
+	font-weight: 400;
+	max-width: 500px;
+	line-height: unset;
+	overflow: hidden;
+}
+
+.table thead th {
+	font-weight: 500;
+	background: #edf0f5;
+	border: 1px solid #d3d8e1;
+	padding: 9px 5px;
+}
+
+.selection-cell {
+	width: 25px;
+}
+
+.PImage {
+	margin: 0 5px 0 0;
+	width: 20px;
+	height: 20px;
+}
+
+.ToggleList {
+	margin: 10px 0;
+}
+
+.ToggleListBtn {
+	font-size: 0.8rem;
+}
+
+.btn-success {
+	background: #eee;
+	border-color: #eee;
+	color: #238b23;
+}
+
+.imageHoverView {
+	position: absolute;
+	z-index: 99;
+	top: 0;
+	right: 0;
+	width: 300px;
+	height: 300px;
+	background: #3e8f3e;
+}
+
+.imageHoverViewOld {
+	position: absolute;
+	z-index: 99;
+	top: 200px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 800px;
+	height: 800px;
+	background: #3e8f3e;
+}
+
+.page-item .page-link {
+	font-size: 13px;
+	border-radius: 0;
+	color: #555;
+	background-color: #fff;
+	border-color: #dbdde2;
+}
+
+.page-item.active .page-link {
+	z-index: 1;
+	font-size: 13px;
+	border-radius: 0;
+	color: #3e8f3e;
+	background-color: #fff;
+	border-color: #3e8f3e;
+}
+
+.Caret {
+	font-size: 10px;
+}
