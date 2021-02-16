@@ -1,6 +1,5 @@
 .ProductCreatePage {
 	text-align: left;
-	max-width: 1000px;
 	background: #f4f8fb;
 }
 .ProductCreatePage .BackButton {
@@ -8,13 +7,11 @@
 }
 
 .ProductCreateView {
-	margin: 20px 0 10px;
 }
 
 .ProductCreateView .FormView {
 	padding: 10px;
-	margin-top: 15px;
-	margin-bottom: 20px;
+
 	background: #ffffff;
 	border-radius: .5rem;
 	box-shadow: 1px 1px 5px rgba(237, 238, 240, .2);

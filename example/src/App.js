@@ -221,6 +221,7 @@ export default class App extends React.Component {
 							{this.TestTable('Array', exT.Array, exT.ArrayInit)}
 							{this.TestTable('Table', exT.Table, exT.TableInit)}
 							{this.TestTable('Icon', exT.Icon, exT.IconInit)}
+							{this.TestTable('Html', exT.Html, exT.HtmlInit)}
 						</Tabs>
 					</Tab>
 					<Tab eventKey="DOC" title="DOC">

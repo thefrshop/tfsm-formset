@@ -2481,6 +2481,19 @@ var F_Icon = {
   formatter: formatter$b
 };
 
+var formatter$c = function formatter(cell, row, rowIndex, Data) {
+  return /*#__PURE__*/React__default.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: cell
+    }
+  });
+};
+
+var F_Html = {
+  __proto__: null,
+  formatter: formatter$c
+};
+
 var FormatSet$1 = [{
   name: 'DateTime',
   module: F_DateTime
@@ -2517,6 +2530,9 @@ var FormatSet$1 = [{
 }, {
   name: 'Icon',
   module: F_Icon
+}, {
+  name: 'Html',
+  module: F_Html
 }];
 var Getformatter = function Getformatter(format) {
   if (format === undefined) return null;

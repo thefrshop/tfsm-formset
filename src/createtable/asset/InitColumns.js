@@ -14,6 +14,7 @@ import * as F_Link from '../formatter/Link';
 import * as F_Array from '../formatter/Array';
 import * as F_Table from '../formatter/Table';
 import * as F_Icon from '../formatter/Icon';
+import * as F_Html from '../formatter/Html';
 
 const FormatSet = [
 	{ name: 'DateTime', module: F_DateTime },
@@ -27,7 +28,8 @@ const FormatSet = [
 	{ name: 'Link', module: F_Link },
 	{ name: 'Array', module: F_Array },
 	{ name: 'Table', module: F_Table },
-	{ name: 'Icon', module: F_Icon }
+	{ name: 'Icon', module: F_Icon },
+	{ name: 'Html', module: F_Html }
 ];
 
 export const Getformatter = (format) => {
