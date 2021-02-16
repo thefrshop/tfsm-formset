@@ -1899,9 +1899,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     _this.FormView = function (Struct, InitData, handleChange) {
       var ModifyMode = _this.props.ModifyMode;
       if (ModifyMode === undefined) ModifyMode = false;
-
-      var InitData = _this.InitDataSet(ModifyMode, Struct, InitData);
-
       var FormTable = [];
       Struct.forEach(function (item, index) {
         if (item.format === 'Titletext') FormTable.push( /*#__PURE__*/React__default.createElement("div", {
@@ -1911,7 +1908,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
           className: "FormViewTitle"
         }, item.name), /*#__PURE__*/React__default.createElement("div", {
           className: "FormViewPage"
-        }, _this.ItemsView(item.Items, InitData, handleChange, ModifyMode))));
+        }, _this.ItemsView(item.Items, _this.state.InitData, handleChange, ModifyMode))));
       });
       return FormTable;
     };
@@ -1942,6 +1939,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.ItemsView = function (Struct, values, handleChange, ModifyMode) {
+      if (values === null) return null;
       var ItemsTable = [];
       Struct.forEach(function (item, index) {
         if (item.format === 'Child') {
@@ -2113,7 +2111,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       isloading: false,
       create_state: 0,
-      InitData: {},
+      InitData: null,
       imagefile: [],
       htmlfile: null,
       deleteimage: []
@@ -2122,6 +2120,24 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
   }
 
   var _proto = CreatePage.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    var ModifyMode = this.props.ModifyMode;
+    if (ModifyMode === undefined) ModifyMode = false;
+    var values = this.InitDataSet(ModifyMode, this.props.DataStruct.Struct, this.props.InitData);
+    this.setState({
+      InitData: values
+    });
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.DataStruct.Struct != this.props.DataStruct.Struct || prevProps.InitData != this.props.InitData) {
+      var values = this.InitDataSet(this.props.ModifyMode, this.props.DataStruct.Struct, this.props.InitData);
+      this.setState({
+        InitData: values
+      });
+    }
+  };
 
   _proto.render = function render() {
     var bt_style = {};

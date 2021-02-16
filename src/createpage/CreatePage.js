@@ -19,12 +19,26 @@ class CreatePage extends React.Component {
 		this.state = {
 			isloading: false,
 			create_state: 0,
-			InitData: {},
+			InitData: null,
 			imagefile: [],
 			htmlfile: null,
 			deleteimage: []
 		};
 	}
+	componentDidMount() {
+		var ModifyMode = this.props.ModifyMode;
+		if (ModifyMode === undefined) ModifyMode = false;
+		var values = this.InitDataSet(ModifyMode, this.props.DataStruct.Struct, this.props.InitData);
+		this.setState({ InitData: values });
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevProps.DataStruct.Struct != this.props.DataStruct.Struct || prevProps.InitData != this.props.InitData) {
+			var values = this.InitDataSet(this.props.ModifyMode, this.props.DataStruct.Struct, this.props.InitData);
+			this.setState({ InitData: values });
+		}
+	}
+
 	Submit = () => {
 		this.Submitbtn.current.click();
 	};
@@ -33,7 +47,6 @@ class CreatePage extends React.Component {
 	FormView = (Struct, InitData, handleChange) => {
 		var ModifyMode = this.props.ModifyMode;
 		if (ModifyMode === undefined) ModifyMode = false;
-		var InitData = this.InitDataSet(ModifyMode, Struct, InitData);
 
 		let FormTable = [];
 		Struct.forEach((item, index) => {
@@ -42,7 +55,7 @@ class CreatePage extends React.Component {
 					<div className="FormView" key={index}>
 						<div className="FormViewTitle">{item.name}</div>
 						<div className="FormViewPage">
-							{this.ItemsView(item.Items, InitData, handleChange, ModifyMode)}
+							{this.ItemsView(item.Items, this.state.InitData, handleChange, ModifyMode)}
 						</div>
 					</div>
 				);
@@ -83,6 +96,7 @@ class CreatePage extends React.Component {
 
 	ItemsView = (Struct, values, handleChange, ModifyMode) => {
 		//console.log(this.props);
+		if (values === null) return null;
 
 		let ItemsTable = [];
 		Struct.forEach((item, index) => {
