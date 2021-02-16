@@ -15,16 +15,11 @@ class CreatePage extends React.Component {
 		this.Submitbtn = React.createRef();
 
 		if (this.props.Submit !== undefined) this.props.Submit(() => this.Submit());
-		if (this.props.UpdateData !== undefined) this.props.UpdateData((Data) => this.UpdateData(Data));
-
-		var ModifyMode = this.props.ModifyMode;
-		if (ModifyMode === undefined) ModifyMode = false;
 
 		this.state = {
-			ModifyMode: ModifyMode,
 			isloading: false,
 			create_state: 0,
-			InitData: this.InitDataSet(ModifyMode, this.props.DataStruct.Struct, this.props.InitData),
+			InitData: {},
 			imagefile: [],
 			htmlfile: null,
 			deleteimage: []
@@ -34,15 +29,26 @@ class CreatePage extends React.Component {
 		this.Submitbtn.current.click();
 	};
 
-	UpdateData = (Data) => {
-		//console.log('Data', Data);
+	// 타입별 폼 생성
+	FormView = (Struct, InitData, handleChange) => {
+		var ModifyMode = this.props.ModifyMode;
+		if (ModifyMode === undefined) ModifyMode = false;
+		var InitData = this.InitDataSet(ModifyMode, Struct, InitData);
 
-		var InitData = this.InitDataSet(this.state.ModifyMode, this.props.DataStruct.Struct, Data);
-		//console.log('UpdateData', InitData);
-
-		this.setState({
-			InitData: InitData
+		let FormTable = [];
+		Struct.forEach((item, index) => {
+			if (item.format === 'Titletext')
+				FormTable.push(
+					<div className="FormView" key={index}>
+						<div className="FormViewTitle">{item.name}</div>
+						<div className="FormViewPage">
+							{this.ItemsView(item.Items, InitData, handleChange, ModifyMode)}
+						</div>
+					</div>
+				);
 		});
+
+		return FormTable;
 	};
 
 	// 타입별 데이터 초기화
@@ -75,7 +81,7 @@ class CreatePage extends React.Component {
 		return InitPopup;
 	};
 
-	ItemsView = (Struct, values, handleChange) => {
+	ItemsView = (Struct, values, handleChange, ModifyMode) => {
 		//console.log(this.props);
 
 		let ItemsTable = [];
@@ -96,15 +102,7 @@ class CreatePage extends React.Component {
 				});
 			} else {
 				ItemsTable.push(
-					FormFormat.ItemsView(
-						this,
-						index,
-						item,
-						values,
-						handleChange,
-						this.state.ModifyMode,
-						this.UpdateInitData
-					)
+					FormFormat.ItemsView(this, index, item, values, handleChange, ModifyMode, this.UpdateInitData)
 				);
 			}
 		});
@@ -210,24 +208,6 @@ class CreatePage extends React.Component {
 		return images;
 	};
 
-	// 타입별 폼 생성
-	FormView = (Struct, values, handleChange) => {
-		//console.log('Struct', Struct);
-
-		let FormTable = [];
-		Struct.forEach((item, index) => {
-			if (item.format === 'Titletext')
-				FormTable.push(
-					<div className="FormView" key={index}>
-						<div className="FormViewTitle">{item.name}</div>
-						<div className="FormViewPage">{this.ItemsView(item.Items, values, handleChange)}</div>
-					</div>
-				);
-		});
-
-		return FormTable;
-	};
-
 	onSubmit = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -259,12 +239,12 @@ class CreatePage extends React.Component {
 			<div className="ProductCreatePage">
 				<Form onSubmit={this.onSubmit}>
 					<div className="ProductCreateView">
-						{this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)}
+						{this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)}
 					</div>
 
 					<div className="ProductCreateFooter" style={bt_style}>
 						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
-							{this.state.ModifyMode ? '수정' : '등록'}
+							{this.props.ModifyMode ? '수정' : '등록'}
 						</Button>
 					</div>
 				</Form>

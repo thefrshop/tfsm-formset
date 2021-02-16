@@ -1896,12 +1896,24 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       _this.Submitbtn.current.click();
     };
 
-    _this.UpdateData = function (Data) {
-      var InitData = _this.InitDataSet(_this.state.ModifyMode, _this.props.DataStruct.Struct, Data);
+    _this.FormView = function (Struct, InitData, handleChange) {
+      var ModifyMode = _this.props.ModifyMode;
+      if (ModifyMode === undefined) ModifyMode = false;
 
-      _this.setState({
-        InitData: InitData
+      var InitData = _this.InitDataSet(ModifyMode, Struct, InitData);
+
+      var FormTable = [];
+      Struct.forEach(function (item, index) {
+        if (item.format === 'Titletext') FormTable.push( /*#__PURE__*/React__default.createElement("div", {
+          className: "FormView",
+          key: index
+        }, /*#__PURE__*/React__default.createElement("div", {
+          className: "FormViewTitle"
+        }, item.name), /*#__PURE__*/React__default.createElement("div", {
+          className: "FormViewPage"
+        }, _this.ItemsView(item.Items, InitData, handleChange, ModifyMode))));
       });
+      return FormTable;
     };
 
     _this.InitDataSet = function (ModifyMode, Struct, Data) {
@@ -1929,7 +1941,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return InitPopup;
     };
 
-    _this.ItemsView = function (Struct, values, handleChange) {
+    _this.ItemsView = function (Struct, values, handleChange, ModifyMode) {
       var ItemsTable = [];
       Struct.forEach(function (item, index) {
         if (item.format === 'Child') {
@@ -1946,7 +1958,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             }
           });
         } else {
-          ItemsTable.push(ItemsView$i(_assertThisInitialized(_this), index, item, values, handleChange, _this.state.ModifyMode, _this.UpdateInitData));
+          ItemsTable.push(ItemsView$i(_assertThisInitialized(_this), index, item, values, handleChange, ModifyMode, _this.UpdateInitData));
         }
       });
       return ItemsTable;
@@ -2077,21 +2089,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       return images;
     };
 
-    _this.FormView = function (Struct, values, handleChange) {
-      var FormTable = [];
-      Struct.forEach(function (item, index) {
-        if (item.format === 'Titletext') FormTable.push( /*#__PURE__*/React__default.createElement("div", {
-          className: "FormView",
-          key: index
-        }, /*#__PURE__*/React__default.createElement("div", {
-          className: "FormViewTitle"
-        }, item.name), /*#__PURE__*/React__default.createElement("div", {
-          className: "FormViewPage"
-        }, _this.ItemsView(item.Items, values, handleChange))));
-      });
-      return FormTable;
-    };
-
     _this.onSubmit = function (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -2113,16 +2110,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     if (_this.props.Submit !== undefined) _this.props.Submit(function () {
       return _this.Submit();
     });
-    if (_this.props.UpdateData !== undefined) _this.props.UpdateData(function (Data) {
-      return _this.UpdateData(Data);
-    });
-    var _ModifyMode = _this.props.ModifyMode;
-    if (_ModifyMode === undefined) _ModifyMode = false;
     _this.state = {
-      ModifyMode: _ModifyMode,
       isloading: false,
       create_state: 0,
-      InitData: _this.InitDataSet(_ModifyMode, _this.props.DataStruct.Struct, _this.props.InitData),
+      InitData: {},
       imagefile: [],
       htmlfile: null,
       deleteimage: []
@@ -2151,7 +2142,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       onSubmit: this.onSubmit
     }, /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreateView"
-    }, this.FormView(this.props.DataStruct.Struct, this.state.InitData, this.handleChange)), /*#__PURE__*/React__default.createElement("div", {
+    }, this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)), /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreateFooter",
       style: bt_style
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
@@ -2159,7 +2150,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       type: "submit",
       variant: "Submit",
       size: "sm"
-    }, this.state.ModifyMode ? '수정' : '등록'))));
+    }, this.props.ModifyMode ? '수정' : '등록'))));
   };
 
   return CreatePage;
