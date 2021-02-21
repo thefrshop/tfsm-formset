@@ -59,16 +59,16 @@ export const InitColumns = (propscolumns, onChange) => {
 };
 
 const Caret = (order) => {
-	if (!order) return <span className="Caret" />;
+	if (!order) return <span className="Caret" style={{ position: 'absolute', right: '10px', top: '5px' }} />;
 	else if (order === 'asc')
 		return (
-			<span className="Caret">
+			<span className="Caret" style={{ position: 'absolute', right: '10px', top: '5px' }}>
 				<ImSortAlphaAsc color="#238b23" />
 			</span>
 		);
 	else if (order === 'desc')
 		return (
-			<span className="Caret">
+			<span className="Caret" style={{ position: 'absolute', right: '10px', top: '5px' }}>
 				<ImSortAlphaDesc color="#238b23" />
 			</span>
 		);

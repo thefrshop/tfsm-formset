@@ -25,6 +25,7 @@ var ReactJson = _interopDefault(require('react-json-view'));
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
 var ToolkitProvider__default = _interopDefault(ToolkitProvider);
+var bs = require('react-icons/bs');
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -2188,28 +2189,32 @@ var TableButton = /*#__PURE__*/function (_React$Component) {
       className: "TableButtonSet"
     }, this.props.UpDownBT && /*#__PURE__*/React__default.createElement("div", {
       className: "TableButtonGroup"
-    }, /*#__PURE__*/React__default.createElement("button", {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.DoubleUp();
       }
     }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleUp, {
       className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement("button", {
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.Up();
       }
     }, /*#__PURE__*/React__default.createElement(fa.FaAngleUp, {
       className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement("button", {
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.Down();
       }
     }, /*#__PURE__*/React__default.createElement(fa.FaAngleDown, {
       className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement("button", {
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.DoubleDown();
@@ -2218,19 +2223,22 @@ var TableButton = /*#__PURE__*/function (_React$Component) {
       className: "bannerIcons"
     }))), this.props.setBT && /*#__PURE__*/React__default.createElement("div", {
       className: "TableButtonGroup"
-    }, /*#__PURE__*/React__default.createElement("button", {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.Remove();
       }
     }, "\uC120\uD0DD \uC0AD\uC81C"), /*#__PURE__*/React__default.createElement("div", {
       className: "Split"
-    }), /*#__PURE__*/React__default.createElement("button", {
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.Add();
       }
-    }, "\uB4F1\uB85D"), /*#__PURE__*/React__default.createElement("button", {
+    }, "\uB4F1\uB85D"), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "TButton",
       onClick: function onClick() {
         return _this.props.Modify();
@@ -2574,13 +2582,28 @@ var InitColumns = function InitColumns(propscolumns, onChange) {
 
 var Caret = function Caret(order) {
   if (!order) return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret"
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
   });else if (order === 'asc') return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret"
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
   }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaAsc, {
     color: "#238b23"
   }));else if (order === 'desc') return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret"
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
   }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaDesc, {
     color: "#238b23"
   }));
@@ -2702,22 +2725,43 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
     }, function (props) {
       return /*#__PURE__*/React__default.createElement("div", {
         className: "Table_main"
-      }, _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(ToggleList, _extends({
-        contextual: "success",
-        className: "ToggleList",
-        btnClassName: "ToggleListBtn"
-      }, props.columnToggleProps)) : null, /*#__PURE__*/React__default.createElement("div", {
+      }, /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion, {
+        style: {
+          marginBottom: '15px'
+        }
+      }, /*#__PURE__*/React__default.createElement("div", {
         className: "THeader"
-      }, /*#__PURE__*/React__default.createElement(TableButton, {
+      }, /*#__PURE__*/React__default.createElement("div", {
+        style: {
+          display: 'flex'
+        }
+      }, _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Toggle, {
+        as: reactBootstrap.Button,
+        variant: "secondary",
+        className: "TButton",
+        eventKey: "0",
+        style: {
+          marginRight: '20px',
+          minWidth: '20px'
+        }
+      }, /*#__PURE__*/React__default.createElement(bs.BsLayoutThreeColumns, null)) : null, /*#__PURE__*/React__default.createElement(TableButton, {
         UpDownBT: _this2.props.UpDownBT,
         setBT: _this2.props.setBT,
         Add: _this2.props.Add,
         Remove: _this2.props.Remove,
         Modify: _this2.props.Modify
-      }), _this2.props.searchBar ? /*#__PURE__*/React__default.createElement(SearchForm, _extends({}, props.searchProps, {
+      })), _this2.props.searchBar ? /*#__PURE__*/React__default.createElement(SearchForm, _extends({}, props.searchProps, {
         ref: _this2.SearchBar,
         SendSearch: _this2.props.SendSearch
-      })) : null), /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({}, props.baseProps, {
+      })) : null), _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Collapse, {
+        eventKey: "0"
+      }, /*#__PURE__*/React__default.createElement(ToggleList, _extends({
+        contextual: "secondary",
+        className: "ToggleList",
+        btnClassName: "ToggleListBtn"
+      }, props.columnToggleProps))) : null), /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({
+        id: _this2.props.id
+      }, props.baseProps, {
         selectRow: selectRow,
         ref: _this2.Table,
         rowEvents: _this2.props.rowEvents,
@@ -2795,6 +2839,7 @@ var SearchForm = /*#__PURE__*/function (_React$Component2) {
     return /*#__PURE__*/React__default.createElement("div", {
       className: "TopSearchBar"
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Prepend, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "ClearBT",
       onClick: this.ClearClick
     }, "Clear")), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
@@ -2807,6 +2852,7 @@ var SearchForm = /*#__PURE__*/function (_React$Component2) {
         return _this4.appKeyPress(e);
       }
     }), /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Append, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
       className: "SearchBT",
       onClick: this.SearchClick
     }, "\uAC80\uC0C9"))));

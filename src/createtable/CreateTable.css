@@ -47,24 +47,52 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-bottom: 15px;
+}
+
+.ToggleList {
+	margin-top: 15px;
+}
+
+.ToggleListBtn {
+	border-radius: 0;
+	height: 30px;
+	padding: 4px 10px;
+	margin-right: 5px;
+	background: #fff !important;
+	border: 1px solid #dbdde2 !important;
+	color: #666;
+	font-size: 12px;
+	cursor: pointer;
+}
+.ToggleListBtn:hover {
+	color: #474d57 !important;
+	background: #efefef !important;
+}
+
+.ToggleListBtn.active {
+	background: #9197a0 !important;
 }
 
 .TButton {
-	min-width: 90px !important;
+	min-width: 90px;
 	border-radius: 0 !important;
 	height: 30px !important;
 	padding: 4px 15px !important;
-	margin-right: 10px !important;
-	background: #fff !important;
+	margin-right: 10px;
+	background: #fff;
 	border: 1px solid #dbdde2 !important;
-	color: #666 !important;
+	color: #666;
 	font-size: 12px !important;
 	cursor: pointer !important;
 }
+.TButton:hover {
+	color: #474d57;
+	background: #efefef;
+	border: 1px solid #666;
+}
 
 .TableButtonSet .active {
-	background: #238b23 !important;
+	background: #9197a0 !important;
 	color: #fff !important;
 }
 
@@ -77,11 +105,6 @@
 	width: 2px;
 	font-size: 0;
 	border: 1px solid #dbdde2;
-}
-
-.TableButtonSet .TButton:hover {
-	background: #efefef;
-	border: 1px solid #666;
 }
 
 .TableImage:hover {
@@ -112,12 +135,19 @@
 }
 
 .TopSearchBar .SearchBT {
-	background: #238b23;
-	border: 1px solid #238b23;
+	background: #9197a0;
+	border: 1px solid #9197a0;
 	border-radius: 0;
 	height: 30px;
 	color: #fff;
 	font-size: 12px;
+}
+
+.TopSearchBar .ClearBT:hover,
+.TopSearchBar .SearchBT:hover {
+	color: #474d57;
+	background: #efefef;
+	border: 1px solid #dbdde2;
 }
 
 .BT_jarr {
@@ -161,6 +191,7 @@
 }
 
 .table thead th {
+	position: relative;
 	font-weight: 500;
 	background: #edf0f5;
 	border: 1px solid #d3d8e1;
@@ -175,14 +206,6 @@
 	margin: 0 5px 0 0;
 	width: 20px;
 	height: 20px;
-}
-
-.ToggleList {
-	margin: 10px 0;
-}
-
-.ToggleListBtn {
-	font-size: 0.8rem;
 }
 
 .imageHoverView {
@@ -226,4 +249,9 @@
 .Caret {
 	padding-left: 2px;
 	font-size: 15px;
+}
+
+.btn:focus {
+	outline: none !important;
+	box-shadow: none !important;
 }

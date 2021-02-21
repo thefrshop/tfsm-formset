@@ -8,8 +8,10 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
 import './CreateTable.css';
 
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import 'moment/locale/ko';
+
+import { BsLayoutThreeColumns } from 'react-icons/bs';
 
 //import { Link } from 'react-router-dom';
 
@@ -123,34 +125,51 @@ export default class CreateTable extends React.Component {
 				>
 					{(props) => (
 						<div className="Table_main">
-							{this.props.toggleList ? (
-								<ToggleList
-									contextual="success"
-									className="ToggleList"
-									btnClassName="ToggleListBtn"
-									{...props.columnToggleProps}
-								/>
-							) : null}
+							<Accordion style={{ marginBottom: '15px' }}>
+								<div className="THeader">
+									<div style={{ display: 'flex' }}>
+										{this.props.toggleList ? (
+											<Accordion.Toggle
+												as={Button}
+												variant="secondary"
+												className="TButton"
+												eventKey="0"
+												style={{ marginRight: '20px', minWidth: '20px' }}
+											>
+												<BsLayoutThreeColumns />
+											</Accordion.Toggle>
+										) : null}
+										<TableButton
+											UpDownBT={this.props.UpDownBT}
+											setBT={this.props.setBT}
+											Add={this.props.Add}
+											Remove={this.props.Remove}
+											Modify={this.props.Modify}
+										/>
+									</div>
 
-							<div className="THeader">
-								<TableButton
-									UpDownBT={this.props.UpDownBT}
-									setBT={this.props.setBT}
-									Add={this.props.Add}
-									Remove={this.props.Remove}
-									Modify={this.props.Modify}
-								/>
-
-								{this.props.searchBar ? (
-									<SearchForm
-										{...props.searchProps}
-										ref={this.SearchBar}
-										SendSearch={this.props.SendSearch}
-									/>
+									{this.props.searchBar ? (
+										<SearchForm
+											{...props.searchProps}
+											ref={this.SearchBar}
+											SendSearch={this.props.SendSearch}
+										/>
+									) : null}
+								</div>
+								{this.props.toggleList ? (
+									<Accordion.Collapse eventKey="0">
+										<ToggleList
+											contextual="secondary"
+											className="ToggleList"
+											btnClassName="ToggleListBtn"
+											{...props.columnToggleProps}
+										/>
+									</Accordion.Collapse>
 								) : null}
-							</div>
+							</Accordion>
 
 							<BootstrapTable
+								id={this.props.id}
 								{...props.baseProps}
 								selectRow={selectRow}
 								ref={this.Table}
@@ -214,7 +233,7 @@ class SearchForm extends React.Component {
 			<div className="TopSearchBar">
 				<InputGroup>
 					<InputGroup.Prepend>
-						<Button className="ClearBT" onClick={this.ClearClick}>
+						<Button variant="secondary" className="ClearBT" onClick={this.ClearClick}>
 							Clear
 						</Button>
 					</InputGroup.Prepend>
@@ -225,7 +244,7 @@ class SearchForm extends React.Component {
 						onKeyPress={(e) => this.appKeyPress(e)}
 					/>
 					<InputGroup.Append>
-						<Button className="SearchBT" onClick={this.SearchClick}>
+						<Button variant="secondary" className="SearchBT" onClick={this.SearchClick}>
 							검색
 						</Button>
 					</InputGroup.Append>

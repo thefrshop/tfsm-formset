@@ -155,6 +155,9 @@ export default class App extends React.Component {
 				<br />
 				<h5>테이블</h5>
 				<CreateTable
+					setBT
+					toggleList
+					searchBar
 					keyField={keyField}
 					data={InitData}
 					columns={columns}

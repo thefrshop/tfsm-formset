@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaAngleDoubleUp, FaAngleUp, FaAngleDoubleDown, FaAngleDown } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
 
 export default class TableButton extends React.Component {
 	render() {
@@ -7,33 +8,33 @@ export default class TableButton extends React.Component {
 			<div className="TableButtonSet">
 				{this.props.UpDownBT && (
 					<div className="TableButtonGroup">
-						<button className="TButton" onClick={() => this.props.DoubleUp()}>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.DoubleUp()}>
 							<FaAngleDoubleUp className="bannerIcons" />
-						</button>
-						<button className="TButton" onClick={() => this.props.Up()}>
+						</Button>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.Up()}>
 							<FaAngleUp className="bannerIcons" />
-						</button>
-						<button className="TButton" onClick={() => this.props.Down()}>
+						</Button>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.Down()}>
 							<FaAngleDown className="bannerIcons" />
-						</button>
-						<button className="TButton" onClick={() => this.props.DoubleDown()}>
+						</Button>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.DoubleDown()}>
 							<FaAngleDoubleDown className="bannerIcons" />
-						</button>
+						</Button>
 					</div>
 				)}
 
 				{this.props.setBT && (
 					<div className="TableButtonGroup">
-						<button className="TButton" onClick={() => this.props.Remove()}>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.Remove()}>
 							선택 삭제
-						</button>
+						</Button>
 						<div className="Split" />
-						<button className="TButton" onClick={() => this.props.Add()}>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.Add()}>
 							등록
-						</button>
-						<button className="TButton" onClick={() => this.props.Modify()}>
+						</Button>
+						<Button variant="secondary" className="TButton" onClick={() => this.props.Modify()}>
 							수정
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>
