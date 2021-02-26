@@ -20,6 +20,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 					onChange={handleChange}
 					minRows={5}
 					maxRows={10}
+					{...item.props}
 				/>
 			</div>
 		</div>

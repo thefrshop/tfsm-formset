@@ -19,6 +19,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 					type="date"
 					name={item.id}
 					onChange={handleChange}
+					{...item.props}
 				/>
 			</div>
 		</div>

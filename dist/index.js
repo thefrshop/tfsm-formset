@@ -146,14 +146,14 @@ var ItemsView = function ItemsView(M, index, item, values, handleChange, ModifyM
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(ProductCodeGen, {
+  }, /*#__PURE__*/React__default.createElement(ProductCodeGen, _extends({
     key: index,
     ModifyMode: ModifyMode,
     InitialValue: values[item.id],
     name: item.id,
     onChange: handleChange,
     prefix: item.prefix
-  })));
+  }, item.props))));
 };
 
 var M_CodeGen = {
@@ -173,14 +173,14 @@ var ItemsView$1 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, _extends({}, item.props, {
     value: values[item.id],
     className: "TextInput",
     required: item.required,
     type: "text",
     name: item.id,
     onChange: handleChange
-  })));
+  }))));
 };
 
 var M_Text = {
@@ -200,14 +200,14 @@ var ItemsView$2 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, _extends({
     value: values[item.id] || '',
     className: "TextInput",
     required: item.required,
     type: "date",
     name: item.id,
     onChange: handleChange
-  })));
+  }, item.props))));
 };
 
 var M_Date = {
@@ -227,7 +227,7 @@ var ItemsView$3 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(TextareaAutosize, {
+  }, /*#__PURE__*/React__default.createElement(TextareaAutosize, _extends({
     value: values[item.id],
     className: "TextInput",
     required: item.required,
@@ -235,7 +235,7 @@ var ItemsView$3 = function ItemsView(M, index, item, values, handleChange, Modif
     onChange: handleChange,
     minRows: 5,
     maxRows: 10
-  })));
+  }, item.props))));
 };
 
 var M_Textline = {
@@ -265,7 +265,7 @@ var ItemsView$4 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(NumberFormat, {
+  }, /*#__PURE__*/React__default.createElement(NumberFormat, _extends({
     required: item.required,
     className: "TextInput form-control",
     value: values[item.id],
@@ -274,7 +274,7 @@ var ItemsView$4 = function ItemsView(M, index, item, values, handleChange, Modif
     onValueChange: function onValueChange(value) {
       return _onValueChange(item.id, value, handleChange);
     }
-  })));
+  }, item.props))));
 };
 
 var M_Price = {
@@ -294,7 +294,7 @@ var ItemsView$5 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, _extends({
     value: values[item.id],
     className: "TextSelect",
     required: item.required,
@@ -302,7 +302,7 @@ var ItemsView$5 = function ItemsView(M, index, item, values, handleChange, Modif
     as: "select",
     name: item.id,
     onChange: handleChange
-  }, GetOption(item.SelectText))));
+  }, item.props), GetOption(item.SelectText))));
 };
 
 var GetOption = function GetOption(SelectText) {
@@ -1590,7 +1590,7 @@ var ItemsView$e = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(DatePicker, {
+  }, /*#__PURE__*/React__default.createElement(DatePicker, _extends({
     name: item.id,
     selected: selected,
     dateFormat: item.dateFormat,
@@ -1598,7 +1598,7 @@ var ItemsView$e = function ItemsView(M, index, item, values, handleChange, Modif
       return UpdateInitData(item.id, date);
     },
     showTimeSelect: item.showTimeSelect
-  }))));
+  }, item.props)))));
 };
 
 var M_DatePicker = {
@@ -1623,7 +1623,7 @@ var ItemsView$f = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
+  }, /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, _extends({
     onlabel: item.onlabel,
     onstyle: item.onstyle,
     offlabel: item.offlabel,
@@ -1636,7 +1636,7 @@ var ItemsView$f = function ItemsView(M, index, item, values, handleChange, Modif
     onChange: function onChange(value) {
       return UpdateInitData(item.id, value);
     }
-  }))));
+  }, item.props)))));
 };
 
 var M_Switch = {
@@ -1658,14 +1658,14 @@ var ItemsView$g = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, {
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.Control, _extends({
     type: 'text',
     value: values[item.id],
     className: "TextInput",
     name: item.id,
     placeholder: "\uC27C\uD45C(,)\uB85C \uAD6C\uBD84",
     onChange: handleChange
-  }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+  }, item.props)), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
     style: {
       top: 0,
       right: 0,

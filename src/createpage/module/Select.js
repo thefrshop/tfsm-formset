@@ -20,6 +20,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 					as="select"
 					name={item.id}
 					onChange={handleChange}
+					{...item.props}
 				>
 					{GetOption(item.SelectText)}
 				</Form.Control>

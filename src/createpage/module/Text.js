@@ -13,6 +13,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 			<div className="ItemTitle">{item.name}</div>
 			<div className="ItemContent">
 				<Form.Control
+					{...item.props}
 					value={values[item.id]}
 					className="TextInput"
 					required={item.required}

@@ -23,6 +23,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 						dateFormat={item.dateFormat}
 						onChange={(date) => UpdateInitData(item.id, date)}
 						showTimeSelect={item.showTimeSelect}
+						{...item.props}
 					/>
 				</div>
 			</div>

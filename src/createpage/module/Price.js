@@ -29,6 +29,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 					thousandSeparator={item.Separator}
 					suffix={item.suffix}
 					onValueChange={(value) => onValueChange(item.id, value, handleChange)}
+					{...item.props}
 				/>
 			</div>
 		</div>

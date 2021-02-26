@@ -29,7 +29,8 @@ export const Text = {
 				{
 					id: 'ProductName',
 					name: '상품명',
-					format: 'Text'
+					format: 'Text',
+					props: { readOnly: true }
 				}
 			]
 		}

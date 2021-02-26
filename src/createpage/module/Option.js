@@ -20,6 +20,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, View
 						name={item.id}
 						placeholder="쉼표(,)로 구분"
 						onChange={handleChange}
+						{...item.props}
 					/>
 					<Button
 						style={{

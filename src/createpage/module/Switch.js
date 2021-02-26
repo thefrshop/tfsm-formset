@@ -25,6 +25,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode, Upda
 						size={item.size}
 						style={item.style}
 						onChange={(value) => UpdateInitData(item.id, value)}
+						{...item.props}
 					/>
 				</div>
 			</div>
