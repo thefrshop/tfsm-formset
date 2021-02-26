@@ -112,7 +112,7 @@ export default class CreateTable extends React.Component {
 		}
 
 		var noDataIndication = this.props.noDataIndication;
-		if (this.props.noDataIndication === undefined) noDataIndication = 'Table is Empty';
+		if (this.props.noDataIndication === undefined) noDataIndication = '내용이 없습니다.';
 		return (
 			<div>
 				{this.state.showImageHover ? <img className="imageHoverView" alt="" src={this.state.hoversrc} /> : null}

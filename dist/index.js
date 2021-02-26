@@ -2712,7 +2712,7 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
     }
 
     var noDataIndication = this.props.noDataIndication;
-    if (this.props.noDataIndication === undefined) noDataIndication = 'Table is Empty';
+    if (this.props.noDataIndication === undefined) noDataIndication = '내용이 없습니다.';
     return /*#__PURE__*/React__default.createElement("div", null, this.state.showImageHover ? /*#__PURE__*/React__default.createElement("img", {
       className: "imageHoverView",
       alt: "",
