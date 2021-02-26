@@ -111,6 +111,8 @@ export default class CreateTable extends React.Component {
 			if (selectRow.bgColor === undefined) selectRow.bgColor = '#ffffe0';
 		}
 
+		var noDataIndication = this.props.noDataIndication;
+		if (this.props.noDataIndication === undefined) noDataIndication = 'Table is Empty';
 		return (
 			<div>
 				{this.state.showImageHover ? <img className="imageHoverView" alt="" src={this.state.hoversrc} /> : null}
@@ -175,6 +177,7 @@ export default class CreateTable extends React.Component {
 								ref={this.Table}
 								rowEvents={this.props.rowEvents}
 								pagination={!this.props.pagination ? null : paginationFactory(options)}
+								noDataIndication={noDataIndication}
 							/>
 						</div>
 					)}

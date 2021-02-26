@@ -2711,6 +2711,8 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
       if (selectRow.bgColor === undefined) selectRow.bgColor = '#ffffe0';
     }
 
+    var noDataIndication = this.props.noDataIndication;
+    if (this.props.noDataIndication === undefined) noDataIndication = 'Table is Empty';
     return /*#__PURE__*/React__default.createElement("div", null, this.state.showImageHover ? /*#__PURE__*/React__default.createElement("img", {
       className: "imageHoverView",
       alt: "",
@@ -2765,7 +2767,8 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
         selectRow: selectRow,
         ref: _this2.Table,
         rowEvents: _this2.props.rowEvents,
-        pagination: !_this2.props.pagination ? null : paginationFactory(options)
+        pagination: !_this2.props.pagination ? null : paginationFactory(options),
+        noDataIndication: noDataIndication
       })));
     }));
   };
