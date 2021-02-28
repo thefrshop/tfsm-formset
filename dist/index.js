@@ -2768,7 +2768,9 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
         ref: _this2.Table,
         rowEvents: _this2.props.rowEvents,
         pagination: !_this2.props.pagination ? null : paginationFactory(options),
-        noDataIndication: noDataIndication
+        noDataIndication: noDataIndication,
+        expandRow: _this2.props.expandRow,
+        defaultSorted: _this2.props.defaultSorted
       })));
     }));
   };

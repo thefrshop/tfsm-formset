@@ -178,6 +178,8 @@ export default class CreateTable extends React.Component {
 								rowEvents={this.props.rowEvents}
 								pagination={!this.props.pagination ? null : paginationFactory(options)}
 								noDataIndication={noDataIndication}
+								expandRow={this.props.expandRow}
+								defaultSorted={this.props.defaultSorted}
 							/>
 						</div>
 					)}
