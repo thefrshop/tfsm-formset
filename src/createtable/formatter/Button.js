@@ -7,7 +7,14 @@ export const formatter = (cell, row, rowIndex, Data) => {
 	var onChange = Data.onChange;
 
 	return (
-		<Button variant={item.variant} onClick={() => onChange(item.dataField, cell, row, rowIndex, 'onClick')}>
+		<Button
+			size={item.size}
+			width={item.width}
+			height={item.height}
+			variant={item.variant}
+			style={item.btnStyle}
+			onClick={() => onChange(item.dataField, cell, row, rowIndex, 'onClick')}
+		>
 			{cell}
 		</Button>
 	);

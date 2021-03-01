@@ -12,5 +12,6 @@ export const formatter = (cell, row, rowIndex, Data) => {
 
 	var OutDate = moment(cell);
 
+	if (cell === '' || cell === undefined) return <div />;
 	return <div>{OutDate.format(Dateformat)}</div>;
 };

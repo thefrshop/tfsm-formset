@@ -2254,6 +2254,7 @@ var formatter = function formatter(cell, row, rowIndex, Data) {
   var Dateformat = item.Dateformat;
   if (Dateformat === undefined) Dateformat = 'YYYY-MM-D';
   var OutDate = moment(cell);
+  if (cell === '' || cell === undefined) return /*#__PURE__*/React__default.createElement("div", null);
   return /*#__PURE__*/React__default.createElement("div", null, OutDate.format(Dateformat));
 };
 
@@ -2368,7 +2369,11 @@ var formatter$5 = function formatter(cell, row, rowIndex, Data) {
   var item = Data.item;
   var onChange = Data.onChange;
   return /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    size: item.size,
+    width: item.width,
+    height: item.height,
     variant: item.variant,
+    style: item.btnStyle,
     onClick: function onClick() {
       return onChange(item.dataField, cell, row, rowIndex, 'onClick');
     }
