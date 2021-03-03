@@ -2573,6 +2573,8 @@ var InitColumns = function InitColumns(propscolumns, onChange) {
           }
         }
       });
+    } else {
+      console.log(c_item);
     }
 
     c_item = update$1(c_item, {

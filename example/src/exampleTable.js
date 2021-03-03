@@ -329,3 +329,28 @@ export const HtmlInit = [
 	}
 ];
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const custom_Formatter = (cell, row, rowIndex, formatExtraData) => {
+	console.log('cell', cell);
+	console.log('row', row);
+	return <div> custom_Formatter</div>;
+};
+
+export const Custom = [
+	{
+		dataField: 'html',
+		text: 'Html',
+		sort: true,
+		formatter: custom_Formatter
+	}
+];
+
+export const CustomInit = [
+	{
+		html: '<div>1234</div>'
+	},
+	{
+		html: '<div><strong>1234</strong></div>'
+	}
+];
+/////////////////////////////////////////////////////////////////////////////////////////////////////

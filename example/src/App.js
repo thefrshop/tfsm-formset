@@ -208,7 +208,7 @@ export default class App extends React.Component {
 						</Tabs>
 					</Tab>
 					<Tab eventKey="Table" title="Table Format">
-						<Tabs defaultActiveKey="DateTime">
+						<Tabs defaultActiveKey="Custom">
 							{this.TestTable('DateTime', exT.DateTime, exT.DateTimeInit)}
 							{this.TestTable('Switch', exT.Switch, exT.SwitchInit)}
 							{this.TestTable('Number', exT.Number, exT.NumberInit)}
@@ -225,6 +225,7 @@ export default class App extends React.Component {
 							{this.TestTable('Table', exT.Table, exT.TableInit)}
 							{this.TestTable('Icon', exT.Icon, exT.IconInit)}
 							{this.TestTable('Html', exT.Html, exT.HtmlInit)}
+							{this.TestTable('Custom', exT.Custom, exT.CustomInit)}
 						</Tabs>
 					</Tab>
 					<Tab eventKey="DOC" title="DOC">

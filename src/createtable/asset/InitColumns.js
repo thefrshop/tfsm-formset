@@ -47,6 +47,8 @@ export const InitColumns = (propscolumns, onChange) => {
 		if (formatter !== null) {
 			c_item = update(c_item, { formatter: { $set: formatter } });
 			c_item = update(c_item, { formatExtraData: { $set: { item: item, onChange: onChange } } });
+		} else {
+			console.log(c_item);
 		}
 
 		c_item = update(c_item, { sortCaret: { $set: Caret } });
