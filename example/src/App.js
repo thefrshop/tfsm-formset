@@ -181,13 +181,20 @@ export default class App extends React.Component {
 			<div className="App">
 				<h3>tfsm-formset 예제</h3>
 				<br />
-				<Tabs defaultActiveKey="Table">
+				<Tabs defaultActiveKey="API">
 					<Tab eventKey="API" title="Form API">
-						<Tabs defaultActiveKey="CodeGen">
+						<Tabs defaultActiveKey="HierarchyLastMulti">
 							{this.Test('CodeGen', exL.CodeGen, exL.CodeGenInit)}
 							{this.Test('Text', exL.Text, exL.TextInit)}
 							{this.Test('Price', exL.Price, exL.PriceInit)}
 							{this.Test('Hierarchy', exL.Hierarchy, exL.HierarchyInit, null, exL.HierarchySample)}
+							{this.Test(
+								'HierarchyLastMulti',
+								exL.HierarchyLast,
+								exL.HierarchyLastInit,
+								null,
+								exL.HierarchySample
+							)}
 							{this.Test('ListSelect', exL.ListSelect, exL.ListSelectInit, null, null, exL.ListData)}
 							{this.Test('Child', exL.Child, null, [
 								<div key="Child1">Child1</div>,

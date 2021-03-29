@@ -81,6 +81,28 @@ export const Hierarchy = {
 	]
 };
 
+export const HierarchyLast = {
+	Struct: [
+		{
+			id: 'BasicInfo',
+			name: 'Hierarchy',
+			format: 'Titletext',
+			Items: [
+				{
+					id: 'Category',
+					name: '상품분류',
+					format: 'Hierarchy',
+					HierarchyData: {
+						name: [ '대분류', '중분류', '소분류' ],
+						viewField: 'Name',
+						LastMulti: true
+					}
+				}
+			]
+		}
+	]
+};
+
 export const HierarchySample = {
 	Category: [
 		[
@@ -95,7 +117,10 @@ export const HierarchySample = {
 
 			{ Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' }
 		],
-		[ { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' } ]
+		[
+			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' },
+			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' }
+		]
 	]
 };
 
@@ -104,6 +129,14 @@ export const HierarchyInit = {
 		{ Code: '1', Name: '1', lev: 0, pid: 0, key: 'sKItoqKJnAbTnGVP3mfM' },
 		{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
 		{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' }
+	]
+};
+export const HierarchyLastInit = {
+	Category: [
+		{ Code: '1', Name: '1', lev: 0, pid: 0, key: 'sKItoqKJnAbTnGVP3mfM' },
+		{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
+		{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' },
+		{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' }
 	]
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////

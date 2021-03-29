@@ -83,6 +83,7 @@ class CatSelect extends React.Component {
 							resolve();
 						});
 					}}
+					LastMulti={this.props.LastMulti}
 				/>
 
 				<Button variant="SelectPre" onClick={this.openCatSelect}>

@@ -8,62 +8,25 @@ export const InitData = () => {
 
 //뷰
 export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
-	if (item.Select === undefined) {
-		return (
-			<div className="ItemView" key={index}>
-				<div className="ItemTitle">{item.name}</div>
-				<div className="ItemContent">
-					<CatSelect
-						InitialValue={values[item.id]}
-						name={item.id}
-						title={item.name}
-						HierarchyNames={item.HierarchyData.name}
-						viewField={item.HierarchyData.viewField}
-						hierarchyData={M.props.hierarchyData[item.id]}
-						selected={values[item.id]}
-						onChange={handleChange}
-					/>
-				</div>
-			</div>
-		);
-	} else if (item.Select === 'Multi') {
+	if (item.HierarchyData.LastMulti) {
+		console.log('Multi');
 		return (
 			<div className="ItemViewRow" key={index}>
 				<div className="ItemHeader">
 					<div className="ItemTitle">{item.name}</div>
 					<div className="ItemContent">
 						<CatSelect
+							InitialValue={values[item.id]}
 							name={item.id}
 							title={item.name}
 							HierarchyNames={item.HierarchyData.name}
 							viewField={item.HierarchyData.viewField}
-							hierarchyData={M.props.hierarchyData[item.Selectid]}
+							hierarchyData={M.props.hierarchyData[item.id]}
 							selected={values[item.id]}
-							onChange={(e) => {
-								let dat = [];
-
-								if (ModifyMode.state.InitData[item.Selectid] !== undefined) {
-									var bool = true;
-									dat = M.state.InitData[item.Selectid];
-									dat.forEach((val, ind) => {
-										if (val[3].Code === e.target.value[3].Code) bool = false;
-									});
-									if (bool) dat.push(e.target.value);
-								} else {
-									dat.push(e.target.value);
-								}
-
-								M.setState({
-									InitData: update(M.state.InitData, {
-										[item.Selectid]: { $set: dat }
-									})
-								});
-							}}
+							onChange={handleChange}
+							LastMulti={true}
 						/>
 					</div>
-				</div>
-				<div className="ItemBody">
-					<div className="ViewListformBox">{GetHierarchy(values, item)}</div>
 				</div>
 			</div>
 		);

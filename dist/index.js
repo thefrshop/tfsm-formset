@@ -2,7 +2,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
-var update$1 = _interopDefault(require('react-addons-update'));
+var update = _interopDefault(require('react-addons-update'));
 require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var moment = _interopDefault(require('moment-timezone'));
@@ -22,6 +22,7 @@ var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-rea
 var fa = require('react-icons/fa');
 var im = require('react-icons/im');
 var ReactJson = _interopDefault(require('react-json-view'));
+var sprintfJs = require('sprintf-js');
 var moment$1 = _interopDefault(require('moment'));
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
@@ -388,11 +389,33 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       }, table);
     };
 
-    _this.onSelect = function (count, row) {
+    _this.onSelect = function (count, row, checked) {
       var CategorySelect = _this.state.CategorySelect;
 
-      for (var i = 0; i < CategorySelect.length; i++) {
-        if (i === count) CategorySelect[i] = row;else if (i >= count) CategorySelect[i] = '';
+      if (_this.props.LastMulti && count === _this.props.name.length - 1) {
+        for (var i = 0; i < CategorySelect.length - 1; i++) {
+          if (i === count) CategorySelect[i] = row;else if (i >= count) CategorySelect[i] = '';
+        }
+
+        if (checked === true) _this.setState({
+          last: update(_this.state.last, {
+            $push: [row]
+          })
+        });else {
+          var index = _this.state.last.findIndex(function (m) {
+            return m = row;
+          });
+
+          _this.setState({
+            last: update(_this.state.last, {
+              $splice: [[index, 1]]
+            })
+          });
+        }
+      } else {
+        for (var i = 0; i < CategorySelect.length; i++) {
+          if (i === count) CategorySelect[i] = row;else if (i >= count) CategorySelect[i] = '';
+        }
       }
 
       if (count === _this.props.name.length - 1) {
@@ -400,7 +423,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
 
         _this.setState({
           CategorySelect: CategorySelect,
-          done: update$1(_this.state.done, (_update = {}, _update[count] = {
+          done: update(_this.state.done, (_update = {}, _update[count] = {
             $set: true
           }, _update))
         });
@@ -409,7 +432,7 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
 
         _this.setState({
           CategorySelect: CategorySelect,
-          next: update$1(_this.state.next, (_update2 = {}, _update2[count] = {
+          next: update(_this.state.next, (_update2 = {}, _update2[count] = {
             $set: true
           }, _update2))
         });
@@ -424,10 +447,10 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       _this.Table[_this.state.index].current.selectionContext.selected = [];
 
       _this.setState({
-        CategorySelect: update$1(_this.state.CategorySelect, (_update3 = {}, _update3[_this.state.index] = {
+        CategorySelect: update(_this.state.CategorySelect, (_update3 = {}, _update3[_this.state.index] = {
           $set: ''
         }, _update3)),
-        done: update$1(_this.state.done, (_update4 = {}, _update4[_this.state.index] = {
+        done: update(_this.state.done, (_update4 = {}, _update4[_this.state.index] = {
           $set: false
         }, _update4))
       });
@@ -439,20 +462,30 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       _this.MoveCarousel(_this.state.index + 1);
 
       _this.setState({
-        prev: update$1(_this.state.prev, (_update5 = {}, _update5[_this.state.index + 1] = {
+        prev: update(_this.state.prev, (_update5 = {}, _update5[_this.state.index + 1] = {
           $set: true
         }, _update5))
       });
     };
 
     _this.MoveCarousel = function (selectedIndex) {
+      if (selectedIndex === _this.props.name.length - 1) _this.setState({
+        last: []
+      });
+
       _this.setState({
         index: selectedIndex
       });
     };
 
     _this.selectRowProp = function (count) {
-      return {
+      if (count === _this.props.name.length - 1 && _this.props.LastMulti) return {
+        mode: 'checkbox',
+        hideSelectColumn: true,
+        clickToSelect: true,
+        onSelect: _this.onSelect.bind(_assertThisInitialized(_this), count),
+        bgColor: '#ffffe0'
+      };else return {
         mode: 'radio',
         hideSelectColumn: true,
         clickToSelect: true,
@@ -528,7 +561,8 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       CategoryView: _CategoryView,
       prev: prev,
       next: next,
-      done: done
+      done: done,
+      last: []
     };
     return _this;
   }
@@ -571,7 +605,14 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
-        return _this2.props.onOk(_this2.state.CategorySelect).then(function () {
+        var OutCategorySelect = _this2.state.CategorySelect;
+
+        if (_this2.props.LastMulti) {
+          OutCategorySelect.splice(OutCategorySelect.length - 1, 1);
+          Array.prototype.push.apply(OutCategorySelect, _this2.state.last);
+        }
+
+        _this2.props.onOk(_this2.state.CategorySelect).then(function () {
           var CategorySelect = [];
           var prev = [];
           var next = [];
@@ -705,7 +746,8 @@ var CatSelect = /*#__PURE__*/function (_React$Component) {
 
           resolve();
         });
-      }
+      },
+      LastMulti: this.props.LastMulti
     }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "SelectPre",
       onClick: this.openCatSelect
@@ -721,10 +763,13 @@ var InitData$6 = function InitData() {
   return [];
 };
 var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
-  if (item.Select === undefined) {
+  if (item.HierarchyData.LastMulti) {
+    console.log('Multi');
     return /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemView",
+      className: "ItemViewRow",
       key: index
+    }, /*#__PURE__*/React__default.createElement("div", {
+      className: "ItemHeader"
     }, /*#__PURE__*/React__default.createElement("div", {
       className: "ItemTitle"
     }, item.name), /*#__PURE__*/React__default.createElement("div", {
@@ -737,52 +782,9 @@ var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, Modif
       viewField: item.HierarchyData.viewField,
       hierarchyData: M.props.hierarchyData[item.id],
       selected: values[item.id],
-      onChange: handleChange
-    })));
-  } else if (item.Select === 'Multi') {
-    return /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemViewRow",
-      key: index
-    }, /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemHeader"
-    }, /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemTitle"
-    }, item.name), /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemContent"
-    }, /*#__PURE__*/React__default.createElement(CatSelect, {
-      name: item.id,
-      title: item.name,
-      HierarchyNames: item.HierarchyData.name,
-      viewField: item.HierarchyData.viewField,
-      hierarchyData: M.props.hierarchyData[item.Selectid],
-      selected: values[item.id],
-      onChange: function onChange(e) {
-        var _update;
-
-        var dat = [];
-
-        if (ModifyMode.state.InitData[item.Selectid] !== undefined) {
-          var bool = true;
-          dat = M.state.InitData[item.Selectid];
-          dat.forEach(function (val, ind) {
-            if (val[3].Code === e.target.value[3].Code) bool = false;
-          });
-          if (bool) dat.push(e.target.value);
-        } else {
-          dat.push(e.target.value);
-        }
-
-        M.setState({
-          InitData: update(M.state.InitData, (_update = {}, _update[item.Selectid] = {
-            $set: dat
-          }, _update))
-        });
-      }
-    }))), /*#__PURE__*/React__default.createElement("div", {
-      className: "ItemBody"
-    }, /*#__PURE__*/React__default.createElement("div", {
-      className: "ViewListformBox"
-    }, GetHierarchy(values, item))));
+      onChange: handleChange,
+      LastMulti: true
+    }))));
   } else {
     return /*#__PURE__*/React__default.createElement("div", {
       className: "ItemView",
@@ -802,57 +804,6 @@ var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, Modif
       onChange: handleChange
     })));
   }
-};
-
-var GetHierarchy = function GetHierarchy(values, item) {
-  var viewlist = [];
-
-  var onRemove = function onRemove(Selvalue) {
-    var RemoveData = values[item.Selectid].filter(function (arr) {
-      return arr[3].Code !== Selvalue[3].Code;
-    });
-    console.log(RemoveData);
-  };
-
-  function DataView(Selvalue) {
-    var table = '';
-    Selvalue.forEach(function (catitem, catindex) {
-      if (catitem !== null) {
-        table += catitem[item.HierarchyData.viewField] + ' ';
-      }
-    });
-    return table;
-  }
-
-  if (values[item.Selectid] !== undefined) {
-    values[item.Selectid].forEach(function (Selvalue, Selindex) {
-      console.log(Selvalue);
-      viewlist.push( /*#__PURE__*/React__default.createElement("div", {
-        className: "ViewList",
-        key: Selindex
-      }, /*#__PURE__*/React__default.createElement("div", {
-        className: "Viewitle"
-      }, Selindex + 1), /*#__PURE__*/React__default.createElement("div", {
-        className: "ViewContent"
-      }, DataView(Selvalue)), /*#__PURE__*/React__default.createElement(Button, {
-        style: {
-          top: 0,
-          right: 0,
-          margin: 0,
-          padding: 0,
-          width: 34,
-          height: 34,
-          fontSize: 10,
-          backgroundColor: '#555555'
-        },
-        onClick: function onClick() {
-          return onRemove(Selvalue);
-        }
-      }, "\uC0AD\uC81C")));
-    });
-  }
-
-  return viewlist;
 };
 
 var M_Hierarchy = {
@@ -1339,7 +1290,7 @@ var ImageFileChange = function ImageFileChange(e, id, UpdateInitData, values) {
       reader.readAsDataURL(file);
 
       reader.onloadend = function (e) {
-        var data = update$1(values[id], {
+        var data = update(values[id], {
           FileList: {
             $push: [{
               file: file,
@@ -1968,7 +1919,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       var _update;
 
       _this.setState({
-        InitData: update$1(_this.state.InitData, (_update = {}, _update[id] = {
+        InitData: update(_this.state.InitData, (_update = {}, _update[id] = {
           $set: data
         }, _update))
       });
@@ -1994,7 +1945,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
               var _item$Selectid, _update2;
 
               _this.setState({
-                InitData: update$1(_this.state.InitData, (_update2 = {}, _update2[item.Selectid] = (_item$Selectid = {}, _item$Selectid[ind] = {
+                InitData: update(_this.state.InitData, (_update2 = {}, _update2[item.Selectid] = (_item$Selectid = {}, _item$Selectid[ind] = {
                   price: {
                     $set: e.target.value
                   }
@@ -2035,7 +1986,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
                   array.splice(ind, 1);
 
                   _this.setState({
-                    InitData: update$1(_this.state.InitData, (_update3 = {}, _update3[item.Selectid] = {
+                    InitData: update(_this.state.InitData, (_update3 = {}, _update3[item.Selectid] = {
                       $set: array
                     }, _update3))
                   });
@@ -2044,7 +1995,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
                 var _update4;
 
                 _this.setState({
-                  InitData: update$1(_this.state.InitData, (_update4 = {}, _update4[item.Selectid] = {
+                  InitData: update(_this.state.InitData, (_update4 = {}, _update4[item.Selectid] = {
                     $push: [value]
                   }, _update4))
                 });
@@ -2069,7 +2020,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
               var _update5;
 
               _this.setState({
-                InitData: update$1(_this.state.InitData, (_update5 = {}, _update5[item.Selectid] = {
+                InitData: update(_this.state.InitData, (_update5 = {}, _update5[item.Selectid] = {
                   0: {
                     $set: value
                   }
@@ -2100,7 +2051,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
       var _update6;
 
       _this.setState({
-        InitData: update$1(_this.state.InitData, (_update6 = {}, _update6[item.target.name] = {
+        InitData: update(_this.state.InitData, (_update6 = {}, _update6[item.target.name] = {
           $set: item.target.value
         }, _update6))
       });
@@ -2267,7 +2218,7 @@ var F_DateTime = {
 var formatter$1 = function formatter(cell, row, rowIndex, Data) {
   var item = Data.item;
   var _onChange = Data.onChange;
-  return /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
+  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
     onlabel: item.onlabel,
     onstyle: item.onstyle,
     offlabel: item.offlabel,
@@ -2378,7 +2329,7 @@ var formatter$5 = function formatter(cell, row, rowIndex, Data) {
     onClick: function onClick() {
       return onChange(item.dataField, cell, row, rowIndex, 'onClick');
     }
-  }, cell);
+  }, cell !== undefined ? cell : item.text);
 };
 
 var F_Button = {
@@ -2540,6 +2491,71 @@ var Count = /*#__PURE__*/function (_React$Component) {
       }
     };
 
+    _this.getTimeLeft = function () {
+      var until = _this.state.until;
+      return {
+        seconds: until % 60,
+        minutes: parseInt(until / 60, 10) % 60,
+        hours: parseInt(until / (60 * 60), 10) % 24,
+        days: parseInt(until / (60 * 60 * 24), 10)
+      };
+    };
+
+    _this.renderDoubleDigits = function (label, digits) {
+      return /*#__PURE__*/React__default.createElement("div", {
+        style: {
+          display: 'flex',
+          textAlign: 'center'
+        }
+      }, digits, label);
+    };
+
+    _this.renderCountDown = function () {
+      var _this$props = _this.props,
+          timeToShow = _this$props.timeToShow,
+          timeLabels = _this$props.timeLabels;
+
+      var _this$getTimeLeft = _this.getTimeLeft(),
+          days = _this$getTimeLeft.days,
+          hours = _this$getTimeLeft.hours,
+          minutes = _this$getTimeLeft.minutes,
+          seconds = _this$getTimeLeft.seconds;
+
+      var newTime = sprintfJs.sprintf('%02d:%02d:%02d:%02d', days, hours, minutes, seconds).split(':');
+
+      if (_this.props.fulldate) {
+        return /*#__PURE__*/React__default.createElement("div", {
+          style: {
+            display: 'flex',
+            textAlign: 'center'
+          }
+        }, timeToShow.includes('D') ? _this.renderDoubleDigits(timeLabels.d, newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+      } else {
+        if (newTime[0] != 0) {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('D') ? _this.renderDoubleDigits(' 일 ', newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(' 시간', newTime[1]) : null);
+        } else if (newTime[1] != 0) {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+        } else {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+        }
+      }
+    };
+
     _this.state = {
       until: Math.max(_this.props.until, 0),
       lastUntil: null
@@ -2557,7 +2573,7 @@ var Count = /*#__PURE__*/function (_React$Component) {
   };
 
   _proto.render = function render() {
-    if (this.props.until !== undefined) return /*#__PURE__*/React__default.createElement("div", null, this.state.until);else return null;
+    if (this.props.until !== undefined) return /*#__PURE__*/React__default.createElement("div", null, this.renderCountDown());else return null;
   };
 
   return Count;
@@ -2576,7 +2592,13 @@ var formatter$d = function formatter(cell, row, rowIndex, Data) {
   if (cell !== undefined) return /*#__PURE__*/React__default.createElement(Count, {
     until: d,
     timeToShow: item.timeToShow == undefined ? ['D', 'H', 'M', 'S'] : item.timeToShow,
-    timeLabels: item.format,
+    timeLabels: item.formatView == undefined ? {
+      d: ' 일 ',
+      h: ' : ',
+      m: ' : ',
+      s: ''
+    } : item.formatView,
+    fulldate: item.fulldate,
     onFinish: function onFinish() {
       onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
     }
@@ -2644,12 +2666,12 @@ var InitColumns = function InitColumns(propscolumns, onChange) {
     var formatter = Getformatter(item.format);
 
     if (formatter !== null) {
-      c_item = update$1(c_item, {
+      c_item = update(c_item, {
         formatter: {
           $set: formatter
         }
       });
-      c_item = update$1(c_item, {
+      c_item = update(c_item, {
         formatExtraData: {
           $set: {
             item: item,
@@ -2661,7 +2683,7 @@ var InitColumns = function InitColumns(propscolumns, onChange) {
       console.log(c_item);
     }
 
-    c_item = update$1(c_item, {
+    c_item = update(c_item, {
       sortCaret: {
         $set: Caret
       }

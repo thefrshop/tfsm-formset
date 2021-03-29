@@ -37,7 +37,8 @@ class PopupCatSelect extends React.Component {
 			CategoryView: CategoryView,
 			prev: prev,
 			next: next,
-			done: done
+			done: done,
+			last: []
 		};
 	}
 
@@ -115,11 +116,34 @@ class PopupCatSelect extends React.Component {
 		);
 	};
 
-	onSelect = (count, row) => {
+	onSelect = (count, row, checked) => {
 		var CategorySelect = this.state.CategorySelect;
-		for (var i = 0; i < CategorySelect.length; i++) {
-			if (i === count) CategorySelect[i] = row;
-			else if (i >= count) CategorySelect[i] = '';
+
+		if (this.props.LastMulti && count === this.props.name.length - 1) {
+			for (var i = 0; i < CategorySelect.length - 1; i++) {
+				if (i === count) CategorySelect[i] = row;
+				else if (i >= count) CategorySelect[i] = '';
+			}
+
+			if (checked === true)
+				this.setState({
+					last: update(this.state.last, {
+						$push: [ row ]
+					})
+				});
+			else {
+				var index = this.state.last.findIndex((m) => (m = row));
+				this.setState({
+					last: update(this.state.last, {
+						$splice: [ [ index, 1 ] ]
+					})
+				});
+			}
+		} else {
+			for (var i = 0; i < CategorySelect.length; i++) {
+				if (i === count) CategorySelect[i] = row;
+				else if (i >= count) CategorySelect[i] = '';
+			}
 		}
 
 		if (count === this.props.name.length - 1) {
@@ -163,19 +187,29 @@ class PopupCatSelect extends React.Component {
 	};
 
 	MoveCarousel = (selectedIndex) => {
+		if (selectedIndex === this.props.name.length - 1) this.setState({ last: [] });
 		this.setState({
 			index: selectedIndex
 		});
 	};
 
 	selectRowProp = (count) => {
-		return {
-			mode: 'radio',
-			hideSelectColumn: true,
-			clickToSelect: true,
-			onSelect: this.onSelect.bind(this, count),
-			bgColor: '#ffffe0'
-		};
+		if (count === this.props.name.length - 1 && this.props.LastMulti)
+			return {
+				mode: 'checkbox',
+				hideSelectColumn: true,
+				clickToSelect: true,
+				onSelect: this.onSelect.bind(this, count),
+				bgColor: '#ffffe0'
+			};
+		else
+			return {
+				mode: 'radio',
+				hideSelectColumn: true,
+				clickToSelect: true,
+				onSelect: this.onSelect.bind(this, count),
+				bgColor: '#ffffe0'
+			};
 	};
 
 	onHide = () => {
@@ -240,7 +274,16 @@ class PopupCatSelect extends React.Component {
 								<Button
 									variant="Submit"
 									className="FooterButton"
-									onClick={() =>
+									onClick={() => {
+										//console.log(this.state.last);
+
+										var OutCategorySelect = this.state.CategorySelect;
+										if (this.props.LastMulti) {
+											OutCategorySelect.splice(OutCategorySelect.length - 1, 1);
+											Array.prototype.push.apply(OutCategorySelect, this.state.last);
+											//console.log(OutCategorySelect);
+										}
+
 										this.props.onOk(this.state.CategorySelect).then(() => {
 											var CategorySelect = [];
 											var prev = [];
@@ -263,7 +306,8 @@ class PopupCatSelect extends React.Component {
 												next: next,
 												done: done
 											});
-										})}
+										});
+									}}
 								>
 									완료
 								</Button>
