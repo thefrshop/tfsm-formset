@@ -15,6 +15,7 @@ import * as F_Array from '../formatter/Array';
 import * as F_Table from '../formatter/Table';
 import * as F_Icon from '../formatter/Icon';
 import * as F_Html from '../formatter/Html';
+import * as F_Count from '../formatter/Count';
 
 const FormatSet = [
 	{ name: 'DateTime', module: F_DateTime },
@@ -29,7 +30,8 @@ const FormatSet = [
 	{ name: 'Array', module: F_Array },
 	{ name: 'Table', module: F_Table },
 	{ name: 'Icon', module: F_Icon },
-	{ name: 'Html', module: F_Html }
+	{ name: 'Html', module: F_Html },
+	{ name: 'Count', module: F_Count }
 ];
 
 export const Getformatter = (format) => {
