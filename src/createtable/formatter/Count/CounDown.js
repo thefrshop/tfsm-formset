@@ -24,17 +24,11 @@ export default class Count extends React.Component {
 			if (this.props.onFinish) {
 				this.props.onFinish();
 			}
-			if (this.props.onChange) {
-				this.props.Data.onChange(this.state.until);
-			}
 		}
 
 		if (this.state.until === 0) {
 			this.setState({ lastUntil: 0, until: 0 });
 		} else {
-			if (this.props.onChange) {
-				this.props.onChange(this.state.until);
-			}
 			this.setState({
 				lastUntil: this.state.until,
 				until: Math.max(0, this.state.until - 1)

@@ -18,8 +18,8 @@ export const formatter = (cell, row, rowIndex, Data) => {
 		return (
 			<CountDown
 				until={d}
-				onChange={() => {
-					onChange(item.dataField, cell, row, rowIndex, 'onClick');
+				onFinish={() => {
+					onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
 				}}
 			/>
 		);
