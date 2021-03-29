@@ -19,7 +19,7 @@ export const formatter = (cell, row, rowIndex, Data) => {
 			<CountDown
 				until={d}
 				timeToShow={item.timeToShow == undefined ? [ 'D', 'H', 'M', 'S' ] : item.timeToShow}
-				timeLabels={item.format}
+				timeLabels={item.formatView}
 				onFinish={() => {
 					onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
 				}}
