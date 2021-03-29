@@ -1,2 +1,0 @@
-(this["webpackJsonptfsm-formset-example"]=this["webpackJsonptfsm-formset-example"]||[]).push([[13],{551:function(e,t,a){"use strict";function s(e){e.languages.arff={comment:/%.*/,string:{pattern:/(["'])(?:\\.|(?!\1)[^\\\r\n])*\1/,greedy:!0},keyword:/@(?:attribute|data|end|relation)\b/i,number:/\b\d+(?:\.\d+)?\b/,punctuation:/[{},]/}}e.exports=s,s.displayName="arff",s.aliases=[]}}]);
-//# sourceMappingURL=react-syntax-highlighter_languages_refractor_arff.b7bd26bf.chunk.js.map
