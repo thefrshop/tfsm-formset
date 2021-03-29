@@ -22,6 +22,7 @@ var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-rea
 var fa = require('react-icons/fa');
 var im = require('react-icons/im');
 var ReactJson = _interopDefault(require('react-json-view'));
+var moment$1 = _interopDefault(require('moment'));
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
 var ToolkitProvider__default = _interopDefault(ToolkitProvider);
@@ -2507,6 +2508,86 @@ var F_Html = {
   formatter: formatter$c
 };
 
+var Count = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(Count, _React$Component);
+
+  function Count(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.updateTimer = function () {
+      if (_this.state.lastUntil === _this.state.until) {
+        return;
+      }
+
+      if (_this.state.until === 1 || _this.state.until === 0 && _this.state.lastUntil !== 1) {
+        if (_this.props.onFinish) {
+          _this.props.onFinish();
+        }
+      }
+
+      if (_this.state.until === 0) {
+        _this.setState({
+          lastUntil: 0,
+          until: 0
+        });
+      } else {
+        _this.setState({
+          lastUntil: _this.state.until,
+          until: Math.max(0, _this.state.until - 1)
+        });
+      }
+    };
+
+    _this.state = {
+      until: Math.max(_this.props.until, 0),
+      lastUntil: null
+    };
+    _this.timer = setInterval(_this.updateTimer, 1000);
+    return _this;
+  }
+
+  var _proto = Count.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {};
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    clearInterval(this.timer);
+  };
+
+  _proto.render = function render() {
+    if (this.props.until !== undefined) return /*#__PURE__*/React__default.createElement("div", null, this.state.until);else return null;
+  };
+
+  return Count;
+}(React__default.Component);
+
+var formatter$d = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  var d = '';
+  var date = moment$1().format('YYYY-MM-DD HH:mm:ss');
+  var diffr = moment$1.duration(moment$1(cell).diff(moment$1(date)));
+  var hours = parseInt(diffr.asHours());
+  var minutes = parseInt(diffr.minutes());
+  var seconds = parseInt(diffr.seconds());
+  d = hours * 60 * 60 + minutes * 60 + seconds;
+  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(Count, {
+    until: d,
+    timeToShow: item.timeToShow == undefined ? ['D', 'H', 'M', 'S'] : item.timeToShow,
+    timeLabels: item.format,
+    onFinish: function onFinish() {
+      onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
+    }
+  });
+};
+
+var F_Count = {
+  __proto__: null,
+  formatter: formatter$d
+};
+
 var FormatSet$1 = [{
   name: 'DateTime',
   module: F_DateTime
@@ -2546,6 +2627,9 @@ var FormatSet$1 = [{
 }, {
   name: 'Html',
   module: F_Html
+}, {
+  name: 'Count',
+  module: F_Count
 }];
 var Getformatter = function Getformatter(format) {
   if (format === undefined) return null;
