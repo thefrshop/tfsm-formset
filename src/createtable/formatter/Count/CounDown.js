@@ -49,12 +49,7 @@ export default class Count extends React.Component {
 	};
 
 	renderDoubleDigits = (label, digits) => {
-		return (
-			<div style={{ display: 'flex' }}>
-				{digits}
-				{label}
-			</div>
-		);
+		return <div style={{ display: 'flex' }}>{(digits, label)}</div>;
 	};
 
 	renderSeparator = () => {
