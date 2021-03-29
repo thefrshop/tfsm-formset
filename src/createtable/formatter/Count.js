@@ -23,6 +23,7 @@ export class Count extends React.Component {
 		var minutes = parseInt(diffr.minutes());
 		var seconds = parseInt(diffr.seconds());
 		d = hours * 60 * 60 + minutes * 60 + seconds; //마감날짜 - 현재날짜 초 단위
+		console.log(date, cell, d);
 		this.setState({
 			until: Math.max(d, 0)
 		});
