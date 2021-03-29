@@ -15,7 +15,7 @@ export const formatter = (cell, row, rowIndex, Data) => {
 			style={item.btnStyle}
 			onClick={() => onChange(item.dataField, cell, row, rowIndex, 'onClick')}
 		>
-			{cell}
+			{cell !== undefined ? cell : item.text}
 		</Button>
 	);
 };
