@@ -49,7 +49,12 @@ export default class Count extends React.Component {
 	};
 
 	renderDoubleDigits = (label, digits) => {
-		return <div style={{ display: 'flex' }}>{(digits, label)}</div>;
+		return (
+			<div style={{ display: 'flex' }}>
+				{digits}
+				{label}
+			</div>
+		);
 	};
 
 	renderSeparator = () => {
@@ -92,9 +97,7 @@ export default class Count extends React.Component {
 				return (
 					<div style={{ display: 'flex' }}>
 						{timeToShow.includes('M') ? this.renderDoubleDigits(timeLabels.m, newTime[2]) : null}
-						{showSeparator && timeToShow.includes('M') && timeToShow.includes('S') ? (
-							this.renderSeparator()
-						) : null}
+						{timeToShow.includes('M') && timeToShow.includes('S') ? this.renderSeparator() : null}
 						{timeToShow.includes('S') ? this.renderDoubleDigits(timeLabels.s, newTime[3]) : null}
 					</div>
 				);

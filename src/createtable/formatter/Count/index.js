@@ -20,6 +20,7 @@ export const formatter = (cell, row, rowIndex, Data) => {
 				until={d}
 				timeToShow={item.timeToShow == undefined ? [ 'D', 'H', 'M', 'S' ] : item.timeToShow}
 				timeLabels={item.formatView == undefined ? { d: ' 일 ', h: ' : ', m: ' : ', s: '' } : item.formatView}
+				fulldate={item.fulldate}
 				onFinish={() => {
 					onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
 				}}
