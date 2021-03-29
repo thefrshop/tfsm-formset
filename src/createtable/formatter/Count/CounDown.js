@@ -1,45 +1,49 @@
 import React from 'react';
-import moment from 'moment-timezone';
-import 'moment/locale/ko';
 
-export default (Count = (props) => {
-	const { cell, row, rowIndex, Data } = props;
+export default class Count extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			until: Math.max(this.props.until, 0),
+			lastUntil: null
+		};
+		this.timer = setInterval(this.updateTimer, 1000);
+	}
 
-	const [ until, setuntil ] = React.useState(0);
-	const [ lastUntil, setlastUntil ] = React.useState(null);
+	componentDidMount() {}
 
-	var item = Data.item;
-	var onChange = Data.onChange;
+	componentWillUnmount() {
+		clearInterval(this.timer);
+	}
 
-	React.useEffect(() => {
-		const timer = setInterval(() => {
-			if (lastUntil === until) {
-				return;
+	updateTimer = () => {
+		if (this.state.lastUntil === this.state.until) {
+			return;
+		}
+		if (this.state.until === 1 || (this.state.until === 0 && this.state.lastUntil !== 1)) {
+			if (this.props.onFinish) {
+				this.props.onFinish();
 			}
-			if (until === 1 || (until === 0 && lastUntil !== 1)) {
-				onChange(item.dataField, cell, row, rowIndex, 'onClick');
+			if (this.props.onChange) {
+				this.props.Data.onChange(this.state.until);
 			}
+		}
 
-			if (until === 0) {
-				setlastUntil(0);
-				setuntil(0);
-			} else {
-				setlastUntil(until);
-				setuntil(Math.max(0, until - 1));
+		if (this.state.until === 0) {
+			this.setState({ lastUntil: 0, until: 0 });
+		} else {
+			if (this.props.onChange) {
+				this.props.onChange(this.state.until);
 			}
-		}, 1000);
+			this.setState({
+				lastUntil: this.state.until,
+				until: Math.max(0, this.state.until - 1)
+			});
+		}
+	};
 
-		var d = '';
-		var date = moment().format('YYYY-MM-DD HH:mm:ss'); // 현재 시간
-		var diffr = moment.duration(moment(cell).diff(moment(date)));
-		var hours = parseInt(diffr.asHours());
-		var minutes = parseInt(diffr.minutes());
-		var seconds = parseInt(diffr.seconds());
-		d = hours * 60 * 60 + minutes * 60 + seconds; //마감날짜 - 현재날짜 초 단위
-
-		setuntil(Math.max(d, 0));
-		return () => clearInterval(timer);
-	});
-
-	if (cell !== undefined) return <div>{until}</div>;
-});
+	render() {
+		if (this.props.until !== undefined) return <div>{this.state.until}</div>;
+		else return null;
+	}
+}
