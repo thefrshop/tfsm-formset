@@ -67,7 +67,7 @@ export default class Count extends React.Component {
 		const newTime = sprintf('%02d:%02d:%02d:%02d', days, hours, minutes, seconds).split(':');
 		if (this.props.fulldate) {
 			return (
-				<div style={styles.timeCont} onPress={this.props.onPress}>
+				<div style={{ display: 'flex' }}>
 					{timeToShow.includes('D') ? this.renderDoubleDigits(timeLabels.d, newTime[0]) : null}
 					{timeToShow.includes('D') && timeToShow.includes('H') ? this.renderSeparator() : null}
 					{timeToShow.includes('H') ? this.renderDoubleDigits(timeLabels.h, newTime[1]) : null}
@@ -80,14 +80,14 @@ export default class Count extends React.Component {
 		} else {
 			if (newTime[0] != 0) {
 				return (
-					<div style={styles.timeCont} onPress={this.props.onPress}>
+					<div style={{ display: 'flex' }}>
 						{timeToShow.includes('D') ? this.renderDoubleDigits(' 일 ', newTime[0]) : null}
 						{timeToShow.includes('H') ? this.renderDoubleDigits(' 시간', newTime[1]) : null}
 					</div>
 				);
 			} else if (newTime[1] != 0) {
 				return (
-					<div style={styles.timeCont} onPress={this.props.onPress}>
+					<div style={{ display: 'flex' }}>
 						{timeToShow.includes('H') ? this.renderDoubleDigits(timeLabels.h, newTime[1]) : null}
 						{timeToShow.includes('M') ? this.renderDoubleDigits(timeLabels.m, newTime[2]) : null}
 						{timeToShow.includes('S') ? this.renderDoubleDigits(timeLabels.s, newTime[3]) : null}
@@ -95,7 +95,7 @@ export default class Count extends React.Component {
 				);
 			} else {
 				return (
-					<div style={styles.timeCont} onPress={this.props.onPress}>
+					<div style={{ display: 'flex' }}>
 						{timeToShow.includes('M') ? this.renderDoubleDigits(timeLabels.m, newTime[2]) : null}
 						{showSeparator && timeToShow.includes('M') && timeToShow.includes('S') ? (
 							this.renderSeparator()
