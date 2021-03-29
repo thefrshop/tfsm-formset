@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment-timezone';
 import 'moment/locale/ko';
 
-export const Count = (cell, row, rowIndex, Data) => {
+export const formatter = (cell, row, rowIndex, Data) => {
 	const [ until, setuntil ] = React.useState(0);
 	const [ lastUntil, setlastUntil ] = React.useState(null);
 
