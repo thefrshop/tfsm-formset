@@ -69,11 +69,8 @@ export default class Count extends React.Component {
 			return (
 				<div style={{ display: 'flex' }}>
 					{timeToShow.includes('D') ? this.renderDoubleDigits(timeLabels.d, newTime[0]) : null}
-					{timeToShow.includes('D') && timeToShow.includes('H') ? this.renderSeparator() : null}
 					{timeToShow.includes('H') ? this.renderDoubleDigits(timeLabels.h, newTime[1]) : null}
-					{timeToShow.includes('H') && timeToShow.includes('M') ? this.renderSeparator() : null}
 					{timeToShow.includes('M') ? this.renderDoubleDigits(timeLabels.m, newTime[2]) : null}
-					{timeToShow.includes('M') && timeToShow.includes('S') ? this.renderSeparator() : null}
 					{timeToShow.includes('S') ? this.renderDoubleDigits(timeLabels.s, newTime[3]) : null}
 				</div>
 			);
@@ -97,7 +94,6 @@ export default class Count extends React.Component {
 				return (
 					<div style={{ display: 'flex' }}>
 						{timeToShow.includes('M') ? this.renderDoubleDigits(timeLabels.m, newTime[2]) : null}
-						{timeToShow.includes('M') && timeToShow.includes('S') ? this.renderSeparator() : null}
 						{timeToShow.includes('S') ? this.renderDoubleDigits(timeLabels.s, newTime[3]) : null}
 					</div>
 				);
