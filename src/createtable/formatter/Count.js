@@ -18,7 +18,7 @@ export class Count extends React.Component {
 
 		var d = '';
 		var date = moment().format('YYYY-MM-DD HH:mm:ss'); // 현재 시간
-		var diffr = moment.duration(moment(item.endtime).diff(moment(date)));
+		var diffr = moment.duration(moment(cell).diff(moment(date)));
 		var hours = parseInt(diffr.asHours());
 		var minutes = parseInt(diffr.minutes());
 		var seconds = parseInt(diffr.seconds());
@@ -73,6 +73,7 @@ export class Count extends React.Component {
 			});
 		}
 	};
+
 	render() {
 		return <div>{this.state.until}</div>;
 	}
