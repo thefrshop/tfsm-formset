@@ -16,6 +16,7 @@ import * as F_Table from '../formatter/Table';
 import * as F_Icon from '../formatter/Icon';
 import * as F_Html from '../formatter/Html';
 import * as F_Count from '../formatter/Count';
+import * as F_UpDown from '../formatter/UpDownButton';
 
 const FormatSet = [
 	{ name: 'DateTime', module: F_DateTime },
@@ -31,7 +32,8 @@ const FormatSet = [
 	{ name: 'Table', module: F_Table },
 	{ name: 'Icon', module: F_Icon },
 	{ name: 'Html', module: F_Html },
-	{ name: 'Count', module: F_Count }
+	{ name: 'Count', module: F_Count },
+	{ name: 'UpDown', module: F_UpDown }
 ];
 
 export const Getformatter = (format) => {
