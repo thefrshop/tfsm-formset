@@ -24,10 +24,10 @@ var im = require('react-icons/im');
 var ReactJson = _interopDefault(require('react-json-view'));
 var sprintfJs = require('sprintf-js');
 var moment$1 = _interopDefault(require('moment'));
+var bs = require('react-icons/bs');
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
 var ToolkitProvider__default = _interopDefault(ToolkitProvider);
-var bs = require('react-icons/bs');
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -2669,6 +2669,31 @@ var F_Count = {
   formatter: formatter$d
 };
 
+var formatter$e = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    variant: "outline-dark",
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'Up');
+    }
+  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactUp, null)), /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      margin: 5
+    }
+  }, cell !== undefined ? cell : item.text), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    variant: "outline-dark",
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'Down');
+    }
+  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactDown, null)));
+};
+
+var F_UpDown = {
+  __proto__: null,
+  formatter: formatter$e
+};
+
 var FormatSet$1 = [{
   name: 'DateTime',
   module: F_DateTime
@@ -2711,6 +2736,9 @@ var FormatSet$1 = [{
 }, {
   name: 'Count',
   module: F_Count
+}, {
+  name: 'UpDown',
+  module: F_UpDown
 }];
 var Getformatter = function Getformatter(format) {
   if (format === undefined) return null;
