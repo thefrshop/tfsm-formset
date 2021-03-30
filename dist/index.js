@@ -351,6 +351,8 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       return CategoryView;
     };
 
+    _this.allSelect = function () {};
+
     _this.ViewTable = function () {
       var CategoryView = _this.UpdateTable();
 
@@ -364,12 +366,66 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       var table = [];
 
       _this.props.name.forEach(function (item, catindex) {
+        var sel = [];
+
+        if (_this.props.LastMulti && catindex === _this.props.name.length - 1) {
+          CategoryView[catindex].forEach(function (m) {
+            return sel.push(m.Code);
+          });
+        }
+
         table.push( /*#__PURE__*/React__default.createElement(reactBootstrap.Carousel.Item, {
           className: "TableView",
           key: catindex
         }, /*#__PURE__*/React__default.createElement("div", {
           className: "TableTitle"
-        }, item), /*#__PURE__*/React__default.createElement(BootstrapTable, {
+        }, item), _this.props.LastMulti && catindex === _this.props.name.length - 1 ? /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+          variant: "Move",
+          style: {
+            margin: '0 0 10px 0',
+            width: '80px',
+            height: 'auto'
+          },
+          onClick: function onClick() {
+            var _update;
+
+            var CategorySelect = _this.state.CategorySelect;
+            _this.Table[catindex].current.selectionContext.selected = sel;
+
+            _this.setState({
+              last: CategoryView[catindex],
+              CategorySelect: CategorySelect,
+              done: update(_this.state.done, (_update = {}, _update[catindex] = {
+                $set: true
+              }, _update))
+            });
+
+            _this.forceUpdate();
+          }
+        }, "\uC804\uCCB4\uC120\uD0DD"), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+          variant: "Move",
+          style: {
+            margin: '0 0 10px 5px',
+            width: '80px',
+            height: 'auto'
+          },
+          onClick: function onClick() {
+            var _update2;
+
+            var CategorySelect = _this.state.CategorySelect;
+            _this.Table[catindex].current.selectionContext.selected = [];
+
+            _this.setState({
+              last: [],
+              CategorySelect: CategorySelect,
+              done: update(_this.state.done, (_update2 = {}, _update2[catindex] = {
+                $set: false
+              }, _update2))
+            });
+
+            _this.forceUpdate();
+          }
+        }, "\uC804\uCCB4\uD574\uC81C")) : null, /*#__PURE__*/React__default.createElement(BootstrapTable, {
           ref: _this.Table[catindex],
           data: CategoryView[catindex],
           keyField: "Code",
@@ -419,52 +475,53 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       }
 
       if (count === _this.props.name.length - 1) {
-        var _update;
+        var _update3;
 
         _this.setState({
           CategorySelect: CategorySelect,
-          done: update(_this.state.done, (_update = {}, _update[count] = {
+          done: update(_this.state.done, (_update3 = {}, _update3[count] = {
             $set: true
-          }, _update))
+          }, _update3))
         });
       } else {
-        var _update2;
+        var _update4;
 
         _this.setState({
           CategorySelect: CategorySelect,
-          next: update(_this.state.next, (_update2 = {}, _update2[count] = {
+          next: update(_this.state.next, (_update4 = {}, _update4[count] = {
             $set: true
-          }, _update2))
+          }, _update4))
         });
       }
     };
 
     _this.onPrev = function () {
-      var _update3, _update4;
+      var _update5, _update6;
 
       _this.MoveCarousel(_this.state.index - 1);
 
+      console.log(_this.Table[_this.state.index].current.selectionContext.selected);
       _this.Table[_this.state.index].current.selectionContext.selected = [];
 
       _this.setState({
-        CategorySelect: update(_this.state.CategorySelect, (_update3 = {}, _update3[_this.state.index] = {
+        CategorySelect: update(_this.state.CategorySelect, (_update5 = {}, _update5[_this.state.index] = {
           $set: ''
-        }, _update3)),
-        done: update(_this.state.done, (_update4 = {}, _update4[_this.state.index] = {
+        }, _update5)),
+        done: update(_this.state.done, (_update6 = {}, _update6[_this.state.index] = {
           $set: false
-        }, _update4))
+        }, _update6))
       });
     };
 
     _this.onNext = function () {
-      var _update5;
+      var _update7;
 
       _this.MoveCarousel(_this.state.index + 1);
 
       _this.setState({
-        prev: update(_this.state.prev, (_update5 = {}, _update5[_this.state.index + 1] = {
+        prev: update(_this.state.prev, (_update7 = {}, _update7[_this.state.index + 1] = {
           $set: true
-        }, _update5))
+        }, _update7))
       });
     };
 
@@ -605,11 +662,13 @@ var PopupCatSelect = /*#__PURE__*/function (_React$Component) {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
+        console.log(_this2.state.last);
         var OutCategorySelect = _this2.state.CategorySelect;
 
         if (_this2.props.LastMulti) {
           OutCategorySelect.splice(OutCategorySelect.length - 1, 1);
           Array.prototype.push.apply(OutCategorySelect, _this2.state.last);
+          console.log(OutCategorySelect);
         }
 
         _this2.props.onOk(_this2.state.CategorySelect).then(function () {

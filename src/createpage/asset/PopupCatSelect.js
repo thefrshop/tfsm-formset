@@ -67,6 +67,8 @@ class PopupCatSelect extends React.Component {
 		return CategoryView;
 	};
 
+	allSelect = () => {};
+
 	ViewTable = () => {
 		var CategoryView = this.UpdateTable();
 
@@ -86,10 +88,55 @@ class PopupCatSelect extends React.Component {
 		let table = [];
 		this.props.name.forEach((item, catindex) => {
 			//console.log(CategoryView[catindex].length);
+			var sel = [];
+			if (this.props.LastMulti && catindex === this.props.name.length - 1) {
+				CategoryView[catindex].forEach((m) => sel.push(m.Code));
+			}
 
 			table.push(
 				<Carousel.Item className="TableView" key={catindex}>
 					<div className="TableTitle">{item}</div>
+					{this.props.LastMulti && catindex === this.props.name.length - 1 ? (
+						<div>
+							<Button
+								variant="Move"
+								style={{ margin: '0 0 10px 0', width: '80px', height: 'auto' }}
+								onClick={() => {
+									var CategorySelect = this.state.CategorySelect;
+									this.Table[catindex].current.selectionContext.selected = sel;
+									this.setState({
+										last: CategoryView[catindex],
+										CategorySelect: CategorySelect,
+										done: update(this.state.done, {
+											[catindex]: { $set: true }
+										})
+									});
+									this.forceUpdate();
+								}}
+							>
+								전체선택
+							</Button>
+							<Button
+								variant="Move"
+								style={{ margin: '0 0 10px 5px', width: '80px', height: 'auto' }}
+								onClick={() => {
+									var CategorySelect = this.state.CategorySelect;
+									this.Table[catindex].current.selectionContext.selected = [];
+									this.setState({
+										last: [],
+										CategorySelect: CategorySelect,
+										done: update(this.state.done, {
+											[catindex]: { $set: false }
+										})
+									});
+									this.forceUpdate();
+								}}
+							>
+								전체해제
+							</Button>
+						</div>
+					) : null}
+
 					<BootstrapTable
 						ref={this.Table[catindex]}
 						data={CategoryView[catindex]}
@@ -166,6 +213,7 @@ class PopupCatSelect extends React.Component {
 	onPrev = () => {
 		this.MoveCarousel(this.state.index - 1);
 		//console.log(this.Table[this.state.index].current);
+		console.log(this.Table[this.state.index].current.selectionContext.selected);
 		this.Table[this.state.index].current.selectionContext.selected = [];
 		this.setState({
 			CategorySelect: update(this.state.CategorySelect, {
@@ -275,13 +323,13 @@ class PopupCatSelect extends React.Component {
 									variant="Submit"
 									className="FooterButton"
 									onClick={() => {
-										//console.log(this.state.last);
+										console.log(this.state.last);
 
 										var OutCategorySelect = this.state.CategorySelect;
 										if (this.props.LastMulti) {
 											OutCategorySelect.splice(OutCategorySelect.length - 1, 1);
 											Array.prototype.push.apply(OutCategorySelect, this.state.last);
-											//console.log(OutCategorySelect);
+											console.log(OutCategorySelect);
 										}
 
 										this.props.onOk(this.state.CategorySelect).then(() => {
