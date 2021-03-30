@@ -7,13 +7,12 @@ export const formatter = (cell, row, rowIndex, Data) => {
 	var onChange = Data.onChange;
 
 	return (
-		<div style={{ display: 'none' }}>
-			<Button variant="outline-light" onClick={() => onChange(item.dataField, cell, row, rowIndex, 'Up')}>
+		<div>
+			<Button variant="outline-dark" onClick={() => onChange(item.dataField, cell, row, rowIndex, 'Up')}>
 				<BsChevronCompactUp />
 			</Button>
-
-			{cell !== undefined ? cell : item.text}
-			<Button variant="outline-light" onClick={() => onChange(item.dataField, cell, row, rowIndex, 'Down')}>
+			<div style={{ margin: 5 }}>{cell !== undefined ? cell : item.text}</div>
+			<Button variant="outline-dark" onClick={() => onChange(item.dataField, cell, row, rowIndex, 'Down')}>
 				<BsChevronCompactDown />
 			</Button>
 		</div>
