@@ -91,7 +91,7 @@ const GetUploagImage = (props) => {
 						var Fi = _.concat(values[item.id].FileList);
 						var Ur = _.concat(values[item.id].UrlList);
 
-						Up.splice(index, 1);
+						Ur.splice(index, 1);
 						Fi.splice(index, 1);
 						var data = {
 							UrlList: Ur,
@@ -165,17 +165,27 @@ const GetCurrentImage = (props) => {
 //이미지 체인지
 const ImageFileChange = (e, id, UpdateInitData, values) => {
 	if (e.target.files) {
+		var data = values[id];
+
 		[].forEach.call(e.target.files, (file) => {
-			let reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onloadend = (e) => {
-				var data = update(values[id], {
+			ImageRead(file).then((m) => {
+				data = update(data, {
 					FileList: {
-						$push: [ { file: file, url: e.target.result } ]
+						$push: [ { file: file, url: m } ]
 					}
 				});
 				UpdateInitData(id, data);
-			};
+			});
 		});
 	}
+};
+
+const ImageRead = (file) => {
+	return new Promise((resolve, reject) => {
+		let reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = (e) => {
+			resolve(e.target.result);
+		};
+	});
 };

@@ -1272,7 +1272,7 @@ var GetUploagImage = function GetUploagImage(props) {
 
         var Ur = _.concat(values[item.id].UrlList);
 
-        Up.splice(index, 1);
+        Ur.splice(index, 1);
         Fi.splice(index, 1);
         var data = {
           UrlList: Ur,
@@ -1344,23 +1344,32 @@ var GetCurrentImage = function GetCurrentImage(props) {
 
 var ImageFileChange = function ImageFileChange(e, id, UpdateInitData, values) {
   if (e.target.files) {
+    var data = values[id];
     [].forEach.call(e.target.files, function (file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onloadend = function (e) {
-        var data = update(values[id], {
+      ImageRead(file).then(function (m) {
+        data = update(data, {
           FileList: {
             $push: [{
               file: file,
-              url: e.target.result
+              url: m
             }]
           }
         });
         UpdateInitData(id, data);
-      };
+      });
     });
   }
+};
+
+var ImageRead = function ImageRead(file) {
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = function (e) {
+      resolve(e.target.result);
+    };
+  });
 };
 
 var M_UploadImage = {
