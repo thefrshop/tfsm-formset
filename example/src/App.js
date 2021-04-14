@@ -161,6 +161,8 @@ export default class App extends React.Component {
 					keyField={keyField}
 					data={InitData}
 					columns={columns}
+					pagination
+					Poptions={{ showTotal: false, hideSizePerPage: true }}
 					onChange={(dataField, cell, row, rowIndex, value) =>
 						console.log(dataField, cell, row, rowIndex, value)}
 				/>

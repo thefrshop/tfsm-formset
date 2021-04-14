@@ -2913,6 +2913,7 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
         value: this.props.data.length
       }]
     };
+    options = Object.assign(options, this.props.Poptions);
     var selectRow = this.props.selectRow;
 
     if (selectRow !== undefined) {

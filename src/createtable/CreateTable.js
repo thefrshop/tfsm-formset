@@ -62,7 +62,7 @@ export default class CreateTable extends React.Component {
 				전체 ({size}개) : {from} 부터 {to} 까지
 			</span>
 		);
-		const options = {
+		var options = {
 			paginationSize: 10,
 			pageStartIndex: 1,
 			alwaysShowAllBtns: true, // Always show next and previous button
@@ -106,6 +106,8 @@ export default class CreateTable extends React.Component {
 				}
 			]
 		};
+
+		options = Object.assign(options, this.props.Poptions);
 
 		var selectRow = this.props.selectRow;
 		if (selectRow !== undefined) {
