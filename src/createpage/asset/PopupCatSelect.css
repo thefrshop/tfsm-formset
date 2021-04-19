@@ -3,8 +3,8 @@
 }
 
 .CatSelect tr,
-th,
-td {
+.CatSelect th,
+.CatSelect td {
 	text-align: center;
 }
 
