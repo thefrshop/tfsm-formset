@@ -331,8 +331,8 @@ export const HtmlInit = [
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const custom_Formatter = (cell, row, rowIndex, formatExtraData) => {
-	console.log('cell', cell);
-	console.log('row', row);
+	//console.log('cell', cell);
+	//console.log('row', row);
 	return <div> custom_Formatter</div>;
 };
 

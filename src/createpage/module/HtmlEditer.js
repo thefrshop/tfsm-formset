@@ -1,12 +1,8 @@
 import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, convertFromRaw, ContentState } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './HtmlEditer.css';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import draftToMarkdown from 'draftjs-to-markdown';
-import { markdownToDraft } from 'markdown-draft-js';
+
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 //초기화
 export const InitData = () => {
@@ -34,70 +30,42 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 class UploadBoard extends React.Component {
 	constructor(props) {
 		super(props);
-		var contentBlock;
-
-		if (this.props.type !== undefined) {
-			if (this.props.type.toLowerCase() === 'markdown') {
-				contentBlock = markdownToDraft(this.props.InitData, {
-					remarkablePreset: 'commonmark',
-					remarkableOptions: {
-						html: true,
-						disable: {
-							block: [ 'list' ]
-						},
-						preserveNewlines: true
-					}
-				});
-
-				const contentState = convertFromRaw(contentBlock);
-				const newEditorState = EditorState.createWithContent(contentState);
-				this.state = {
-					editorState: newEditorState
-				};
-			}
-		} else {
-			contentBlock = htmlToDraft(this.props.InitData);
-			if (contentBlock) {
-				const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-				const editorState = EditorState.createWithContent(contentState);
-				this.state = {
-					editorState
-				};
-			}
-		}
 	}
-	onEditorStateChange = (editorState) => {
-		this.setState({
-			editorState
-		});
-		var value = '';
-		if (this.props.type !== undefined) {
-			if (this.props.type.toLowerCase() === 'markdown') {
-				value = draftToMarkdown(convertToRaw(this.state.editorState.getCurrentContent()));
-			}
-		} else {
-			value = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
-		}
-
-		console.log(value);
-		this.props.onValueChange(value);
-	};
 
 	render() {
 		return (
-			<Editor
-				defaultEditorState={this.state.editorState}
-				toolbarClassName="editorToolbar"
-				wrapperClassName="editorWrapper"
-				editorClassName="editorBox"
-				onEditorStateChange={this.onEditorStateChange}
-				localization={{
-					locale: 'ko'
-				}}
-				toolbar={{
-					options: [ 'inline', 'blockType', 'fontSize', 'fontFamily', 'textAlign', 'colorPicker', 'emoji' ]
-				}}
-			/>
+			<div>
+				<CKEditor
+					config={{
+						language: 'ko'
+					}}
+					onReady={(editor) => {
+						//console.log('Editor is ready to use!', editor);
+
+						// Insert the toolbar before the editable area.
+						editor.ui
+							.getEditableElement()
+							.parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
+
+						this.editor = editor;
+					}}
+					onError={({ willEditorRestart }) => {
+						// If the editor is restarted, the toolbar element will be created once again.
+						// The `onReady` callback will be called again and the new toolbar will be added.
+						// This is why you need to remove the older toolbar.
+						if (willEditorRestart) {
+							this.editor.ui.view.toolbar.element.remove();
+						}
+					}}
+					editor={DecoupledEditor}
+					data={this.props.InitData}
+					onChange={(event, editor) => {
+						const data = editor.getData();
+						this.props.onValueChange(data);
+						//console.log({ event, editor, data });
+					}}
+				/>
+			</div>
 		);
 	}
 }

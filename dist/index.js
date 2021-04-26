@@ -12,13 +12,8 @@ var TextareaAutosize = _interopDefault(require('react-textarea-autosize'));
 var NumberFormat = _interopDefault(require('react-number-format'));
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
 var _ = require('lodash');
-var reactDraftWysiwyg = require('react-draft-wysiwyg');
-var draftJs = require('draft-js');
-require('react-draft-wysiwyg/dist/react-draft-wysiwyg.css');
-var draftToHtml = _interopDefault(require('draftjs-to-html'));
-var htmlToDraft = _interopDefault(require('html-to-draftjs'));
-var draftToMarkdown = _interopDefault(require('draftjs-to-markdown'));
-var markdownDraftJs = require('markdown-draft-js');
+var ckeditor5React = require('@ckeditor/ckeditor5-react');
+var DecoupledEditor = _interopDefault(require('@ckeditor/ckeditor5-build-decoupled-document'));
 var DatePicker = _interopDefault(require('react-datepicker'));
 var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 var fa = require('react-icons/fa');
@@ -826,7 +821,6 @@ var InitData$6 = function InitData() {
 };
 var ItemsView$6 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   if (item.HierarchyData.LastMulti) {
-    console.log('Multi');
     return /*#__PURE__*/React__default.createElement("div", {
       className: "ItemViewRow",
       key: index
@@ -1462,82 +1456,37 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(UploadBoard, _React$Component);
 
   function UploadBoard(props) {
-    var _this;
-
-    _this = _React$Component.call(this, props) || this;
-
-    _this.onEditorStateChange = function (editorState) {
-      _this.setState({
-        editorState: editorState
-      });
-
-      var value = '';
-
-      if (_this.props.type !== undefined) {
-        if (_this.props.type.toLowerCase() === 'markdown') {
-          value = draftToMarkdown(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
-        }
-      } else {
-        value = draftToHtml(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
-      }
-
-      console.log(value);
-
-      _this.props.onValueChange(value);
-    };
-
-    var contentBlock;
-
-    if (_this.props.type !== undefined) {
-      if (_this.props.type.toLowerCase() === 'markdown') {
-        contentBlock = markdownDraftJs.markdownToDraft(_this.props.InitData, {
-          remarkablePreset: 'commonmark',
-          remarkableOptions: {
-            html: true,
-            disable: {
-              block: ['list']
-            },
-            preserveNewlines: true
-          }
-        });
-        var contentState = draftJs.convertFromRaw(contentBlock);
-        var newEditorState = draftJs.EditorState.createWithContent(contentState);
-        _this.state = {
-          editorState: newEditorState
-        };
-      }
-    } else {
-      contentBlock = htmlToDraft(_this.props.InitData);
-
-      if (contentBlock) {
-        var _contentState = draftJs.ContentState.createFromBlockArray(contentBlock.contentBlocks);
-
-        var editorState = draftJs.EditorState.createWithContent(_contentState);
-        _this.state = {
-          editorState: editorState
-        };
-      }
-    }
-
-    return _this;
+    return _React$Component.call(this, props) || this;
   }
 
   var _proto = UploadBoard.prototype;
 
   _proto.render = function render() {
-    return /*#__PURE__*/React__default.createElement(reactDraftWysiwyg.Editor, {
-      defaultEditorState: this.state.editorState,
-      toolbarClassName: "editorToolbar",
-      wrapperClassName: "editorWrapper",
-      editorClassName: "editorBox",
-      onEditorStateChange: this.onEditorStateChange,
-      localization: {
-        locale: 'ko'
+    var _this = this;
+
+    return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(ckeditor5React.CKEditor, {
+      config: {
+        language: 'ko'
       },
-      toolbar: {
-        options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'textAlign', 'colorPicker', 'emoji']
+      onReady: function onReady(editor) {
+        editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
+        _this.editor = editor;
+      },
+      onError: function onError(_ref) {
+        var willEditorRestart = _ref.willEditorRestart;
+
+        if (willEditorRestart) {
+          _this.editor.ui.view.toolbar.element.remove();
+        }
+      },
+      editor: DecoupledEditor,
+      data: this.props.InitData,
+      onChange: function onChange(event, editor) {
+        var data = editor.getData();
+
+        _this.props.onValueChange(data);
       }
-    });
+    }));
   };
 
   return UploadBoard;

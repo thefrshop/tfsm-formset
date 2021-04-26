@@ -421,28 +421,9 @@ export const HtmlEditer = {
 		}
 	]
 };
-export const HtmlEditerMarkdown = {
-	Struct: [
-		{
-			id: 'BasicInfo',
-			name: 'HtmlEditer',
-			format: 'Titletext',
-			Items: [
-				{
-					id: 'HtmlEditer',
-					name: 'Html',
-					format: 'HtmlEditer',
-					type: 'MarkDown'
-				}
-			]
-		}
-	]
-};
+
 export const HtmlEditerInit = {
 	HtmlEditer: '<p><strong>안녕하세요.</strong></p>↵<p>테스트 입니다.</p>'
-};
-export const MarkEditerInit = {
-	HtmlEditer: '2434\n234↵234↵234↵234↵234234234234↵234234↵234↵234↵23↵42↵34↵234↵'
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

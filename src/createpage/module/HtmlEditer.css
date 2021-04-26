@@ -14,3 +14,13 @@
 	margin: 0 auto;
 	width: 100%;
 }
+
+.editorBox .public-DraftStyleDefault-block {
+	margin: 0;
+}
+
+.ck.ck-editor__editable_inline {
+	min-height: 500px;
+
+	border: 1px solid #ced4da;
+}

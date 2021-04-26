@@ -9,7 +9,7 @@ export const InitData = () => {
 //뷰
 export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 	if (item.HierarchyData.LastMulti) {
-		console.log('Multi');
+		//console.log('Multi');
 		return (
 			<div className="ItemViewRow" key={index}>
 				<div className="ItemHeader">
