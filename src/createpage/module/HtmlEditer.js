@@ -1,10 +1,12 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './HtmlEditer.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import draftToMarkdown from 'draftjs-to-markdown';
+import { markdownToDraft } from 'markdown-draft-js';
 
 //초기화
 export const InitData = () => {
@@ -19,6 +21,7 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 				<div className="ItemTitle">{item.name}</div>
 				<div className="ItemContent">
 					<UploadBoard
+						type={item.type}
 						InitData={values[item.id]}
 						onValueChange={(value) => handleChange({ target: { name: item.id, value: value } })}
 					/>
@@ -31,21 +34,51 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 class UploadBoard extends React.Component {
 	constructor(props) {
 		super(props);
+		var contentBlock;
 
-		const contentBlock = htmlToDraft(this.props.InitData);
-		if (contentBlock) {
-			const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-			const editorState = EditorState.createWithContent(contentState);
-			this.state = {
-				editorState
-			};
+		if (this.props.type !== undefined) {
+			if (this.props.type.toLowerCase() === 'markdown') {
+				contentBlock = markdownToDraft(this.props.InitData, {
+					remarkablePreset: 'commonmark',
+					remarkableOptions: {
+						html: true,
+						disable: {
+							block: [ 'list' ]
+						},
+						preserveNewlines: true
+					}
+				});
+
+				const contentState = convertFromRaw(contentBlock);
+				const newEditorState = EditorState.createWithContent(contentState);
+				this.state = {
+					editorState: newEditorState
+				};
+			}
+		} else {
+			contentBlock = htmlToDraft(this.props.InitData);
+			if (contentBlock) {
+				const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+				const editorState = EditorState.createWithContent(contentState);
+				this.state = {
+					editorState
+				};
+			}
 		}
 	}
 	onEditorStateChange = (editorState) => {
 		this.setState({
 			editorState
 		});
-		var value = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
+		var value = '';
+		if (this.props.type !== undefined) {
+			if (this.props.type.toLowerCase() === 'markdown') {
+				value = draftToMarkdown(convertToRaw(this.state.editorState.getCurrentContent()));
+			}
+		} else {
+			value = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
+		}
+
 		//console.log(value);
 		this.props.onValueChange(value);
 	};

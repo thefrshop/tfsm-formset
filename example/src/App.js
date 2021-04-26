@@ -206,6 +206,7 @@ export default class App extends React.Component {
 							{this.Test('UploadImage', exL.UploadImage, exL.UploadImageInit)}
 							{this.Test('UploadImageSingle', exL.UploadImageSingle, exL.UploadImageSingleInit)}
 							{this.Test('HtmlEditer', exL.HtmlEditer, exL.HtmlEditerInit)}
+							{this.Test('HtmlEditer-Markdown', exL.HtmlEditerMarkdown, exL.MarkEditerInit)}
 
 							{this.Test('Imageset', exL.Imageset, exL.ImagesetInit)}
 							{this.Test('Tab', exL.Tab, null)}

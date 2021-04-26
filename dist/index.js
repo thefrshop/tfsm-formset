@@ -17,6 +17,8 @@ var draftJs = require('draft-js');
 require('react-draft-wysiwyg/dist/react-draft-wysiwyg.css');
 var draftToHtml = _interopDefault(require('draftjs-to-html'));
 var htmlToDraft = _interopDefault(require('html-to-draftjs'));
+var draftToMarkdown = _interopDefault(require('draftjs-to-markdown'));
+var markdownDraftJs = require('markdown-draft-js');
 var DatePicker = _interopDefault(require('react-datepicker'));
 var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 var fa = require('react-icons/fa');
@@ -1443,6 +1445,7 @@ var ItemsView$b = function ItemsView(M, index, item, values, handleChange, Modif
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
   }, /*#__PURE__*/React__default.createElement(UploadBoard, {
+    type: item.type,
     InitData: values[item.id],
     onValueChange: function onValueChange(value) {
       return handleChange({
@@ -1468,19 +1471,49 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
         editorState: editorState
       });
 
-      var value = draftToHtml(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
+      var value = '';
+
+      if (_this.props.type !== undefined) {
+        if (_this.props.type.toLowerCase() === 'markdown') {
+          value = draftToMarkdown(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
+        }
+      } else {
+        value = draftToHtml(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
+      }
 
       _this.props.onValueChange(value);
     };
 
-    var contentBlock = htmlToDraft(_this.props.InitData);
+    var contentBlock;
 
-    if (contentBlock) {
-      var contentState = draftJs.ContentState.createFromBlockArray(contentBlock.contentBlocks);
-      var editorState = draftJs.EditorState.createWithContent(contentState);
-      _this.state = {
-        editorState: editorState
-      };
+    if (_this.props.type !== undefined) {
+      if (_this.props.type.toLowerCase() === 'markdown') {
+        contentBlock = markdownDraftJs.markdownToDraft(_this.props.InitData, {
+          remarkablePreset: 'commonmark',
+          remarkableOptions: {
+            html: true,
+            disable: {
+              block: ['list']
+            }
+          }
+        });
+        var contentState = draftJs.convertFromRaw(contentBlock);
+        var newEditorState = draftJs.EditorState.createWithContent(contentState);
+        _this.state = {
+          editorState: newEditorState
+        };
+      }
+    } else {
+      contentBlock = htmlToDraft(_this.props.InitData);
+
+      if (contentBlock) {
+        var _contentState = draftJs.ContentState.createFromBlockArray(contentBlock.contentBlocks);
+
+        var editorState = draftJs.EditorState.createWithContent(_contentState);
+        _this.state = {
+          editorState: editorState
+        };
+      }
     }
 
     return _this;
