@@ -79,7 +79,7 @@ class UploadBoard extends React.Component {
 			value = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
 		}
 
-		//console.log(value);
+		console.log(value);
 		this.props.onValueChange(value);
 	};
 

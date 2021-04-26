@@ -1481,6 +1481,8 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
         value = draftToHtml(draftJs.convertToRaw(_this.state.editorState.getCurrentContent()));
       }
 
+      console.log(value);
+
       _this.props.onValueChange(value);
     };
 
@@ -1494,7 +1496,8 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
             html: true,
             disable: {
               block: ['list']
-            }
+            },
+            preserveNewlines: true
           }
         });
         var contentState = draftJs.convertFromRaw(contentBlock);
