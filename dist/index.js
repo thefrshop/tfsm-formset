@@ -22,7 +22,6 @@ var ReactJson = _interopDefault(require('react-json-view'));
 var sprintfJs = require('sprintf-js');
 var moment$1 = _interopDefault(require('moment'));
 var bs = require('react-icons/bs');
-require('react-bootstrap-table-next/dist/react-bootstrap-table2.min.css');
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
 var ToolkitProvider__default = _interopDefault(ToolkitProvider);
