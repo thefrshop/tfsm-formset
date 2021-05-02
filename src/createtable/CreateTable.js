@@ -12,6 +12,7 @@ import { Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import 'moment/locale/ko';
 
 import { BsLayoutThreeColumns } from 'react-icons/bs';
+import './react-bootstrap-table2.css';
 
 //import { Link } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import update from 'react-addons-update';
 import './CreatePage.css';
-import 'react-datepicker/dist/react-datepicker.css';
+import './react-datepicker.css';
 
 import { Button, Form, Image, Tab, Tabs } from 'react-bootstrap';
 

@@ -3,7 +3,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 var update = _interopDefault(require('react-addons-update'));
-require('react-datepicker/dist/react-datepicker.css');
 var reactBootstrap = require('react-bootstrap');
 var moment = _interopDefault(require('moment-timezone'));
 require('moment/locale/ko');
