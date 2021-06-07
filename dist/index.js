@@ -2766,7 +2766,6 @@ var InitColumns = function InitColumns(propscolumns, onChange) {
         $set: Caret
       }
     });
-    columns.push(c_item);
   });
   return columns;
 };
