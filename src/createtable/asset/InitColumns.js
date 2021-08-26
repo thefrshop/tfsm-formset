@@ -57,7 +57,7 @@ export const InitColumns = (propscolumns, onChange) => {
 
 		c_item = update(c_item, { sortCaret: { $set: Caret } });
 
-		//columns.push(c_item);
+		columns.push(c_item);
 	});
 
 	//console.log(columns);
