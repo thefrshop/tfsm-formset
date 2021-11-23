@@ -3095,11 +3095,11 @@ var SearchForm = /*#__PURE__*/function (_React$Component2) {
 
     return /*#__PURE__*/React__default.createElement("div", {
       className: "TopSearchBar"
-    }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Prepend, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "secondary",
       className: "ClearBT",
       onClick: this.ClearClick
-    }, "Clear")), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
+    }, "Clear"), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
       className: "SearchForm",
       onChange: function onChange(e) {
         return _this4.FormChange(e);
@@ -3108,11 +3108,11 @@ var SearchForm = /*#__PURE__*/function (_React$Component2) {
       onKeyPress: function onKeyPress(e) {
         return _this4.appKeyPress(e);
       }
-    }), /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup.Append, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "secondary",
       className: "SearchBT",
       onClick: this.SearchClick
-    }, "\uAC80\uC0C9"))));
+    }, "\uAC80\uC0C9")));
   };
 
   return SearchForm;

@@ -240,22 +240,18 @@ class SearchForm extends React.Component {
 		return (
 			<div className="TopSearchBar">
 				<InputGroup>
-					<InputGroup.Prepend>
-						<Button variant="secondary" className="ClearBT" onClick={this.ClearClick}>
-							Clear
-						</Button>
-					</InputGroup.Prepend>
+					<Button variant="secondary" className="ClearBT" onClick={this.ClearClick}>
+						Clear
+					</Button>
 					<FormControl
 						className="SearchForm"
 						onChange={(e) => this.FormChange(e)}
 						value={this.state.input}
 						onKeyPress={(e) => this.appKeyPress(e)}
 					/>
-					<InputGroup.Append>
-						<Button variant="secondary" className="SearchBT" onClick={this.SearchClick}>
-							검색
-						</Button>
-					</InputGroup.Append>
+					<Button variant="secondary" className="SearchBT" onClick={this.SearchClick}>
+						검색
+					</Button>
 				</InputGroup>
 			</div>
 		);
