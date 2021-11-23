@@ -74,15 +74,15 @@ const GetUploagImage = (props) => {
 				<Image
 					className="ImageformImage"
 					variant="top"
-					src={value.url}
+					src={value.FileData}
 					onMouseEnter={() => setIsShown('UP' + index)}
 					onMouseLeave={() => setIsShown(false)}
 				/>
-				<div className="ImageformTitle">{value.file.name}</div>
+				<div className="ImageformTitle">{value.FileName}</div>
 				{isShown === 'UP' + index && (
 					<div className="ImageformPop">
-						<Image variant="top" src={value.url} />
-						<div>{value.file.name}</div>
+						<Image variant="top" src={value.FileData} />
+						<div>{value.FileName}</div>
 					</div>
 				)}
 				<Button
@@ -171,7 +171,7 @@ const ImageFileChange = (e, id, UpdateInitData, values) => {
 			ImageRead(file).then((m) => {
 				data = update(data, {
 					FileList: {
-						$push: [ { file: file, url: m } ]
+						$push: [ { FileName: file.name, FileData: m } ]
 					}
 				});
 				UpdateInitData(id, data);

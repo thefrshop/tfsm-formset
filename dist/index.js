@@ -1246,7 +1246,7 @@ var GetUploagImage = function GetUploagImage(props) {
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       className: "ImageformImage",
       variant: "top",
-      src: value.url,
+      src: value.FileData,
       onMouseEnter: function onMouseEnter() {
         return setIsShown('UP' + index);
       },
@@ -1255,12 +1255,12 @@ var GetUploagImage = function GetUploagImage(props) {
       }
     }), /*#__PURE__*/React__default.createElement("div", {
       className: "ImageformTitle"
-    }, value.file.name), isShown === 'UP' + index && /*#__PURE__*/React__default.createElement("div", {
+    }, value.FileName), isShown === 'UP' + index && /*#__PURE__*/React__default.createElement("div", {
       className: "ImageformPop"
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       variant: "top",
-      src: value.url
-    }), /*#__PURE__*/React__default.createElement("div", null, value.file.name)), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      src: value.FileData
+    }), /*#__PURE__*/React__default.createElement("div", null, value.FileName)), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       className: "ImageformXBTN",
       onClick: function onClick() {
         var Fi = _.concat(values[item.id].FileList);
@@ -1345,8 +1345,8 @@ var ImageFileChange = function ImageFileChange(e, id, UpdateInitData, values) {
         data = update(data, {
           FileList: {
             $push: [{
-              file: file,
-              url: m
+              FileName: file.name,
+              FileData: m
             }]
           }
         });

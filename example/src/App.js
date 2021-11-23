@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { CreatePage, CreateTable } from 'tfsm-formset/dist';
 import 'tfsm-formset/dist/index.css';
@@ -13,7 +13,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
-export default class App extends React.Component {
+export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
