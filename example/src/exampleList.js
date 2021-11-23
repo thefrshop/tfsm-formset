@@ -449,3 +449,28 @@ export const UploadImageSingleInit = {
 		Url: 'https://shop-phinf.pstatic.net/20200717_47/15949746658893MYpr_JPEG/32336999427478920_808315976.jpg'
 	}
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+export const UploadFile = {
+	Struct: [
+		{
+			id: 'BasicInfo',
+			name: 'UploadFile',
+			format: 'Titletext',
+			Items: [
+				{
+					id: 'TitleImage',
+					name: '업로드 파일',
+					format: 'UploadFile'
+				}
+			]
+		}
+	]
+};
+
+export const UploadFileInit = {
+	TitleImage: {
+		FileName: 'test.file'
+	}
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////

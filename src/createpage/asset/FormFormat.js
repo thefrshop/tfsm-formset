@@ -16,6 +16,7 @@ import * as M_DatePicker from '../module/DatePicker';
 import * as M_Switch from '../module/Switch';
 import * as M_Option from '../module/Option';
 import * as M_UploadImageSingle from '../module/UploadImageSingle';
+import * as M_UploadFile from '../module/UploadFile';
 
 const FormatSet = [
 	{ name: 'CodeGen', module: M_CodeGen },
@@ -35,7 +36,8 @@ const FormatSet = [
 	{ name: 'DatePicker', module: M_DatePicker },
 	{ name: 'Switch', module: M_Switch },
 	{ name: 'Option', module: M_Option },
-	{ name: 'UploadImageSingle', module: M_UploadImageSingle }
+	{ name: 'UploadImageSingle', module: M_UploadImageSingle },
+	{ name: 'UploadFile', module: M_UploadFile }
 ];
 
 export const GetModule = (format) => {

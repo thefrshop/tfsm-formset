@@ -1508,7 +1508,7 @@ var ItemsView$c = function ItemsView(M, index, item, values, handleChange, Modif
   var ItemsTable = [];
   var FormViewTable = [];
   item.Items.forEach(function (Tabitem, index) {
-    FormViewTable.push(ItemsView$i(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
+    FormViewTable.push(ItemsView$j(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
   });
   var TabTable = [];
   FormViewTable.forEach(function (TabItem, Tabindex) {
@@ -1814,6 +1814,63 @@ var M_UploadImageSingle = {
   ItemsView: ItemsView$h
 };
 
+var InitData$i = function InitData() {
+  return {
+    File: '',
+    Url: ''
+  };
+};
+var ItemsView$i = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+  var FileName = values[item.id].FileName;
+  var name = '';
+  var browseText = '파일 선택';
+
+  if (FileName !== '' && FileName !== undefined) {
+    name = FileName;
+    browseText = '파일 교체';
+  }
+
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemViewRow",
+    key: index
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemHeader"
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemTitle"
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemContent"
+  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form.File, {
+    label: name,
+    "data-browse": browseText,
+    onChange: function onChange(e) {
+      onChangeFile(e, item.id, UpdateInitData);
+    },
+    custom: true
+  }))));
+};
+
+var onChangeFile = function onChangeFile(e, id, UpdateInitData, values) {
+  if (e.target.files) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = function (val) {
+      var data = {
+        FileName: file.name,
+        FileData: val.target.result
+      };
+      UpdateInitData(id, data);
+    };
+  }
+};
+
+var M_UploadFile = {
+  __proto__: null,
+  InitData: InitData$i,
+  ItemsView: ItemsView$i
+};
+
 var FormatSet = [{
   name: 'CodeGen',
   module: M_CodeGen
@@ -1868,23 +1925,26 @@ var FormatSet = [{
 }, {
   name: 'UploadImageSingle',
   module: M_UploadImageSingle
+}, {
+  name: 'UploadFile',
+  module: M_UploadFile
 }];
 var GetModule = function GetModule(format) {
   return FormatSet.find(function (m) {
     return m.name.toLowerCase() === format.toLowerCase();
   }).module;
 };
-var InitData$i = function InitData(item) {
+var InitData$j = function InitData(item) {
   return GetModule(item.format).InitData(item);
 };
-var ItemsView$i = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
+var ItemsView$j = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
   return GetModule(item.format).ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback);
 };
 
 var InitItemsSet = function InitItemsSet(Struct) {
   var InitData = {};
   Struct.forEach(function (item) {
-    if (item.format === 'Tab') Object.assign(InitData, InitData$i(item));else InitData[item.id] = InitData$i(item);
+    if (item.format === 'Tab') Object.assign(InitData, InitData$j(item));else InitData[item.id] = InitData$j(item);
   });
   return InitData;
 };
@@ -1961,7 +2021,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             }
           });
         } else {
-          ItemsTable.push(ItemsView$i(_assertThisInitialized(_this), index, item, values, handleChange, ModifyMode, _this.UpdateInitData));
+          ItemsTable.push(ItemsView$j(_assertThisInitialized(_this), index, item, values, handleChange, ModifyMode, _this.UpdateInitData));
         }
       });
       return ItemsTable;

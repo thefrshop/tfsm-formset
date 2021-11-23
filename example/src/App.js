@@ -185,7 +185,7 @@ export default class App extends React.Component {
 				<br />
 				<Tabs defaultActiveKey="API">
 					<Tab eventKey="API" title="Form API">
-						<Tabs defaultActiveKey="HtmlEditer">
+						<Tabs defaultActiveKey="UploadFile">
 							{this.Test('CodeGen', exL.CodeGen, exL.CodeGenInit)}
 							{this.Test('Text', exL.Text, exL.TextInit)}
 							{this.Test('Price', exL.Price, exL.PriceInit)}
@@ -205,6 +205,7 @@ export default class App extends React.Component {
 							{this.Test('Select', exL.Select, exL.SelectInit)}
 							{this.Test('UploadImage', exL.UploadImage, exL.UploadImageInit)}
 							{this.Test('UploadImageSingle', exL.UploadImageSingle, exL.UploadImageSingleInit)}
+							{this.Test('UploadFile', exL.UploadFile, exL.UploadFileInit)}
 							{this.Test('HtmlEditer', exL.HtmlEditer, exL.HtmlEditerInit)}
 
 							{this.Test('Imageset', exL.Imageset, exL.ImagesetInit)}
