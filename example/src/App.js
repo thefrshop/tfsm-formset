@@ -20,6 +20,7 @@ export default class App extends Component {
 			defaultdata: {},
 			modifidata: {}
 		};
+		this.Table = React.createRef();
 	}
 
 	onSubmitDefault = (data) => {
@@ -155,6 +156,14 @@ export default class App extends Component {
 				<br />
 				<h5>테이블</h5>
 				<CreateTable
+					ref={this.Table}
+					selectRow={{
+						mode: 'radio',
+						hideSelectColumn: true,
+						clickToSelect: true,
+						onSelect: this.onSelect,
+						bgColor: '#ffffe0'
+					}}
 					setBT
 					toggleList
 					searchBar
@@ -166,10 +175,14 @@ export default class App extends Component {
 					onChange={(dataField, cell, row, rowIndex, value) =>
 						console.log(dataField, cell, row, rowIndex, value)}
 				/>
+				<Button onClick={() => this.testbt()}>Test</Button>
 			</div>
 		);
 	};
 
+	testbt = () => {
+		this.Table.current.Gettest();
+	};
 	TestTable = (name, columns, InitData, keyField) => {
 		return (
 			<Tab eventKey={name} title={name}>
@@ -183,7 +196,7 @@ export default class App extends Component {
 			<div className="App">
 				<h3>tfsm-formset 예제</h3>
 				<br />
-				<Tabs defaultActiveKey="API">
+				<Tabs defaultActiveKey="Table">
 					<Tab eventKey="API" title="Form API">
 						<Tabs defaultActiveKey="UploadFile">
 							{this.Test('CodeGen', exL.CodeGen, exL.CodeGenInit)}

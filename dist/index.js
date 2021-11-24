@@ -2875,6 +2875,12 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
       });
     };
 
+    _this.Gettest = function () {
+      console.log(_this.Table.current.selectionContext.context);
+      _this.Table.current.props.data = [];
+      console.log(_this.Table.current);
+    };
+
     _this.GetRow = function () {
       return _this.Table.current.selectionContext.selected;
     };
