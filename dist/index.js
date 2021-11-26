@@ -2409,16 +2409,20 @@ var formatter$4 = function formatter(cell, row, rowIndex, Data) {
     return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       key: item.dataField + index,
       style: {
-        margin: 5
+        margin: 5,
+        cursor: 'pointer'
       },
       src: value,
       width: item.width,
       height: item.height,
+      onClick: function onClick() {
+        return onChange(item.dataField, cell, row, rowIndex, 'onClick:' + index);
+      },
       onMouseEnter: function onMouseEnter() {
-        return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter' + index);
+        return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter:' + index);
       },
       onMouseLeave: function onMouseLeave() {
-        return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave' + index);
+        return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave:' + index);
       }
     });
   }));
@@ -2873,12 +2877,6 @@ var CreateTable = /*#__PURE__*/function (_React$Component) {
       _this.setState({
         Tabledata: data
       });
-    };
-
-    _this.Gettest = function () {
-      console.log(_this.Table.current.selectionContext.context);
-      _this.Table.current.props.data = [];
-      console.log(_this.Table.current);
     };
 
     _this.GetRow = function () {

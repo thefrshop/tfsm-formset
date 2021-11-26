@@ -175,14 +175,10 @@ export default class App extends Component {
 					onChange={(dataField, cell, row, rowIndex, value) =>
 						console.log(dataField, cell, row, rowIndex, value)}
 				/>
-				<Button onClick={() => this.testbt()}>Test</Button>
 			</div>
 		);
 	};
 
-	testbt = () => {
-		this.Table.current.Gettest();
-	};
 	TestTable = (name, columns, InitData, keyField) => {
 		return (
 			<Tab eventKey={name} title={name}>
@@ -231,7 +227,7 @@ export default class App extends Component {
 						</Tabs>
 					</Tab>
 					<Tab eventKey="Table" title="Table Format">
-						<Tabs defaultActiveKey="Custom">
+						<Tabs defaultActiveKey="Image">
 							{this.TestTable('DateTime', exT.DateTime, exT.DateTimeInit)}
 							{this.TestTable('Switch', exT.Switch, exT.SwitchInit)}
 							{this.TestTable('Number', exT.Number, exT.NumberInit)}

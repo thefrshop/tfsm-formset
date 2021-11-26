@@ -32,15 +32,6 @@ export default class CreateTable extends React.Component {
 		this.setState({ Tabledata: data });
 	};
 
-	Gettest = () => {
-		console.log(this.Table.current.selectionContext.context);
-
-		//this.Table.current.selectionContext = [];
-		this.Table.current.props.data = [];
-
-		console.log(this.Table.current);
-	};
-
 	GetRow = () => {
 		return this.Table.current.selectionContext.selected;
 	};

@@ -25,12 +25,13 @@ export const formatter = (cell, row, rowIndex, Data) => {
 				return (
 					<Image
 						key={item.dataField + index}
-						style={{ margin: 5 }}
+						style={{ margin: 5, cursor: 'pointer' }}
 						src={value}
 						width={item.width}
 						height={item.height}
-						onMouseEnter={() => onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter' + index)}
-						onMouseLeave={() => onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave' + index)}
+						onClick={() => onChange(item.dataField, cell, row, rowIndex, 'onClick:' + index)}
+						onMouseEnter={() => onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter:' + index)}
+						onMouseLeave={() => onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave:' + index)}
 					/>
 				);
 			})}
