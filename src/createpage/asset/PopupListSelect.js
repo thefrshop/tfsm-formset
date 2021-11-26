@@ -60,6 +60,12 @@ class PopupListSelect extends React.Component {
 	};
 
 	render() {
+		const rowEvents = {
+			onDoubleClick: (e, row, rowIndex) => {
+				this.props.onOk(this.state.Selected);
+			}
+		};
+
 		return (
 			<div className="PopupCatSelect">
 				<Modal centered show={this.props.ispopup} onHide={this.onHide}>
@@ -70,7 +76,12 @@ class PopupListSelect extends React.Component {
 					</Modal.Header>
 					<Modal.Body className="PopBody">
 						<div className="TableView">
-							<BootstrapTable {...this.props} data={this.ListData()} selectRow={this.selectRowProp()} />
+							<BootstrapTable
+								{...this.props}
+								data={this.ListData()}
+								selectRow={this.selectRowProp()}
+								rowEvents={rowEvents}
+							/>
 						</div>
 					</Modal.Body>
 					<Modal.Footer className="PopFooter">
@@ -81,7 +92,7 @@ class PopupListSelect extends React.Component {
 									className="FooterButton"
 									onClick={() => this.props.onOk(this.state.Selected)}
 								>
-									완료
+									선택
 								</Button>
 							)}
 						</div>

@@ -929,6 +929,11 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
   _proto.render = function render() {
     var _this2 = this;
 
+    var rowEvents = {
+      onDoubleClick: function onDoubleClick(e, row, rowIndex) {
+        _this2.props.onOk(_this2.state.Selected);
+      }
+    };
     return /*#__PURE__*/React__default.createElement("div", {
       className: "PopupCatSelect"
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal, {
@@ -947,7 +952,8 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
       className: "TableView"
     }, /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({}, this.props, {
       data: this.ListData(),
-      selectRow: this.selectRowProp()
+      selectRow: this.selectRowProp(),
+      rowEvents: rowEvents
     })))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Footer, {
       className: "PopFooter"
     }, /*#__PURE__*/React__default.createElement("div", {
@@ -958,7 +964,7 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
       onClick: function onClick() {
         return _this2.props.onOk(_this2.state.Selected);
       }
-    }, "\uC644\uB8CC")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
+    }, "\uC120\uD0DD")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
       as: "span",
       animation: "grow",
       size: "sm",
