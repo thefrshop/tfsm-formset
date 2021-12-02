@@ -1767,24 +1767,47 @@ var GetUploagImage$1 = function GetUploagImage(props) {
   var name = '';
   if (Url !== '' && Url !== undefined) name = Url;
   if (File !== '' && File !== undefined) name = File.name;
-  if (Url !== '' && Url !== undefined) images = /*#__PURE__*/React__default.createElement("div", {
-    className: "ImageformSingle"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
-    className: "ImageformSingleImage",
-    variant: "top",
-    src: Url,
-    onMouseEnter: function onMouseEnter() {
-      return setIsShown('UP');
-    },
-    onMouseLeave: function onMouseLeave() {
-      return setIsShown(false);
-    }
-  }), isShown === 'UP' && /*#__PURE__*/React__default.createElement("div", {
-    className: "ImageformPop"
-  }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
-    variant: "top",
-    src: Url
-  }), /*#__PURE__*/React__default.createElement("div", null, name)));
+
+  if (Url !== '' && Url !== undefined) {
+    images = /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformSingle"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      className: "ImageformSingleImage",
+      variant: "top",
+      src: Url,
+      onMouseEnter: function onMouseEnter() {
+        return setIsShown('UP');
+      },
+      onMouseLeave: function onMouseLeave() {
+        return setIsShown(false);
+      }
+    }), isShown === 'UP' && /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformPop"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      variant: "top",
+      src: Url
+    }), /*#__PURE__*/React__default.createElement("div", null, name)));
+  } else {
+    images = /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformSingle"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      className: "ImageformSingleImage",
+      variant: "top",
+      src: File.FileData,
+      onMouseEnter: function onMouseEnter() {
+        return setIsShown('UP');
+      },
+      onMouseLeave: function onMouseLeave() {
+        return setIsShown(false);
+      }
+    }), isShown === 'UP' && /*#__PURE__*/React__default.createElement("div", {
+      className: "ImageformPop"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      variant: "top",
+      src: Url
+    }), /*#__PURE__*/React__default.createElement("div", null, name)));
+  }
+
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody2"
   }, /*#__PURE__*/React__default.createElement("div", {
@@ -1805,8 +1828,10 @@ var ImageFileChange$1 = function ImageFileChange(e, id, UpdateInitData, values) 
 
       reader.onloadend = function (e) {
         var data = {
-          File: file,
-          Url: e.target.result
+          File: {
+            FileName: file.name,
+            FileData: e.target.result
+          }
         };
         UpdateInitData(id, data);
       };
@@ -2379,9 +2404,16 @@ var formatter$3 = function formatter(cell, row, rowIndex, Data) {
   var item = Data.item;
   var onChange = Data.onChange;
   return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+    style: {
+      margin: 5,
+      cursor: 'pointer'
+    },
     src: cell,
     width: item.width,
     height: item.height,
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
+    },
     onMouseEnter: function onMouseEnter() {
       return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter');
     },

@@ -66,7 +66,7 @@ const GetUploagImage = (props) => {
 	if (File !== '' && File !== undefined) name = File.name;
 	//console.log('name', name);
 	//console.log('GetImage', values[item.id]);
-	if (Url !== '' && Url !== undefined)
+	if (Url !== '' && Url !== undefined) {
 		images = (
 			<div className="ImageformSingle">
 				<Image
@@ -84,6 +84,25 @@ const GetUploagImage = (props) => {
 				)}
 			</div>
 		);
+	} else {
+		images = (
+			<div className="ImageformSingle">
+				<Image
+					className="ImageformSingleImage"
+					variant="top"
+					src={File.FileData}
+					onMouseEnter={() => setIsShown('UP')}
+					onMouseLeave={() => setIsShown(false)}
+				/>
+				{isShown === 'UP' && (
+					<div className="ImageformPop">
+						<Image variant="top" src={Url} />
+						<div>{name}</div>
+					</div>
+				)}
+			</div>
+		);
+	}
 
 	return (
 		<div className="ItemBody2">
@@ -103,8 +122,10 @@ const ImageFileChange = (e, id, UpdateInitData, values) => {
 			reader.readAsDataURL(file);
 			reader.onloadend = (e) => {
 				var data = {
-					File: file,
-					Url: e.target.result
+					File: {
+						FileName: file.name,
+						FileData: e.target.result
+					}
 				};
 				UpdateInitData(id, data);
 			};
