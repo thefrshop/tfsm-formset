@@ -32,6 +32,10 @@ export default class App extends Component {
 		console.log(data);
 	};
 
+	onChangeItem = (item) => {
+		console.log('onChange', item);
+	};
+
 	Test = (name, struct, InitData, child, HierarchySample, ListData) => {
 		return (
 			<Tab eventKey={name} title={name}>
@@ -45,6 +49,7 @@ export default class App extends Component {
 					ModifyMode={false}
 					DataStruct={struct}
 					onSubmit={this.onSubmitDefault}
+					onChangeItem={this.onChangeItem}
 					hierarchyData={HierarchySample}
 					ListData={ListData}
 				>

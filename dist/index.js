@@ -3089,6 +3089,8 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
     _this.handleChange = function (item) {
       var _update6;
 
+      if (_this.props.onChangeItem !== undefined) _this.props.onChangeItem(item);
+
       _this.setState({
         InitData: update(_this.state.InitData, (_update6 = {}, _update6[item.target.name] = {
           $set: item.target.value

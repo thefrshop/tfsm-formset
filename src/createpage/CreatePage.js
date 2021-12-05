@@ -230,7 +230,8 @@ class CreatePage extends React.Component {
 	};
 
 	handleChange = (item) => {
-		//console.log(item);
+		if (this.props.onChangeItem !== undefined) this.props.onChangeItem(item);
+
 		this.setState({
 			InitData: update(this.state.InitData, {
 				[item.target.name]: { $set: item.target.value }
