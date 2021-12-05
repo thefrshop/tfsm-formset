@@ -27,6 +27,9 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 						keyField={item.keyField}
 						orderField={item.orderField}
 						viewField={item.viewField}
+						searchBar={item.searchBar}
+						pagination={item.pagination}
+						toggleList={item.toggleList}
 					/>
 				</div>
 			</div>

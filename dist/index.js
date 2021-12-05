@@ -10,13 +10,9 @@ var go = require('react-icons/go');
 var TextareaAutosize = _interopDefault(require('react-textarea-autosize'));
 var NumberFormat = _interopDefault(require('react-number-format'));
 var BootstrapTable = _interopDefault(require('react-bootstrap-table-next'));
-var _ = require('lodash');
-var ckeditor5React = require('@ckeditor/ckeditor5-react');
-var DecoupledEditor = _interopDefault(require('@ckeditor/ckeditor5-build-decoupled-document'));
-var DatePicker = _interopDefault(require('react-datepicker'));
-var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 var fa = require('react-icons/fa');
 var im = require('react-icons/im');
+var BootstrapSwitchButton = _interopDefault(require('bootstrap-switch-button-react'));
 var ReactJson = _interopDefault(require('react-json-view'));
 var sprintfJs = require('sprintf-js');
 var moment$1 = _interopDefault(require('moment'));
@@ -24,6 +20,10 @@ var bs = require('react-icons/bs');
 var paginationFactory = _interopDefault(require('react-bootstrap-table2-paginator'));
 var ToolkitProvider = require('react-bootstrap-table2-toolkit');
 var ToolkitProvider__default = _interopDefault(ToolkitProvider);
+var _ = require('lodash');
+var ckeditor5React = require('@ckeditor/ckeditor5-react');
+var DecoupledEditor = _interopDefault(require('@ckeditor/ckeditor5-build-decoupled-document'));
+var DatePicker = _interopDefault(require('react-datepicker'));
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -866,6 +866,898 @@ var M_Hierarchy = {
   ItemsView: ItemsView$6
 };
 
+var TableButton = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(TableButton, _React$Component);
+
+  function TableButton() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = TableButton.prototype;
+
+  _proto.render = function render() {
+    var _this = this;
+
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonSet"
+    }, this.props.UpDownBT && /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonGroup"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.DoubleUp();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleUp, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Up();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleUp, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Down();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDown, {
+      className: "bannerIcons"
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.DoubleDown();
+      }
+    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleDown, {
+      className: "bannerIcons"
+    }))), this.props.setBT && /*#__PURE__*/React__default.createElement("div", {
+      className: "TableButtonGroup"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Remove();
+      }
+    }, "\uC120\uD0DD \uC0AD\uC81C"), /*#__PURE__*/React__default.createElement("div", {
+      className: "Split"
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Add();
+      }
+    }, "\uB4F1\uB85D"), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "TButton",
+      onClick: function onClick() {
+        return _this.props.Modify();
+      }
+    }, "\uC218\uC815")));
+  };
+
+  return TableButton;
+}(React__default.Component);
+
+var formatter = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var Dateformat = item.Dateformat;
+  if (Dateformat === undefined) Dateformat = 'YYYY-MM-D';
+  var OutDate = moment(cell);
+  if (cell === '' || cell === undefined) return /*#__PURE__*/React__default.createElement("div", null);
+  return /*#__PURE__*/React__default.createElement("div", null, OutDate.format(Dateformat));
+};
+
+var F_DateTime = {
+  __proto__: null,
+  formatter: formatter
+};
+
+var formatter$1 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var _onChange = Data.onChange;
+  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
+    onlabel: item.onlabel,
+    onstyle: item.onstyle,
+    offlabel: item.offlabel,
+    offstyle: item.offstyle,
+    checked: cell,
+    width: item.width,
+    height: item.height,
+    size: item.size,
+    style: item.style,
+    onChange: function onChange(value) {
+      return _onChange(item.dataField, cell, row, rowIndex, value);
+    }
+  });
+};
+
+var F_Switch = {
+  __proto__: null,
+  formatter: formatter$1
+};
+
+var formatter$2 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  return /*#__PURE__*/React__default.createElement(NumberFormat, {
+    value: cell,
+    displayType: 'text',
+    thousandSeparator: item.thousandSeparator,
+    suffix: item.suffix,
+    renderText: function renderText(value) {
+      return /*#__PURE__*/React__default.createElement("div", null, value);
+    }
+  });
+};
+
+var F_Number = {
+  __proto__: null,
+  formatter: formatter$2
+};
+
+var formatter$3 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+    style: {
+      margin: 5,
+      cursor: 'pointer'
+    },
+    src: cell,
+    width: item.width,
+    height: item.height,
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
+    },
+    onMouseEnter: function onMouseEnter() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter');
+    },
+    onMouseLeave: function onMouseLeave() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave');
+    }
+  });
+};
+
+var F_Image = {
+  __proto__: null,
+  formatter: formatter$3
+};
+
+var formatter$4 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  var celldata = [];
+
+  if (typeof cell === 'object') {
+    celldata = cell;
+  } else if (typeof cell === 'string') {
+    try {
+      celldata = JSON.parse(cell);
+    } catch (exception) {
+      celldata = [];
+    }
+  }
+
+  return /*#__PURE__*/React__default.createElement("div", null, celldata.map(function (value, index) {
+    return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
+      key: item.dataField + index,
+      style: {
+        margin: 5,
+        cursor: 'pointer'
+      },
+      src: value,
+      width: item.width,
+      height: item.height,
+      onClick: function onClick() {
+        return onChange(item.dataField, cell, row, rowIndex, 'onClick:' + index);
+      },
+      onMouseEnter: function onMouseEnter() {
+        return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter:' + index);
+      },
+      onMouseLeave: function onMouseLeave() {
+        return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave:' + index);
+      }
+    });
+  }));
+};
+
+var F_Images = {
+  __proto__: null,
+  formatter: formatter$4
+};
+
+var formatter$5 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  return /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    size: item.size,
+    width: item.width,
+    height: item.height,
+    variant: item.variant,
+    style: item.btnStyle,
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
+    }
+  }, cell !== undefined ? cell : item.text);
+};
+
+var F_Button = {
+  __proto__: null,
+  formatter: formatter$5
+};
+
+var formatter$6 = function formatter(cell, row, rowIndex, Data) {
+  var ColorFormat = {
+    color: cell
+  };
+  return /*#__PURE__*/React__default.createElement("div", {
+    style: ColorFormat
+  }, cell);
+};
+
+var F_Color = {
+  __proto__: null,
+  formatter: formatter$6
+};
+
+var formatter$7 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var jsondata;
+
+  if (typeof cell === 'object') {
+    jsondata = cell;
+  } else if (typeof cell === 'string') {
+    try {
+      jsondata = JSON.parse(cell);
+    } catch (exception) {
+      jsondata = 'error';
+    }
+  }
+
+  return /*#__PURE__*/React__default.createElement(ReactJson, _extends({}, item, {
+    src: jsondata,
+    style: {
+      textAlign: 'left'
+    }
+  }));
+};
+
+var F_Jsonview = {
+  __proto__: null,
+  formatter: formatter$7
+};
+
+var formatter$8 = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  if (item.custom) return /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      cursor: 'pointer',
+      color: item.color
+    },
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
+    }
+  }, cell);else return /*#__PURE__*/React__default.createElement("a", {
+    target: item.target,
+    href: cell
+  }, cell);
+};
+
+var F_Link = {
+  __proto__: null,
+  formatter: formatter$8
+};
+
+var formatter$9 = function formatter(cell, row, rowIndex, Data) {
+  if (cell !== undefined) return /*#__PURE__*/React__default.createElement("div", null, cell.map(function (value, index) {
+    return /*#__PURE__*/React__default.createElement("div", {
+      key: index,
+      style: {
+        marginBottom: 5
+      }
+    }, index, " : ", value);
+  }));
+};
+
+var F_Array = {
+  __proto__: null,
+  formatter: formatter$9
+};
+
+var formatter$a = function formatter(cell, row, rowIndex, Data) {
+  return /*#__PURE__*/React__default.createElement(BootstrapTable, {
+    keyField: cell.keyField,
+    data: cell.data,
+    columns: cell.columns
+  });
+};
+
+var F_Table = {
+  __proto__: null,
+  formatter: formatter$a
+};
+
+var formatter$b = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var index = item.match.findIndex(function (m) {
+    return m === cell;
+  });
+  if (index === -1) return '';else return /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      color: item.colors[index]
+    }
+  }, item.icons[index]);
+};
+
+var F_Icon = {
+  __proto__: null,
+  formatter: formatter$b
+};
+
+var formatter$c = function formatter(cell, row, rowIndex, Data) {
+  return /*#__PURE__*/React__default.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: cell
+    }
+  });
+};
+
+var F_Html = {
+  __proto__: null,
+  formatter: formatter$c
+};
+
+var Count = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(Count, _React$Component);
+
+  function Count(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.updateTimer = function () {
+      if (_this.state.lastUntil === _this.state.until) {
+        return;
+      }
+
+      if (_this.state.until === 1 || _this.state.until === 0 && _this.state.lastUntil !== 1) {
+        if (_this.props.onFinish) {
+          _this.props.onFinish();
+        }
+      }
+
+      if (_this.state.until === 0) {
+        _this.setState({
+          lastUntil: 0,
+          until: 0
+        });
+      } else {
+        _this.setState({
+          lastUntil: _this.state.until,
+          until: Math.max(0, _this.state.until - 1)
+        });
+      }
+    };
+
+    _this.getTimeLeft = function () {
+      var until = _this.state.until;
+      return {
+        seconds: until % 60,
+        minutes: parseInt(until / 60, 10) % 60,
+        hours: parseInt(until / (60 * 60), 10) % 24,
+        days: parseInt(until / (60 * 60 * 24), 10)
+      };
+    };
+
+    _this.renderDoubleDigits = function (label, digits) {
+      return /*#__PURE__*/React__default.createElement("div", {
+        style: {
+          display: 'flex',
+          textAlign: 'center'
+        }
+      }, digits, label);
+    };
+
+    _this.renderCountDown = function () {
+      var _this$props = _this.props,
+          timeToShow = _this$props.timeToShow,
+          timeLabels = _this$props.timeLabels;
+
+      var _this$getTimeLeft = _this.getTimeLeft(),
+          days = _this$getTimeLeft.days,
+          hours = _this$getTimeLeft.hours,
+          minutes = _this$getTimeLeft.minutes,
+          seconds = _this$getTimeLeft.seconds;
+
+      var newTime = sprintfJs.sprintf('%02d:%02d:%02d:%02d', days, hours, minutes, seconds).split(':');
+
+      if (_this.props.fulldate) {
+        return /*#__PURE__*/React__default.createElement("div", {
+          style: {
+            display: 'flex',
+            textAlign: 'center'
+          }
+        }, timeToShow.includes('D') ? _this.renderDoubleDigits(timeLabels.d, newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+      } else {
+        if (newTime[0] != 0) {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('D') ? _this.renderDoubleDigits(' 일 ', newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(' 시간', newTime[1]) : null);
+        } else if (newTime[1] != 0) {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+        } else {
+          return /*#__PURE__*/React__default.createElement("div", {
+            style: {
+              display: 'flex',
+              textAlign: 'center'
+            }
+          }, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
+        }
+      }
+    };
+
+    _this.state = {
+      until: Math.max(_this.props.until, 0),
+      lastUntil: null
+    };
+    _this.timer = setInterval(_this.updateTimer, 1000);
+    return _this;
+  }
+
+  var _proto = Count.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {};
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    clearInterval(this.timer);
+  };
+
+  _proto.render = function render() {
+    if (this.props.until !== undefined) return /*#__PURE__*/React__default.createElement("div", null, this.renderCountDown());else return null;
+  };
+
+  return Count;
+}(React__default.Component);
+
+var formatter$d = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  var d = '';
+  var date = moment$1().format('YYYY-MM-DD HH:mm:ss');
+  var diffr = moment$1.duration(moment$1(cell).diff(moment$1(date)));
+  var hours = parseInt(diffr.asHours());
+  var minutes = parseInt(diffr.minutes());
+  var seconds = parseInt(diffr.seconds());
+  d = hours * 60 * 60 + minutes * 60 + seconds;
+  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(Count, {
+    until: d,
+    timeToShow: item.timeToShow == undefined ? ['D', 'H', 'M', 'S'] : item.timeToShow,
+    timeLabels: item.formatView == undefined ? {
+      d: ' 일 ',
+      h: ' : ',
+      m: ' : ',
+      s: ''
+    } : item.formatView,
+    fulldate: item.fulldate,
+    onFinish: function onFinish() {
+      onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
+    }
+  });
+};
+
+var F_Count = {
+  __proto__: null,
+  formatter: formatter$d
+};
+
+var formatter$e = function formatter(cell, row, rowIndex, Data) {
+  var item = Data.item;
+  var onChange = Data.onChange;
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    variant: "outline-dark",
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'Up');
+    }
+  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactUp, null)), /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      margin: 5
+    }
+  }, cell !== undefined ? cell : item.text), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+    variant: "outline-dark",
+    onClick: function onClick() {
+      return onChange(item.dataField, cell, row, rowIndex, 'Down');
+    }
+  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactDown, null)));
+};
+
+var F_UpDown = {
+  __proto__: null,
+  formatter: formatter$e
+};
+
+var FormatSet = [{
+  name: 'DateTime',
+  module: F_DateTime
+}, {
+  name: 'Switch',
+  module: F_Switch
+}, {
+  name: 'Number',
+  module: F_Number
+}, {
+  name: 'Image',
+  module: F_Image
+}, {
+  name: 'Images',
+  module: F_Images
+}, {
+  name: 'Button',
+  module: F_Button
+}, {
+  name: 'Color',
+  module: F_Color
+}, {
+  name: 'Jsonview',
+  module: F_Jsonview
+}, {
+  name: 'Link',
+  module: F_Link
+}, {
+  name: 'Array',
+  module: F_Array
+}, {
+  name: 'Table',
+  module: F_Table
+}, {
+  name: 'Icon',
+  module: F_Icon
+}, {
+  name: 'Html',
+  module: F_Html
+}, {
+  name: 'Count',
+  module: F_Count
+}, {
+  name: 'UpDown',
+  module: F_UpDown
+}];
+var Getformatter = function Getformatter(format) {
+  if (format === undefined) return null;
+  return FormatSet.find(function (m) {
+    return m.name.toLowerCase() === format.toLowerCase();
+  }).module.formatter;
+};
+var InitColumns = function InitColumns(propscolumns, onChange) {
+  var columns = [];
+  propscolumns.forEach(function (item) {
+    var c_item = item;
+    var formatter = Getformatter(item.format);
+
+    if (formatter !== null) {
+      c_item = update(c_item, {
+        formatter: {
+          $set: formatter
+        }
+      });
+      c_item = update(c_item, {
+        formatExtraData: {
+          $set: {
+            item: item,
+            onChange: onChange
+          }
+        }
+      });
+    }
+
+    c_item = update(c_item, {
+      sortCaret: {
+        $set: Caret
+      }
+    });
+    columns.push(c_item);
+  });
+  return columns;
+};
+
+var Caret = function Caret(order) {
+  if (!order) return /*#__PURE__*/React__default.createElement("span", {
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
+  });else if (order === 'asc') return /*#__PURE__*/React__default.createElement("span", {
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
+  }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaAsc, {
+    color: "#238b23"
+  }));else if (order === 'desc') return /*#__PURE__*/React__default.createElement("span", {
+    className: "Caret",
+    style: {
+      position: 'absolute',
+      right: '10px',
+      top: '5px'
+    }
+  }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaDesc, {
+    color: "#238b23"
+  }));
+  return null;
+};
+
+var CreateTable = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(CreateTable, _React$Component);
+
+  function CreateTable(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.dataChange = function (data) {
+      _this.setState({
+        Tabledata: data
+      });
+    };
+
+    _this.GetRow = function () {
+      return _this.Table.current.selectionContext.selected;
+    };
+
+    _this.GetRowSelectedData = function () {
+      var rowKeys = _this.Table.current.selectionContext.selected;
+      var rowData = [];
+      rowKeys.forEach(function (num) {
+        rowData.push(_this.props.data.find(function (item) {
+          return item[_this.props.keyField] === num;
+        }));
+      });
+      return rowData;
+    };
+
+    _this.onUnload = function () {
+      _this.setState(function (state) {
+        return _extends({}, state, {
+          showModal: false,
+          showImgPreview: false,
+          showDataPreview: false
+        });
+      });
+    };
+
+    _this.Table = React__default.createRef();
+    _this.SearchBar = React__default.createRef();
+    _this.state = {
+      Tabledata: _this.props.data
+    };
+    return _this;
+  }
+
+  var _proto = CreateTable.prototype;
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    var ToggleList = ToolkitProvider.ColumnToggle.ToggleList;
+
+    var customTotal = function customTotal(from, to, size) {
+      return /*#__PURE__*/React__default.createElement("span", {
+        className: "react-bootstrap-table-pagination-total"
+      }, "\uC804\uCCB4 (", size, "\uAC1C) : ", from, " \uBD80\uD130 ", to, " \uAE4C\uC9C0");
+    };
+
+    var options = {
+      paginationSize: 10,
+      pageStartIndex: 1,
+      alwaysShowAllBtns: true,
+      withFirstAndLast: true,
+      firstPageText: '<<',
+      prePageText: '<',
+      nextPageText: '>',
+      lastPageText: '>>',
+      nextPageTitle: '처음 페이지',
+      prePageTitle: '이전 페이지',
+      firstPageTitle: '다음 페이지',
+      lastPageTitle: '마지막 페이지',
+      showTotal: true,
+      paginationTotalRenderer: customTotal,
+      sizePerPageList: [{
+        text: '20개',
+        value: 20
+      }, {
+        text: '50개',
+        value: 50
+      }, {
+        text: '100개',
+        value: 100
+      }, {
+        text: '200개',
+        value: 200
+      }, {
+        text: '500개',
+        value: 500
+      }, {
+        text: '전체',
+        value: this.props.data.length
+      }]
+    };
+    options = Object.assign(options, this.props.Poptions);
+    var selectRow = this.props.selectRow;
+
+    if (selectRow !== undefined) {
+      if (selectRow.bgColor === undefined) selectRow.bgColor = '#ffffe0';
+    }
+
+    var noDataIndication = this.props.noDataIndication;
+    if (this.props.noDataIndication === undefined) noDataIndication = '내용이 없습니다.';
+    return /*#__PURE__*/React__default.createElement("div", null, this.state.showImageHover ? /*#__PURE__*/React__default.createElement("img", {
+      className: "imageHoverView",
+      alt: "",
+      src: this.state.hoversrc
+    }) : null, /*#__PURE__*/React__default.createElement(ToolkitProvider__default, {
+      keyField: this.props.keyField,
+      data: this.props.data,
+      columns: InitColumns(this.props.columns, this.props.onChange),
+      onTableChange: this.onTableChange,
+      search: true,
+      columnToggle: true
+    }, function (props) {
+      return /*#__PURE__*/React__default.createElement("div", {
+        className: "Table_main"
+      }, /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion, {
+        style: {
+          marginBottom: '15px'
+        }
+      }, /*#__PURE__*/React__default.createElement("div", {
+        className: "THeader"
+      }, /*#__PURE__*/React__default.createElement("div", {
+        style: {
+          display: 'flex'
+        }
+      }, _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Toggle, {
+        as: reactBootstrap.Button,
+        variant: "secondary",
+        className: "TButton",
+        eventKey: "0",
+        style: {
+          marginRight: '20px',
+          minWidth: '20px'
+        }
+      }, /*#__PURE__*/React__default.createElement(bs.BsLayoutThreeColumns, null)) : null, /*#__PURE__*/React__default.createElement(TableButton, {
+        UpDownBT: _this2.props.UpDownBT,
+        setBT: _this2.props.setBT,
+        Add: _this2.props.Add,
+        Remove: _this2.props.Remove,
+        Modify: _this2.props.Modify
+      })), _this2.props.searchBar ? /*#__PURE__*/React__default.createElement(SearchForm, _extends({}, props.searchProps, {
+        ref: _this2.SearchBar,
+        SendSearch: _this2.props.SendSearch
+      })) : null), _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Collapse, {
+        eventKey: "0"
+      }, /*#__PURE__*/React__default.createElement(ToggleList, _extends({
+        contextual: "secondary",
+        className: "ToggleList",
+        btnClassName: "ToggleListBtn"
+      }, props.columnToggleProps))) : null), /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({
+        id: _this2.props.id
+      }, props.baseProps, {
+        selectRow: selectRow,
+        ref: _this2.Table,
+        rowEvents: _this2.props.rowEvents,
+        pagination: !_this2.props.pagination ? null : paginationFactory(options),
+        noDataIndication: noDataIndication,
+        expandRow: _this2.props.expandRow,
+        defaultSorted: _this2.props.defaultSorted
+      })));
+    }));
+  };
+
+  return CreateTable;
+}(React__default.Component);
+
+var SearchForm = /*#__PURE__*/function (_React$Component2) {
+  _inheritsLoose(SearchForm, _React$Component2);
+
+  function SearchForm(props) {
+    var _this3;
+
+    _this3 = _React$Component2.call(this, props) || this;
+
+    _this3.SendSearch = function (input) {
+      _this3.props.onSearch(input);
+    };
+
+    _this3.SearchClick = function () {
+      _this3.props.onSearch(_this3.state.input);
+    };
+
+    _this3.ClearClick = function () {
+      _this3.setState(function () {
+        return {
+          input: ''
+        };
+      });
+
+      _this3.props.onSearch('');
+    };
+
+    _this3.SearchTable = function (item) {
+      _this3.setState(function () {
+        return {
+          input: item
+        };
+      });
+
+      _this3.props.onSearch(item);
+    };
+
+    _this3.FormChange = function (e) {
+      var in_text = e.target.value;
+
+      _this3.setState(function () {
+        return {
+          input: in_text
+        };
+      });
+    };
+
+    _this3.appKeyPress = function (e) {
+      if (e.key === 'Enter') {
+        _this3.SearchClick();
+      }
+    };
+
+    _this3.state = {
+      input: ''
+    };
+    return _this3;
+  }
+
+  var _proto2 = SearchForm.prototype;
+
+  _proto2.render = function render() {
+    var _this4 = this;
+
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "TopSearchBar"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "ClearBT",
+      onClick: this.ClearClick
+    }, "Clear"), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
+      className: "SearchForm",
+      onChange: function onChange(e) {
+        return _this4.FormChange(e);
+      },
+      value: this.state.input,
+      onKeyPress: function onKeyPress(e) {
+        return _this4.appKeyPress(e);
+      }
+    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "secondary",
+      className: "SearchBT",
+      onClick: this.SearchClick
+    }, "\uAC80\uC0C9")));
+  };
+
+  return SearchForm;
+}(React__default.Component);
+
 var PopupListSelect = /*#__PURE__*/function (_React$Component) {
   _inheritsLoose(PopupListSelect, _React$Component);
 
@@ -937,6 +1829,7 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
     return /*#__PURE__*/React__default.createElement("div", {
       className: "PopupCatSelect"
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal, {
+      className: "PopupCatSelectModal",
       centered: true,
       show: this.props.ispopup,
       onHide: this.onHide
@@ -950,7 +1843,7 @@ var PopupListSelect = /*#__PURE__*/function (_React$Component) {
       className: "PopBody"
     }, /*#__PURE__*/React__default.createElement("div", {
       className: "TableView"
-    }, /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({}, this.props, {
+    }, /*#__PURE__*/React__default.createElement(CreateTable, _extends({}, this.props, {
       data: this.ListData(),
       selectRow: this.selectRowProp(),
       rowEvents: rowEvents
@@ -1127,7 +2020,10 @@ var ItemsView$7 = function ItemsView(M, index, item, values, handleChange, Modif
     dataprops: item.dataprops,
     keyField: item.keyField,
     orderField: item.orderField,
-    viewField: item.viewField
+    viewField: item.viewField,
+    searchBar: item.searchBar,
+    pagination: item.pagination,
+    toggleList: item.toggleList
   })))), item.Viewhidden ? null : /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
   }, /*#__PURE__*/React__default.createElement("div", {
@@ -1902,7 +2798,7 @@ var M_UploadFile = {
   ItemsView: ItemsView$i
 };
 
-var FormatSet = [{
+var FormatSet$1 = [{
   name: 'CodeGen',
   module: M_CodeGen
 }, {
@@ -1961,7 +2857,7 @@ var FormatSet = [{
   module: M_UploadFile
 }];
 var GetModule = function GetModule(format) {
-  return FormatSet.find(function (m) {
+  return FormatSet$1.find(function (m) {
     return m.name.toLowerCase() === format.toLowerCase();
   }).module;
 };
@@ -2266,898 +3162,6 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
   };
 
   return CreatePage;
-}(React__default.Component);
-
-var TableButton = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(TableButton, _React$Component);
-
-  function TableButton() {
-    return _React$Component.apply(this, arguments) || this;
-  }
-
-  var _proto = TableButton.prototype;
-
-  _proto.render = function render() {
-    var _this = this;
-
-    return /*#__PURE__*/React__default.createElement("div", {
-      className: "TableButtonSet"
-    }, this.props.UpDownBT && /*#__PURE__*/React__default.createElement("div", {
-      className: "TableButtonGroup"
-    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.DoubleUp();
-      }
-    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleUp, {
-      className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.Up();
-      }
-    }, /*#__PURE__*/React__default.createElement(fa.FaAngleUp, {
-      className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.Down();
-      }
-    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDown, {
-      className: "bannerIcons"
-    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.DoubleDown();
-      }
-    }, /*#__PURE__*/React__default.createElement(fa.FaAngleDoubleDown, {
-      className: "bannerIcons"
-    }))), this.props.setBT && /*#__PURE__*/React__default.createElement("div", {
-      className: "TableButtonGroup"
-    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.Remove();
-      }
-    }, "\uC120\uD0DD \uC0AD\uC81C"), /*#__PURE__*/React__default.createElement("div", {
-      className: "Split"
-    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.Add();
-      }
-    }, "\uB4F1\uB85D"), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "TButton",
-      onClick: function onClick() {
-        return _this.props.Modify();
-      }
-    }, "\uC218\uC815")));
-  };
-
-  return TableButton;
-}(React__default.Component);
-
-var formatter = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var Dateformat = item.Dateformat;
-  if (Dateformat === undefined) Dateformat = 'YYYY-MM-D';
-  var OutDate = moment(cell);
-  if (cell === '' || cell === undefined) return /*#__PURE__*/React__default.createElement("div", null);
-  return /*#__PURE__*/React__default.createElement("div", null, OutDate.format(Dateformat));
-};
-
-var F_DateTime = {
-  __proto__: null,
-  formatter: formatter
-};
-
-var formatter$1 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var _onChange = Data.onChange;
-  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(BootstrapSwitchButton, {
-    onlabel: item.onlabel,
-    onstyle: item.onstyle,
-    offlabel: item.offlabel,
-    offstyle: item.offstyle,
-    checked: cell,
-    width: item.width,
-    height: item.height,
-    size: item.size,
-    style: item.style,
-    onChange: function onChange(value) {
-      return _onChange(item.dataField, cell, row, rowIndex, value);
-    }
-  });
-};
-
-var F_Switch = {
-  __proto__: null,
-  formatter: formatter$1
-};
-
-var formatter$2 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  return /*#__PURE__*/React__default.createElement(NumberFormat, {
-    value: cell,
-    displayType: 'text',
-    thousandSeparator: item.thousandSeparator,
-    suffix: item.suffix,
-    renderText: function renderText(value) {
-      return /*#__PURE__*/React__default.createElement("div", null, value);
-    }
-  });
-};
-
-var F_Number = {
-  __proto__: null,
-  formatter: formatter$2
-};
-
-var formatter$3 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
-    style: {
-      margin: 5,
-      cursor: 'pointer'
-    },
-    src: cell,
-    width: item.width,
-    height: item.height,
-    onClick: function onClick() {
-      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
-    },
-    onMouseEnter: function onMouseEnter() {
-      return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter');
-    },
-    onMouseLeave: function onMouseLeave() {
-      return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave');
-    }
-  });
-};
-
-var F_Image = {
-  __proto__: null,
-  formatter: formatter$3
-};
-
-var formatter$4 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  var celldata = [];
-
-  if (typeof cell === 'object') {
-    celldata = cell;
-  } else if (typeof cell === 'string') {
-    try {
-      celldata = JSON.parse(cell);
-    } catch (exception) {
-      celldata = [];
-    }
-  }
-
-  return /*#__PURE__*/React__default.createElement("div", null, celldata.map(function (value, index) {
-    return /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
-      key: item.dataField + index,
-      style: {
-        margin: 5,
-        cursor: 'pointer'
-      },
-      src: value,
-      width: item.width,
-      height: item.height,
-      onClick: function onClick() {
-        return onChange(item.dataField, cell, row, rowIndex, 'onClick:' + index);
-      },
-      onMouseEnter: function onMouseEnter() {
-        return onChange(item.dataField, cell, row, rowIndex, 'onMouseEnter:' + index);
-      },
-      onMouseLeave: function onMouseLeave() {
-        return onChange(item.dataField, cell, row, rowIndex, 'onMouseLeave:' + index);
-      }
-    });
-  }));
-};
-
-var F_Images = {
-  __proto__: null,
-  formatter: formatter$4
-};
-
-var formatter$5 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  return /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-    size: item.size,
-    width: item.width,
-    height: item.height,
-    variant: item.variant,
-    style: item.btnStyle,
-    onClick: function onClick() {
-      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
-    }
-  }, cell !== undefined ? cell : item.text);
-};
-
-var F_Button = {
-  __proto__: null,
-  formatter: formatter$5
-};
-
-var formatter$6 = function formatter(cell, row, rowIndex, Data) {
-  var ColorFormat = {
-    color: cell
-  };
-  return /*#__PURE__*/React__default.createElement("div", {
-    style: ColorFormat
-  }, cell);
-};
-
-var F_Color = {
-  __proto__: null,
-  formatter: formatter$6
-};
-
-var formatter$7 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var jsondata;
-
-  if (typeof cell === 'object') {
-    jsondata = cell;
-  } else if (typeof cell === 'string') {
-    try {
-      jsondata = JSON.parse(cell);
-    } catch (exception) {
-      jsondata = 'error';
-    }
-  }
-
-  return /*#__PURE__*/React__default.createElement(ReactJson, _extends({}, item, {
-    src: jsondata,
-    style: {
-      textAlign: 'left'
-    }
-  }));
-};
-
-var F_Jsonview = {
-  __proto__: null,
-  formatter: formatter$7
-};
-
-var formatter$8 = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  if (item.custom) return /*#__PURE__*/React__default.createElement("div", {
-    style: {
-      cursor: 'pointer',
-      color: item.color
-    },
-    onClick: function onClick() {
-      return onChange(item.dataField, cell, row, rowIndex, 'onClick');
-    }
-  }, cell);else return /*#__PURE__*/React__default.createElement("a", {
-    target: item.target,
-    href: cell
-  }, cell);
-};
-
-var F_Link = {
-  __proto__: null,
-  formatter: formatter$8
-};
-
-var formatter$9 = function formatter(cell, row, rowIndex, Data) {
-  if (cell !== undefined) return /*#__PURE__*/React__default.createElement("div", null, cell.map(function (value, index) {
-    return /*#__PURE__*/React__default.createElement("div", {
-      key: index,
-      style: {
-        marginBottom: 5
-      }
-    }, index, " : ", value);
-  }));
-};
-
-var F_Array = {
-  __proto__: null,
-  formatter: formatter$9
-};
-
-var formatter$a = function formatter(cell, row, rowIndex, Data) {
-  return /*#__PURE__*/React__default.createElement(BootstrapTable, {
-    keyField: cell.keyField,
-    data: cell.data,
-    columns: cell.columns
-  });
-};
-
-var F_Table = {
-  __proto__: null,
-  formatter: formatter$a
-};
-
-var formatter$b = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var index = item.match.findIndex(function (m) {
-    return m === cell;
-  });
-  if (index === -1) return '';else return /*#__PURE__*/React__default.createElement("div", {
-    style: {
-      color: item.colors[index]
-    }
-  }, item.icons[index]);
-};
-
-var F_Icon = {
-  __proto__: null,
-  formatter: formatter$b
-};
-
-var formatter$c = function formatter(cell, row, rowIndex, Data) {
-  return /*#__PURE__*/React__default.createElement("div", {
-    dangerouslySetInnerHTML: {
-      __html: cell
-    }
-  });
-};
-
-var F_Html = {
-  __proto__: null,
-  formatter: formatter$c
-};
-
-var Count = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(Count, _React$Component);
-
-  function Count(props) {
-    var _this;
-
-    _this = _React$Component.call(this, props) || this;
-
-    _this.updateTimer = function () {
-      if (_this.state.lastUntil === _this.state.until) {
-        return;
-      }
-
-      if (_this.state.until === 1 || _this.state.until === 0 && _this.state.lastUntil !== 1) {
-        if (_this.props.onFinish) {
-          _this.props.onFinish();
-        }
-      }
-
-      if (_this.state.until === 0) {
-        _this.setState({
-          lastUntil: 0,
-          until: 0
-        });
-      } else {
-        _this.setState({
-          lastUntil: _this.state.until,
-          until: Math.max(0, _this.state.until - 1)
-        });
-      }
-    };
-
-    _this.getTimeLeft = function () {
-      var until = _this.state.until;
-      return {
-        seconds: until % 60,
-        minutes: parseInt(until / 60, 10) % 60,
-        hours: parseInt(until / (60 * 60), 10) % 24,
-        days: parseInt(until / (60 * 60 * 24), 10)
-      };
-    };
-
-    _this.renderDoubleDigits = function (label, digits) {
-      return /*#__PURE__*/React__default.createElement("div", {
-        style: {
-          display: 'flex',
-          textAlign: 'center'
-        }
-      }, digits, label);
-    };
-
-    _this.renderCountDown = function () {
-      var _this$props = _this.props,
-          timeToShow = _this$props.timeToShow,
-          timeLabels = _this$props.timeLabels;
-
-      var _this$getTimeLeft = _this.getTimeLeft(),
-          days = _this$getTimeLeft.days,
-          hours = _this$getTimeLeft.hours,
-          minutes = _this$getTimeLeft.minutes,
-          seconds = _this$getTimeLeft.seconds;
-
-      var newTime = sprintfJs.sprintf('%02d:%02d:%02d:%02d', days, hours, minutes, seconds).split(':');
-
-      if (_this.props.fulldate) {
-        return /*#__PURE__*/React__default.createElement("div", {
-          style: {
-            display: 'flex',
-            textAlign: 'center'
-          }
-        }, timeToShow.includes('D') ? _this.renderDoubleDigits(timeLabels.d, newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
-      } else {
-        if (newTime[0] != 0) {
-          return /*#__PURE__*/React__default.createElement("div", {
-            style: {
-              display: 'flex',
-              textAlign: 'center'
-            }
-          }, timeToShow.includes('D') ? _this.renderDoubleDigits(' 일 ', newTime[0]) : null, timeToShow.includes('H') ? _this.renderDoubleDigits(' 시간', newTime[1]) : null);
-        } else if (newTime[1] != 0) {
-          return /*#__PURE__*/React__default.createElement("div", {
-            style: {
-              display: 'flex',
-              textAlign: 'center'
-            }
-          }, timeToShow.includes('H') ? _this.renderDoubleDigits(timeLabels.h, newTime[1]) : null, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
-        } else {
-          return /*#__PURE__*/React__default.createElement("div", {
-            style: {
-              display: 'flex',
-              textAlign: 'center'
-            }
-          }, timeToShow.includes('M') ? _this.renderDoubleDigits(timeLabels.m, newTime[2]) : null, timeToShow.includes('S') ? _this.renderDoubleDigits(timeLabels.s, newTime[3]) : null);
-        }
-      }
-    };
-
-    _this.state = {
-      until: Math.max(_this.props.until, 0),
-      lastUntil: null
-    };
-    _this.timer = setInterval(_this.updateTimer, 1000);
-    return _this;
-  }
-
-  var _proto = Count.prototype;
-
-  _proto.componentDidMount = function componentDidMount() {};
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    clearInterval(this.timer);
-  };
-
-  _proto.render = function render() {
-    if (this.props.until !== undefined) return /*#__PURE__*/React__default.createElement("div", null, this.renderCountDown());else return null;
-  };
-
-  return Count;
-}(React__default.Component);
-
-var formatter$d = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  var d = '';
-  var date = moment$1().format('YYYY-MM-DD HH:mm:ss');
-  var diffr = moment$1.duration(moment$1(cell).diff(moment$1(date)));
-  var hours = parseInt(diffr.asHours());
-  var minutes = parseInt(diffr.minutes());
-  var seconds = parseInt(diffr.seconds());
-  d = hours * 60 * 60 + minutes * 60 + seconds;
-  if (cell !== undefined) return /*#__PURE__*/React__default.createElement(Count, {
-    until: d,
-    timeToShow: item.timeToShow == undefined ? ['D', 'H', 'M', 'S'] : item.timeToShow,
-    timeLabels: item.formatView == undefined ? {
-      d: ' 일 ',
-      h: ' : ',
-      m: ' : ',
-      s: ''
-    } : item.formatView,
-    fulldate: item.fulldate,
-    onFinish: function onFinish() {
-      onChange(item.dataField, cell, row, rowIndex, 'CountFinish');
-    }
-  });
-};
-
-var F_Count = {
-  __proto__: null,
-  formatter: formatter$d
-};
-
-var formatter$e = function formatter(cell, row, rowIndex, Data) {
-  var item = Data.item;
-  var onChange = Data.onChange;
-  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-    variant: "outline-dark",
-    onClick: function onClick() {
-      return onChange(item.dataField, cell, row, rowIndex, 'Up');
-    }
-  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactUp, null)), /*#__PURE__*/React__default.createElement("div", {
-    style: {
-      margin: 5
-    }
-  }, cell !== undefined ? cell : item.text), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-    variant: "outline-dark",
-    onClick: function onClick() {
-      return onChange(item.dataField, cell, row, rowIndex, 'Down');
-    }
-  }, /*#__PURE__*/React__default.createElement(bs.BsChevronCompactDown, null)));
-};
-
-var F_UpDown = {
-  __proto__: null,
-  formatter: formatter$e
-};
-
-var FormatSet$1 = [{
-  name: 'DateTime',
-  module: F_DateTime
-}, {
-  name: 'Switch',
-  module: F_Switch
-}, {
-  name: 'Number',
-  module: F_Number
-}, {
-  name: 'Image',
-  module: F_Image
-}, {
-  name: 'Images',
-  module: F_Images
-}, {
-  name: 'Button',
-  module: F_Button
-}, {
-  name: 'Color',
-  module: F_Color
-}, {
-  name: 'Jsonview',
-  module: F_Jsonview
-}, {
-  name: 'Link',
-  module: F_Link
-}, {
-  name: 'Array',
-  module: F_Array
-}, {
-  name: 'Table',
-  module: F_Table
-}, {
-  name: 'Icon',
-  module: F_Icon
-}, {
-  name: 'Html',
-  module: F_Html
-}, {
-  name: 'Count',
-  module: F_Count
-}, {
-  name: 'UpDown',
-  module: F_UpDown
-}];
-var Getformatter = function Getformatter(format) {
-  if (format === undefined) return null;
-  return FormatSet$1.find(function (m) {
-    return m.name.toLowerCase() === format.toLowerCase();
-  }).module.formatter;
-};
-var InitColumns = function InitColumns(propscolumns, onChange) {
-  var columns = [];
-  propscolumns.forEach(function (item) {
-    var c_item = item;
-    var formatter = Getformatter(item.format);
-
-    if (formatter !== null) {
-      c_item = update(c_item, {
-        formatter: {
-          $set: formatter
-        }
-      });
-      c_item = update(c_item, {
-        formatExtraData: {
-          $set: {
-            item: item,
-            onChange: onChange
-          }
-        }
-      });
-    }
-
-    c_item = update(c_item, {
-      sortCaret: {
-        $set: Caret
-      }
-    });
-    columns.push(c_item);
-  });
-  return columns;
-};
-
-var Caret = function Caret(order) {
-  if (!order) return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret",
-    style: {
-      position: 'absolute',
-      right: '10px',
-      top: '5px'
-    }
-  });else if (order === 'asc') return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret",
-    style: {
-      position: 'absolute',
-      right: '10px',
-      top: '5px'
-    }
-  }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaAsc, {
-    color: "#238b23"
-  }));else if (order === 'desc') return /*#__PURE__*/React__default.createElement("span", {
-    className: "Caret",
-    style: {
-      position: 'absolute',
-      right: '10px',
-      top: '5px'
-    }
-  }, /*#__PURE__*/React__default.createElement(im.ImSortAlphaDesc, {
-    color: "#238b23"
-  }));
-  return null;
-};
-
-var CreateTable = /*#__PURE__*/function (_React$Component) {
-  _inheritsLoose(CreateTable, _React$Component);
-
-  function CreateTable(props) {
-    var _this;
-
-    _this = _React$Component.call(this, props) || this;
-
-    _this.dataChange = function (data) {
-      _this.setState({
-        Tabledata: data
-      });
-    };
-
-    _this.GetRow = function () {
-      return _this.Table.current.selectionContext.selected;
-    };
-
-    _this.GetRowSelectedData = function () {
-      var rowKeys = _this.Table.current.selectionContext.selected;
-      var rowData = [];
-      rowKeys.forEach(function (num) {
-        rowData.push(_this.props.data.find(function (item) {
-          return item[_this.props.keyField] === num;
-        }));
-      });
-      return rowData;
-    };
-
-    _this.onUnload = function () {
-      _this.setState(function (state) {
-        return _extends({}, state, {
-          showModal: false,
-          showImgPreview: false,
-          showDataPreview: false
-        });
-      });
-    };
-
-    _this.Table = React__default.createRef();
-    _this.SearchBar = React__default.createRef();
-    _this.state = {
-      Tabledata: _this.props.data
-    };
-    return _this;
-  }
-
-  var _proto = CreateTable.prototype;
-
-  _proto.render = function render() {
-    var _this2 = this;
-
-    var ToggleList = ToolkitProvider.ColumnToggle.ToggleList;
-
-    var customTotal = function customTotal(from, to, size) {
-      return /*#__PURE__*/React__default.createElement("span", {
-        className: "react-bootstrap-table-pagination-total"
-      }, "\uC804\uCCB4 (", size, "\uAC1C) : ", from, " \uBD80\uD130 ", to, " \uAE4C\uC9C0");
-    };
-
-    var options = {
-      paginationSize: 10,
-      pageStartIndex: 1,
-      alwaysShowAllBtns: true,
-      withFirstAndLast: true,
-      firstPageText: '<<',
-      prePageText: '<',
-      nextPageText: '>',
-      lastPageText: '>>',
-      nextPageTitle: '처음 페이지',
-      prePageTitle: '이전 페이지',
-      firstPageTitle: '다음 페이지',
-      lastPageTitle: '마지막 페이지',
-      showTotal: true,
-      paginationTotalRenderer: customTotal,
-      sizePerPageList: [{
-        text: '20개',
-        value: 20
-      }, {
-        text: '50개',
-        value: 50
-      }, {
-        text: '100개',
-        value: 100
-      }, {
-        text: '200개',
-        value: 200
-      }, {
-        text: '500개',
-        value: 500
-      }, {
-        text: '전체',
-        value: this.props.data.length
-      }]
-    };
-    options = Object.assign(options, this.props.Poptions);
-    var selectRow = this.props.selectRow;
-
-    if (selectRow !== undefined) {
-      if (selectRow.bgColor === undefined) selectRow.bgColor = '#ffffe0';
-    }
-
-    var noDataIndication = this.props.noDataIndication;
-    if (this.props.noDataIndication === undefined) noDataIndication = '내용이 없습니다.';
-    return /*#__PURE__*/React__default.createElement("div", null, this.state.showImageHover ? /*#__PURE__*/React__default.createElement("img", {
-      className: "imageHoverView",
-      alt: "",
-      src: this.state.hoversrc
-    }) : null, /*#__PURE__*/React__default.createElement(ToolkitProvider__default, {
-      keyField: this.props.keyField,
-      data: this.props.data,
-      columns: InitColumns(this.props.columns, this.props.onChange),
-      onTableChange: this.onTableChange,
-      search: true,
-      columnToggle: true
-    }, function (props) {
-      return /*#__PURE__*/React__default.createElement("div", {
-        className: "Table_main"
-      }, /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion, {
-        style: {
-          marginBottom: '15px'
-        }
-      }, /*#__PURE__*/React__default.createElement("div", {
-        className: "THeader"
-      }, /*#__PURE__*/React__default.createElement("div", {
-        style: {
-          display: 'flex'
-        }
-      }, _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Toggle, {
-        as: reactBootstrap.Button,
-        variant: "secondary",
-        className: "TButton",
-        eventKey: "0",
-        style: {
-          marginRight: '20px',
-          minWidth: '20px'
-        }
-      }, /*#__PURE__*/React__default.createElement(bs.BsLayoutThreeColumns, null)) : null, /*#__PURE__*/React__default.createElement(TableButton, {
-        UpDownBT: _this2.props.UpDownBT,
-        setBT: _this2.props.setBT,
-        Add: _this2.props.Add,
-        Remove: _this2.props.Remove,
-        Modify: _this2.props.Modify
-      })), _this2.props.searchBar ? /*#__PURE__*/React__default.createElement(SearchForm, _extends({}, props.searchProps, {
-        ref: _this2.SearchBar,
-        SendSearch: _this2.props.SendSearch
-      })) : null), _this2.props.toggleList ? /*#__PURE__*/React__default.createElement(reactBootstrap.Accordion.Collapse, {
-        eventKey: "0"
-      }, /*#__PURE__*/React__default.createElement(ToggleList, _extends({
-        contextual: "secondary",
-        className: "ToggleList",
-        btnClassName: "ToggleListBtn"
-      }, props.columnToggleProps))) : null), /*#__PURE__*/React__default.createElement(BootstrapTable, _extends({
-        id: _this2.props.id
-      }, props.baseProps, {
-        selectRow: selectRow,
-        ref: _this2.Table,
-        rowEvents: _this2.props.rowEvents,
-        pagination: !_this2.props.pagination ? null : paginationFactory(options),
-        noDataIndication: noDataIndication,
-        expandRow: _this2.props.expandRow,
-        defaultSorted: _this2.props.defaultSorted
-      })));
-    }));
-  };
-
-  return CreateTable;
-}(React__default.Component);
-
-var SearchForm = /*#__PURE__*/function (_React$Component2) {
-  _inheritsLoose(SearchForm, _React$Component2);
-
-  function SearchForm(props) {
-    var _this3;
-
-    _this3 = _React$Component2.call(this, props) || this;
-
-    _this3.SendSearch = function (input) {
-      _this3.props.onSearch(input);
-    };
-
-    _this3.SearchClick = function () {
-      _this3.props.onSearch(_this3.state.input);
-    };
-
-    _this3.ClearClick = function () {
-      _this3.setState(function () {
-        return {
-          input: ''
-        };
-      });
-
-      _this3.props.onSearch('');
-    };
-
-    _this3.SearchTable = function (item) {
-      _this3.setState(function () {
-        return {
-          input: item
-        };
-      });
-
-      _this3.props.onSearch(item);
-    };
-
-    _this3.FormChange = function (e) {
-      var in_text = e.target.value;
-
-      _this3.setState(function () {
-        return {
-          input: in_text
-        };
-      });
-    };
-
-    _this3.appKeyPress = function (e) {
-      if (e.key === 'Enter') {
-        _this3.SearchClick();
-      }
-    };
-
-    _this3.state = {
-      input: ''
-    };
-    return _this3;
-  }
-
-  var _proto2 = SearchForm.prototype;
-
-  _proto2.render = function render() {
-    var _this4 = this;
-
-    return /*#__PURE__*/React__default.createElement("div", {
-      className: "TopSearchBar"
-    }, /*#__PURE__*/React__default.createElement(reactBootstrap.InputGroup, null, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "ClearBT",
-      onClick: this.ClearClick
-    }, "Clear"), /*#__PURE__*/React__default.createElement(reactBootstrap.FormControl, {
-      className: "SearchForm",
-      onChange: function onChange(e) {
-        return _this4.FormChange(e);
-      },
-      value: this.state.input,
-      onKeyPress: function onKeyPress(e) {
-        return _this4.appKeyPress(e);
-      }
-    }), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
-      variant: "secondary",
-      className: "SearchBT",
-      onClick: this.SearchClick
-    }, "\uAC80\uC0C9")));
-  };
-
-  return SearchForm;
 }(React__default.Component);
 
 var getStructFromFormat = function getStructFromFormat(DataStruct, FormatName) {

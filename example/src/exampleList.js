@@ -163,7 +163,8 @@ export const ListSelect = {
 						}
 					],
 					keyField: 'Code',
-					viewField: 'Name'
+					viewField: 'Name',
+					searchBar: true
 				}
 			]
 		}

@@ -192,9 +192,9 @@ export default class App extends Component {
 			<div className="App">
 				<h3>tfsm-formset 예제</h3>
 				<br />
-				<Tabs defaultActiveKey="Table">
+				<Tabs defaultActiveKey="API">
 					<Tab eventKey="API" title="Form API">
-						<Tabs defaultActiveKey="UploadFile">
+						<Tabs defaultActiveKey="ListSelect">
 							{this.Test('CodeGen', exL.CodeGen, exL.CodeGenInit)}
 							{this.Test('Text', exL.Text, exL.TextInit)}
 							{this.Test('Price', exL.Price, exL.PriceInit)}

@@ -5,7 +5,7 @@ import './PopupCatSelect.css';
 import update from 'react-addons-update';
 
 import BootstrapTable from 'react-bootstrap-table-next';
-
+import CreateTable from '../../createtable/CreateTable';
 class PopupListSelect extends React.Component {
 	constructor(props) {
 		super(props);
@@ -68,7 +68,7 @@ class PopupListSelect extends React.Component {
 
 		return (
 			<div className="PopupCatSelect">
-				<Modal centered show={this.props.ispopup} onHide={this.onHide}>
+				<Modal className="PopupCatSelectModal" centered show={this.props.ispopup} onHide={this.onHide}>
 					<Modal.Header closeButton>
 						<div className="PopHeader">
 							<div className="Title">{this.props.title}</div>
@@ -76,7 +76,7 @@ class PopupListSelect extends React.Component {
 					</Modal.Header>
 					<Modal.Body className="PopBody">
 						<div className="TableView">
-							<BootstrapTable
+							<CreateTable
 								{...this.props}
 								data={this.ListData()}
 								selectRow={this.selectRowProp()}
