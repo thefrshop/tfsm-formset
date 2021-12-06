@@ -39,6 +39,10 @@ class CreatePage extends React.Component {
 		}
 	}
 
+	getSubmitValue = () => {
+		return this.state.InitData;
+	};
+
 	Submit = () => {
 		this.Submitbtn.current.click();
 	};
@@ -252,17 +256,30 @@ class CreatePage extends React.Component {
 
 		return (
 			<div className="ProductCreatePage">
-				<Form onSubmit={this.onSubmit}>
-					<div className="ProductCreateView">
-						{this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)}
+				{this.props.CustomSubmit ? (
+					<div>
+						<div className="ProductCreateView">
+							{this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)}
+						</div>
+						<div className="ProductCreateFooter" style={bt_style}>
+							<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
+								{this.props.ModifyMode ? '수정' : '등록'}
+							</Button>
+						</div>
 					</div>
+				) : (
+					<Form onSubmit={this.onSubmit}>
+						<div className="ProductCreateView">
+							{this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)}
+						</div>
 
-					<div className="ProductCreateFooter" style={bt_style}>
-						<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
-							{this.props.ModifyMode ? '수정' : '등록'}
-						</Button>
-					</div>
-				</Form>
+						<div className="ProductCreateFooter" style={bt_style}>
+							<Button ref={this.Submitbtn} type="submit" variant="Submit" size="sm">
+								{this.props.ModifyMode ? '수정' : '등록'}
+							</Button>
+						</div>
+					</Form>
+				)}
 			</div>
 		);
 	}

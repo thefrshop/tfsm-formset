@@ -2884,6 +2884,10 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     _this = _React$Component.call(this, props) || this;
 
+    _this.getSubmitValue = function () {
+      return _this.state.InitData;
+    };
+
     _this.Submit = function () {
       _this.Submitbtn.current.click();
     };
@@ -3148,7 +3152,17 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
 
     return /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreatePage"
-    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Form, {
+    }, this.props.CustomSubmit ? /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
+      className: "ProductCreateView"
+    }, this.FormView(this.props.DataStruct.Struct, this.props.InitData, this.handleChange)), /*#__PURE__*/React__default.createElement("div", {
+      className: "ProductCreateFooter",
+      style: bt_style
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      ref: this.Submitbtn,
+      type: "submit",
+      variant: "Submit",
+      size: "sm"
+    }, this.props.ModifyMode ? '수정' : '등록'))) : /*#__PURE__*/React__default.createElement(reactBootstrap.Form, {
       onSubmit: this.onSubmit
     }, /*#__PURE__*/React__default.createElement("div", {
       className: "ProductCreateView"
