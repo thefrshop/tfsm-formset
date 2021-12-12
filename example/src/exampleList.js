@@ -112,15 +112,8 @@ export const HierarchySample = {
 
 			{ Name: '111', pid: 0, Code: '111', lev: 0, key: 'RSeghKOWqnOojJxljSFu' }
 		],
-		[
-			{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
-
-			{ Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' }
-		],
-		[
-			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' },
-			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' }
-		]
+		[ { Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' }, { Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' } ],
+		[ { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' }, { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' } ]
 	]
 };
 
@@ -175,6 +168,43 @@ export const ListSelectInit = {
 	Supply: { Code: 'sss', Name: 'ss' }
 };
 export const ListData = [ { Code: 'sss1', Name: 'ss' }, { Code: 'sss2', Name: 'ss' }, { Code: 'sss3', Name: 'ss' } ];
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+export const ListSelects = {
+	Struct: [
+		{
+			id: 'BasicInfo',
+			name: 'ListSelects',
+			format: 'Titletext',
+			Items: [
+				{
+					id: 'Supply',
+					name: '생산자',
+					format: 'ListSelects',
+					dataprops: 'ListData',
+					columns: [
+						{
+							dataField: 'Code',
+							text: '분류 코드'
+						},
+						{
+							dataField: 'Name',
+							text: '분류 이름'
+						}
+					],
+					keyField: 'Code',
+					viewField: 'Name',
+					searchBar: true
+				}
+			]
+		}
+	]
+};
+
+export const ListSelectsInit = {
+	Supply: [ { Code: 'sss', Name: 'ss' }, { Code: 'sss2', Name: 'ss' } ]
+};
+export const ListDatas = [ { Code: 'sss1', Name: 'ss' }, { Code: 'sss2', Name: 'ss' }, { Code: 'sss3', Name: 'ss' } ];
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 export const Child = {
 	Struct: [

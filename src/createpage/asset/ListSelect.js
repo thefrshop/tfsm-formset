@@ -70,12 +70,7 @@ class ListSelected extends React.Component {
 	render() {
 		return (
 			<div className="CatSelectView">
-				<PopupListSelect
-					{...this.props}
-					ispopup={this.state.ShowPopup}
-					onHide={this.hideCatSelect}
-					onOk={this.onSelectOk}
-				/>
+				<PopupListSelect {...this.props} ispopup={this.state.ShowPopup} onHide={this.hideCatSelect} onOk={this.onSelectOk} />
 
 				<Button variant="SelectPre" onClick={this.openSelect}>
 					선택

@@ -1,2 +1,0 @@
-(this["webpackJsonptfsm-formset-example"]=this["webpackJsonptfsm-formset-example"]||[]).push([[85],{618:function(s,e,a){"use strict";function t(s){s.languages.hsts={directive:{pattern:/\b(?:max-age=|includeSubDomains|preload)/,alias:"keyword"},safe:{pattern:/\b\d{8,}\b/,alias:"selector"},unsafe:{pattern:/\b\d{1,7}\b/,alias:"function"}}}s.exports=t,t.displayName="hsts",t.aliases=[]}}]);
-//# sourceMappingURL=react-syntax-highlighter_languages_refractor_hsts.3a0c7266.chunk.js.map

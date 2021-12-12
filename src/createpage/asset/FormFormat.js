@@ -6,6 +6,7 @@ import * as M_Price from '../module/Price';
 import * as M_Select from '../module/Select';
 import * as M_Hierarchy from '../module/Hierarchy';
 import * as M_ListSelect from '../module/ListSelect';
+import * as M_ListSelects from '../module/ListSelects';
 import * as M_ImageSelect from '../module/ImageSelect';
 import * as M_UploadImage from '../module/UploadImage';
 import * as M_Imageset from '../module/Imageset';
@@ -27,6 +28,7 @@ const FormatSet = [
 	{ name: 'Select', module: M_Select },
 	{ name: 'Hierarchy', module: M_Hierarchy },
 	{ name: 'ListSelect', module: M_ListSelect },
+	{ name: 'ListSelects', module: M_ListSelects },
 	{ name: 'ImageSelect', module: M_ImageSelect },
 	{ name: 'UploadImage', module: M_UploadImage },
 	{ name: 'Imageset', module: M_Imageset },

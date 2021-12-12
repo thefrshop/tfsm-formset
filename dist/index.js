@@ -2046,10 +2046,309 @@ var M_ListSelect = {
   ItemsView: ItemsView$7
 };
 
+var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(PopupListSelect, _React$Component);
+
+  function PopupListSelect(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.ListData = function () {
+      var ListData = _this.props[_this.props.dataprops];
+
+      if (ListData === undefined) {
+        ListData = [];
+      }
+
+      return ListData;
+    };
+
+    _this.onSelect = function (row) {
+      _this.setState({
+        Selected: row,
+        done: true
+      });
+    };
+
+    _this.MoveCarousel = function (selectedIndex) {
+      _this.setState({
+        index: selectedIndex
+      });
+    };
+
+    _this.selectRowProp = function () {
+      return {
+        mode: 'radio',
+        hideSelectColumn: true,
+        clickToSelect: true,
+        onSelect: _this.onSelect,
+        bgColor: '#ffffe0'
+      };
+    };
+
+    _this.onHide = function () {
+      _this.setState({
+        index: 0
+      });
+
+      _this.props.onHide();
+    };
+
+    _this.state = {
+      isloading: false,
+      done: false
+    };
+    return _this;
+  }
+
+  var _proto = PopupListSelect.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {};
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    var rowEvents = {
+      onDoubleClick: function onDoubleClick(e, row, rowIndex) {
+        _this2.props.onOk(_this2.state.Selected);
+      }
+    };
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "PopupCatSelect"
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal, {
+      className: "PopupCatSelectModal",
+      centered: true,
+      show: this.props.ispopup,
+      onHide: this.onHide
+    }, /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Header, {
+      closeButton: true
+    }, /*#__PURE__*/React__default.createElement("div", {
+      className: "PopHeader"
+    }, /*#__PURE__*/React__default.createElement("div", {
+      className: "Title"
+    }, this.props.title))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Body, {
+      className: "PopBody"
+    }, /*#__PURE__*/React__default.createElement("div", {
+      className: "TableView"
+    }, /*#__PURE__*/React__default.createElement(CreateTable, _extends({}, this.props, {
+      data: this.ListData(),
+      selectRow: this.selectRowProp(),
+      rowEvents: rowEvents
+    })))), /*#__PURE__*/React__default.createElement(reactBootstrap.Modal.Footer, {
+      className: "PopFooter"
+    }, /*#__PURE__*/React__default.createElement("div", {
+      className: "DoneView"
+    }, !this.state.done ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "Submit",
+      className: "FooterButton",
+      onClick: function onClick() {
+        return _this2.props.onOk(_this2.state.Selected);
+      }
+    }, "\uCD94\uAC00")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
+      as: "span",
+      animation: "grow",
+      size: "sm",
+      role: "status",
+      "aria-hidden": "true"
+    }))));
+  };
+
+  return PopupListSelect;
+}(React__default.Component);
+
+var ListSelected$1 = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ListSelected, _React$Component);
+
+  function ListSelected(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.ViewSelected = function () {
+      if (_this.state.Selected !== '') {
+        var name = '';
+
+        _this.props.columns.forEach(function (element) {
+          if (element.dataField === _this.props.viewField) name = element.text;
+        });
+
+        return /*#__PURE__*/React__default.createElement("div", {
+          className: "ViewSelected"
+        }, /*#__PURE__*/React__default.createElement("div", {
+          className: "name"
+        }, name, " : "), /*#__PURE__*/React__default.createElement("div", {
+          className: "data"
+        }, _this.state.Selected[_this.props.viewField]));
+      }
+
+      return '';
+    };
+
+    _this.openSelect = function () {
+      _this.setState({
+        ShowPopup: true
+      });
+    };
+
+    _this.onSelectOk = function (Selected) {
+      var data = _this.state.Selected;
+      data.push(Selected);
+
+      _this.setState({
+        Selected: data,
+        ShowPopup: false
+      }, function () {
+        return _this.onChange();
+      });
+    };
+
+    _this.onChange = function () {
+      if (_this.props.onChange !== undefined) {
+        _this.props.onChange({
+          target: {
+            name: _this.props.name,
+            value: _this.state.Selected
+          }
+        });
+      }
+    };
+
+    _this.hideCatSelect = function () {
+      _this.setState({
+        ShowPopup: false
+      });
+    };
+
+    var _Selected = [];
+    if (_this.props.InitialValue !== undefined) _Selected = _this.props.InitialValue;
+    _this.state = {
+      Selected: _Selected,
+      ShowPopup: false
+    };
+    return _this;
+  }
+
+  var _proto = ListSelected.prototype;
+
+  _proto.render = function render() {
+    return /*#__PURE__*/React__default.createElement("div", {
+      className: "CatSelectView"
+    }, /*#__PURE__*/React__default.createElement(PopupListSelect$1, _extends({}, this.props, {
+      ispopup: this.state.ShowPopup,
+      onHide: this.hideCatSelect,
+      onOk: this.onSelectOk
+    })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+      variant: "SelectPre",
+      onClick: this.openSelect
+    }, "\uCD94\uAC00"), /*#__PURE__*/React__default.createElement("div", {
+      className: "CatSelectContent"
+    }, this.ViewSelected()));
+  };
+
+  return ListSelected;
+}(React__default.Component);
+
+var ViewLists = /*#__PURE__*/function (_React$Component) {
+  _inheritsLoose(ViewLists, _React$Component);
+
+  function ViewLists(props) {
+    var _this;
+
+    _this = _React$Component.call(this, props) || this;
+
+    _this.ItemsView = function () {
+      console.log(_this.props.selected);
+      var viewlist = [];
+
+      _this.props.selected.forEach(function (selitem, sindex) {
+        var viewlistItem = [];
+
+        _this.props.columns.forEach(function (item, index) {
+          viewlistItem.push( /*#__PURE__*/React__default.createElement("div", {
+            className: "ViewListItem",
+            key: index
+          }, /*#__PURE__*/React__default.createElement("div", {
+            className: "Viewitle"
+          }, item.text, " "), /*#__PURE__*/React__default.createElement("div", {
+            className: "ViewContent"
+          }, selitem[item.dataField])));
+        });
+
+        viewlist.push( /*#__PURE__*/React__default.createElement("div", {
+          className: "ViewListRow",
+          key: sindex
+        }, viewlistItem));
+      });
+
+      return viewlist;
+    };
+
+    return _this;
+  }
+
+  var _proto = ViewLists.prototype;
+
+  _proto.render = function render() {
+    return this.ItemsView();
+  };
+
+  return ViewLists;
+}(React__default.Component);
+
 var InitData$8 = function InitData() {
-  return '';
+  return [];
 };
 var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
+  return /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemViewRow",
+    key: index
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemHeader"
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemTitle"
+  }, item.name), /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemContent"
+  }, /*#__PURE__*/React__default.createElement(ListSelected$1, _extends({}, M.props, {
+    InitialValue: values[item.id],
+    name: item.id,
+    title: item.name,
+    selected: values[item.id],
+    onChange: handleChange,
+    columns: item.columns,
+    dataprops: item.dataprops,
+    keyField: item.keyField,
+    orderField: item.orderField,
+    viewField: item.viewField,
+    searchBar: item.searchBar,
+    pagination: item.pagination,
+    toggleList: item.toggleList
+  })))), item.Viewhidden ? null : /*#__PURE__*/React__default.createElement("div", {
+    className: "ItemBody"
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "ViewListsformBox"
+  }, /*#__PURE__*/React__default.createElement(ViewLists, {
+    InitialValue: values[item.id],
+    name: item.id,
+    title: item.name,
+    selected: values[item.id],
+    columns: item.columns,
+    keyField: item.keyField,
+    orderField: item.orderField,
+    viewField: item.viewField
+  }))));
+};
+
+var M_ListSelects = {
+  __proto__: null,
+  InitData: InitData$8,
+  ItemsView: ItemsView$8
+};
+
+var InitData$9 = function InitData() {
+  return '';
+};
+var ItemsView$9 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2068,17 +2367,17 @@ var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, Modif
 
 var M_ImageSelect = {
   __proto__: null,
-  InitData: InitData$8,
-  ItemsView: ItemsView$8
+  InitData: InitData$9,
+  ItemsView: ItemsView$9
 };
 
-var InitData$9 = function InitData() {
+var InitData$a = function InitData() {
   return {
     FileList: [],
     UrlList: []
   };
 };
-var ItemsView$9 = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$a = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   if (values[item.id].FileList === undefined) values[item.id].FileList = [];
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
@@ -2271,14 +2570,14 @@ var ImageRead = function ImageRead(file) {
 
 var M_UploadImage = {
   __proto__: null,
-  InitData: InitData$9,
-  ItemsView: ItemsView$9
+  InitData: InitData$a,
+  ItemsView: ItemsView$a
 };
 
-var InitData$a = function InitData() {
+var InitData$b = function InitData() {
   return [];
 };
-var ItemsView$a = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$b = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2321,14 +2620,14 @@ var ListImage = function ListImage(values, item, UpdateInitData) {
 
 var M_Imageset = {
   __proto__: null,
-  InitData: InitData$a,
-  ItemsView: ItemsView$a
+  InitData: InitData$b,
+  ItemsView: ItemsView$b
 };
 
-var InitData$b = function InitData() {
+var InitData$c = function InitData() {
   return '';
 };
-var ItemsView$b = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
+var ItemsView$c = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2394,11 +2693,11 @@ var UploadBoard = /*#__PURE__*/function (_React$Component) {
 
 var M_HtmlEditer = {
   __proto__: null,
-  InitData: InitData$b,
-  ItemsView: ItemsView$b
+  InitData: InitData$c,
+  ItemsView: ItemsView$c
 };
 
-var InitData$c = function InitData(item) {
+var InitData$d = function InitData(item) {
   var _Object$assign;
 
   if (item["default"] === undefined) item["default"] = item.Items[0].id;
@@ -2406,11 +2705,11 @@ var InitData$c = function InitData(item) {
   Object.assign(TabData, (_Object$assign = {}, _Object$assign[item.id] = item["default"], _Object$assign));
   return TabData;
 };
-var ItemsView$c = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$d = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   var ItemsTable = [];
   var FormViewTable = [];
   item.Items.forEach(function (Tabitem, index) {
-    FormViewTable.push(ItemsView$j(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
+    FormViewTable.push(ItemsView$k(M, index, Tabitem, values, handleChange, ModifyMode, UpdateInitData));
   });
   var TabTable = [];
   FormViewTable.forEach(function (TabItem, Tabindex) {
@@ -2454,14 +2753,14 @@ var onValueChange = function onValueChange(id, value, handleChange) {
 
 var M_Tab = {
   __proto__: null,
-  InitData: InitData$c,
-  ItemsView: ItemsView$c
+  InitData: InitData$d,
+  ItemsView: ItemsView$d
 };
 
-var InitData$d = function InitData() {
+var InitData$e = function InitData() {
   return '';
 };
-var ItemsView$d = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
+var ItemsView$e = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2474,14 +2773,14 @@ var ItemsView$d = function ItemsView(M, index, item, values, handleChange, Modif
 
 var M_Child = {
   __proto__: null,
-  InitData: InitData$d,
-  ItemsView: ItemsView$d
+  InitData: InitData$e,
+  ItemsView: ItemsView$e
 };
 
-var InitData$e = function InitData() {
+var InitData$f = function InitData() {
   return '';
 };
-var ItemsView$e = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$f = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   var selected;
   if (values[item.id]) selected = new Date(values[item.id]);
   return /*#__PURE__*/React__default.createElement("div", {
@@ -2509,14 +2808,14 @@ var ItemsView$e = function ItemsView(M, index, item, values, handleChange, Modif
 
 var M_DatePicker = {
   __proto__: null,
-  InitData: InitData$e,
-  ItemsView: ItemsView$e
+  InitData: InitData$f,
+  ItemsView: ItemsView$f
 };
 
-var InitData$f = function InitData(item) {
+var InitData$g = function InitData(item) {
   if (item["default"] === undefined) return false;else return item["default"];
 };
-var ItemsView$f = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$g = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index,
@@ -2547,14 +2846,14 @@ var ItemsView$f = function ItemsView(M, index, item, values, handleChange, Modif
 
 var M_Switch = {
   __proto__: null,
-  InitData: InitData$f,
-  ItemsView: ItemsView$f
+  InitData: InitData$g,
+  ItemsView: ItemsView$g
 };
 
-var InitData$g = function InitData() {
+var InitData$h = function InitData() {
   return '';
 };
-var ItemsView$g = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
+var ItemsView$h = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2602,17 +2901,17 @@ var ItemsView$g = function ItemsView(M, index, item, values, handleChange, Modif
 
 var M_Option = {
   __proto__: null,
-  InitData: InitData$g,
-  ItemsView: ItemsView$g
+  InitData: InitData$h,
+  ItemsView: ItemsView$h
 };
 
-var InitData$h = function InitData() {
+var InitData$i = function InitData() {
   return {
     File: '',
     Url: ''
   };
 };
-var ItemsView$h = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$i = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   var File = values[item.id].File;
   var Url = values[item.id].Url;
   var name = '';
@@ -2737,17 +3036,17 @@ var ImageFileChange$1 = function ImageFileChange(e, id, UpdateInitData, values) 
 
 var M_UploadImageSingle = {
   __proto__: null,
-  InitData: InitData$h,
-  ItemsView: ItemsView$h
+  InitData: InitData$i,
+  ItemsView: ItemsView$i
 };
 
-var InitData$i = function InitData() {
+var InitData$j = function InitData() {
   return {
     File: '',
     Url: ''
   };
 };
-var ItemsView$i = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
+var ItemsView$j = function ItemsView(M, index, item, values, handleChange, ModifyMode, UpdateInitData) {
   var FileName = values[item.id].FileName;
   var name = '';
   var browseText = '파일 선택';
@@ -2794,8 +3093,8 @@ var onChangeFile = function onChangeFile(e, id, UpdateInitData, values) {
 
 var M_UploadFile = {
   __proto__: null,
-  InitData: InitData$i,
-  ItemsView: ItemsView$i
+  InitData: InitData$j,
+  ItemsView: ItemsView$j
 };
 
 var FormatSet$1 = [{
@@ -2822,6 +3121,9 @@ var FormatSet$1 = [{
 }, {
   name: 'ListSelect',
   module: M_ListSelect
+}, {
+  name: 'ListSelects',
+  module: M_ListSelects
 }, {
   name: 'ImageSelect',
   module: M_ImageSelect
@@ -2861,17 +3163,17 @@ var GetModule = function GetModule(format) {
     return m.name.toLowerCase() === format.toLowerCase();
   }).module;
 };
-var InitData$j = function InitData(item) {
+var InitData$k = function InitData(item) {
   return GetModule(item.format).InitData(item);
 };
-var ItemsView$j = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
+var ItemsView$k = function ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback) {
   return GetModule(item.format).ItemsView(M, index, item, values, handleChange, ModifyMode, ViewCallback);
 };
 
 var InitItemsSet = function InitItemsSet(Struct) {
   var InitData = {};
   Struct.forEach(function (item) {
-    if (item.format === 'Tab') Object.assign(InitData, InitData$j(item));else InitData[item.id] = InitData$j(item);
+    if (item.format === 'Tab') Object.assign(InitData, InitData$k(item));else InitData[item.id] = InitData$k(item);
   });
   return InitData;
 };
@@ -2952,7 +3254,7 @@ var CreatePage = /*#__PURE__*/function (_React$Component) {
             }
           });
         } else {
-          ItemsTable.push(ItemsView$j(_assertThisInitialized(_this), index, item, values, handleChange, ModifyMode, _this.UpdateInitData));
+          ItemsTable.push(ItemsView$k(_assertThisInitialized(_this), index, item, values, handleChange, ModifyMode, _this.UpdateInitData));
         }
       });
       return ItemsTable;

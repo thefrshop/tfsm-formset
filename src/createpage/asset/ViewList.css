@@ -14,6 +14,13 @@
 	min-height: 100px;
 	margin-bottom: 10px;
 }
+.ViewListsformBox {
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	padding: 5px;
+	min-height: 100px;
+	margin-bottom: 10px;
+}
 
 .ViewList .Viewitle {
 	text-align: center;
@@ -30,6 +37,41 @@
 	font-size: 14px;
 	padding: 7px;
 	width: calc(100% - 150px);
+	border-top: solid 1px #ced4da;
+	border-right: solid 1px #ced4da;
+	border-bottom: solid 1px #ced4da;
+
+	color: #555;
+	background: #fafafa;
+	border-radius: 0 .25rem .25rem 0;
+	height: 38px;
+}
+
+.ViewListItem {
+	display: flex;
+	margin: 10px;
+	padding: 0;
+}
+.ViewListRow {
+	display: flex;
+	justify-content: left;
+}
+
+.ViewListItem .Viewitle {
+	text-align: center;
+	padding: 7px;
+	font-size: 14px;
+	width: 100px;
+	height: 38px;
+	color: #555;
+	border: solid 1px #ced4da;
+	border-radius: .25rem 0 0 0.25rem;
+}
+
+.ViewListItem .ViewContent {
+	font-size: 14px;
+	padding: 7px;
+	min-width: 200px;
 	border-top: solid 1px #ced4da;
 	border-right: solid 1px #ced4da;
 	border-bottom: solid 1px #ced4da;

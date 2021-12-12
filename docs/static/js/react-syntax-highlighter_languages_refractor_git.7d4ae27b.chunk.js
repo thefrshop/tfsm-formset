@@ -1,2 +1,0 @@
-(this["webpackJsonptfsm-formset-example"]=this["webpackJsonptfsm-formset-example"]||[]).push([[72],{606:function(m,e,t){"use strict";function s(m){m.languages.git={comment:/^#.*/m,deleted:/^[-\u2013].*/m,inserted:/^\+.*/m,string:/("|')(?:\\.|(?!\1)[^\\\r\n])*\1/m,command:{pattern:/^.*\$ git .*$/m,inside:{parameter:/\s--?\w+/m}},coord:/^@@.*@@$/m,"commit-sha1":/^commit \w{40}$/m}}m.exports=s,s.displayName="git",s.aliases=[]}}]);
-//# sourceMappingURL=react-syntax-highlighter_languages_refractor_git.7d4ae27b.chunk.js.map
