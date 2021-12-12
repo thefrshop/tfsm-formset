@@ -16,33 +16,35 @@ class ListSelected extends React.Component {
 		};
 	}
 
-	ViewSelected = () => {
-		if (this.state.Selected !== '') {
-			var name = '';
-			this.props.columns.forEach((element) => {
-				if (element.dataField === this.props.viewField) name = element.text;
-			});
-			//console.log(this.state.Selected);
-			return (
-				<div className="ViewSelected">
-					<div className="name">{name} : </div>
-					<div className="data">{this.state.Selected[this.props.viewField]}</div>
-				</div>
-			);
-		}
-
-		return '';
-	};
-
 	openSelect = () => {
 		this.setState({
 			ShowPopup: true
 		});
 	};
 
+	remove = (item) => {
+		var data = this.state.Selected;
+		var fitem = data.find((m) => m[this.props.keyField] === item[this.props.keyField]);
+		const idx = data.indexOf(fitem);
+		if (idx > -1) data.splice(idx, 1);
+
+		//console.log(item, fitem, data);
+
+		this.setState(
+			{
+				Selected: data
+			},
+			() => this.onChange()
+		);
+	};
+
 	onSelectOk = (Selected) => {
 		var data = this.state.Selected;
-		data.push(Selected);
+		var fitem = data.find((m) => m[this.props.keyField] === Selected[this.props.keyField]);
+		//console.log(fitem);
+
+		if (fitem === undefined) data.push(Selected);
+
 		this.setState(
 			{
 				Selected: data,
@@ -53,6 +55,8 @@ class ListSelected extends React.Component {
 	};
 
 	onChange = () => {
+		//console.log(this.state.Selected);
+
 		if (this.props.onChange !== undefined) {
 			this.props.onChange({
 				target: {
@@ -77,7 +81,6 @@ class ListSelected extends React.Component {
 				<Button variant="SelectPre" onClick={this.openSelect}>
 					추가
 				</Button>
-				<div className="CatSelectContent">{this.ViewSelected()}</div>
 			</div>
 		);
 	}

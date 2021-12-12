@@ -8,8 +8,10 @@ class ViewLists extends React.Component {
 		super(props);
 	}
 
+	onRemove = (item) => {};
+
 	ItemsView = () => {
-		console.log(this.props.selected);
+		//console.log(this.props.selected);
 		let viewlist = [];
 		this.props.selected.forEach((selitem, sindex) => {
 			let viewlistItem = [];
@@ -24,6 +26,9 @@ class ViewLists extends React.Component {
 			});
 			viewlist.push(
 				<div className="ViewListRow" key={sindex}>
+					<Button className="ViewListRowremonve" variant="danger" onClick={() => this.props.onRemove(selitem)}>
+						X
+					</Button>
 					{viewlistItem}
 				</div>
 			);

@@ -2165,35 +2165,33 @@ var ListSelected$1 = /*#__PURE__*/function (_React$Component) {
 
     _this = _React$Component.call(this, props) || this;
 
-    _this.ViewSelected = function () {
-      if (_this.state.Selected !== '') {
-        var name = '';
-
-        _this.props.columns.forEach(function (element) {
-          if (element.dataField === _this.props.viewField) name = element.text;
-        });
-
-        return /*#__PURE__*/React__default.createElement("div", {
-          className: "ViewSelected"
-        }, /*#__PURE__*/React__default.createElement("div", {
-          className: "name"
-        }, name, " : "), /*#__PURE__*/React__default.createElement("div", {
-          className: "data"
-        }, _this.state.Selected[_this.props.viewField]));
-      }
-
-      return '';
-    };
-
     _this.openSelect = function () {
       _this.setState({
         ShowPopup: true
       });
     };
 
+    _this.remove = function (item) {
+      var data = _this.state.Selected;
+      var fitem = data.find(function (m) {
+        return m[_this.props.keyField] === item[_this.props.keyField];
+      });
+      var idx = data.indexOf(fitem);
+      if (idx > -1) data.splice(idx, 1);
+
+      _this.setState({
+        Selected: data
+      }, function () {
+        return _this.onChange();
+      });
+    };
+
     _this.onSelectOk = function (Selected) {
       var data = _this.state.Selected;
-      data.push(Selected);
+      var fitem = data.find(function (m) {
+        return m[_this.props.keyField] === Selected[_this.props.keyField];
+      });
+      if (fitem === undefined) data.push(Selected);
 
       _this.setState({
         Selected: data,
@@ -2241,9 +2239,7 @@ var ListSelected$1 = /*#__PURE__*/function (_React$Component) {
     })), /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
       variant: "SelectPre",
       onClick: this.openSelect
-    }, "\uCD94\uAC00"), /*#__PURE__*/React__default.createElement("div", {
-      className: "CatSelectContent"
-    }, this.ViewSelected()));
+    }, "\uCD94\uAC00"));
   };
 
   return ListSelected;
@@ -2257,8 +2253,9 @@ var ViewLists = /*#__PURE__*/function (_React$Component) {
 
     _this = _React$Component.call(this, props) || this;
 
+    _this.onRemove = function (item) {};
+
     _this.ItemsView = function () {
-      console.log(_this.props.selected);
       var viewlist = [];
 
       _this.props.selected.forEach(function (selitem, sindex) {
@@ -2278,7 +2275,13 @@ var ViewLists = /*#__PURE__*/function (_React$Component) {
         viewlist.push( /*#__PURE__*/React__default.createElement("div", {
           className: "ViewListRow",
           key: sindex
-        }, viewlistItem));
+        }, /*#__PURE__*/React__default.createElement(reactBootstrap.Button, {
+          className: "ViewListRowremonve",
+          variant: "danger",
+          onClick: function onClick() {
+            return _this.props.onRemove(selitem);
+          }
+        }, "X"), viewlistItem));
       });
 
       return viewlist;
@@ -2300,6 +2303,7 @@ var InitData$8 = function InitData() {
   return [];
 };
 var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, ModifyMode) {
+  var SelRef = React__default.createRef();
   return /*#__PURE__*/React__default.createElement("div", {
     className: "ItemViewRow",
     key: index
@@ -2309,7 +2313,9 @@ var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, Modif
     className: "ItemTitle"
   }, item.name), /*#__PURE__*/React__default.createElement("div", {
     className: "ItemContent"
-  }, /*#__PURE__*/React__default.createElement(ListSelected$1, _extends({}, M.props, {
+  }, /*#__PURE__*/React__default.createElement(ListSelected$1, _extends({
+    ref: SelRef
+  }, M.props, {
     InitialValue: values[item.id],
     name: item.id,
     title: item.name,
@@ -2335,7 +2341,11 @@ var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, Modif
     columns: item.columns,
     keyField: item.keyField,
     orderField: item.orderField,
-    viewField: item.viewField
+    viewField: item.viewField,
+    onRemove: function onRemove(item) {
+      console.log(item);
+      SelRef.current.remove(item);
+    }
   }))));
 };
 

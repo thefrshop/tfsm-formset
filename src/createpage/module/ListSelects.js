@@ -10,12 +10,15 @@ export const InitData = () => {
 
 //뷰
 export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
+	var SelRef = React.createRef();
+
 	return (
 		<div className="ItemViewRow" key={index}>
 			<div className="ItemHeader">
 				<div className="ItemTitle">{item.name}</div>
 				<div className="ItemContent">
 					<ListSelects
+						ref={SelRef}
 						{...M.props}
 						InitialValue={values[item.id]}
 						name={item.id}
@@ -45,6 +48,10 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 							keyField={item.keyField}
 							orderField={item.orderField}
 							viewField={item.viewField}
+							onRemove={(item) => {
+								console.log(item);
+								SelRef.current.remove(item);
+							}}
 						/>
 					</div>
 				</div>
