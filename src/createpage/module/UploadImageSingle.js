@@ -69,13 +69,7 @@ const GetUploagImage = (props) => {
 	if (Url !== '' && Url !== undefined) {
 		images = (
 			<div className="ImageformSingle">
-				<Image
-					className="ImageformSingleImage"
-					variant="top"
-					src={Url}
-					onMouseEnter={() => setIsShown('UP')}
-					onMouseLeave={() => setIsShown(false)}
-				/>
+				<Image className="ImageformSingleImage" variant="top" src={Url} onMouseEnter={() => setIsShown('UP')} onMouseLeave={() => setIsShown(false)} />
 				{isShown === 'UP' && (
 					<div className="ImageformPop">
 						<Image variant="top" src={Url} />
@@ -85,23 +79,18 @@ const GetUploagImage = (props) => {
 			</div>
 		);
 	} else {
-		images = (
-			<div className="ImageformSingle">
-				<Image
-					className="ImageformSingleImage"
-					variant="top"
-					src={File.FileData}
-					onMouseEnter={() => setIsShown('UP')}
-					onMouseLeave={() => setIsShown(false)}
-				/>
-				{isShown === 'UP' && (
-					<div className="ImageformPop">
-						<Image variant="top" src={Url} />
-						<div>{name}</div>
-					</div>
-				)}
-			</div>
-		);
+		if (File !== undefined)
+			images = (
+				<div className="ImageformSingle">
+					<Image className="ImageformSingleImage" variant="top" src={File.FileData} onMouseEnter={() => setIsShown('UP')} onMouseLeave={() => setIsShown(false)} />
+					{isShown === 'UP' && (
+						<div className="ImageformPop">
+							<Image variant="top" src={Url} />
+							<div>{name}</div>
+						</div>
+					)}
+				</div>
+			);
 	}
 
 	return (

@@ -2993,7 +2993,7 @@ var GetUploagImage$1 = function GetUploagImage(props) {
       src: Url
     }), /*#__PURE__*/React__default.createElement("div", null, name)));
   } else {
-    images = /*#__PURE__*/React__default.createElement("div", {
+    if (File !== undefined) images = /*#__PURE__*/React__default.createElement("div", {
       className: "ImageformSingle"
     }, /*#__PURE__*/React__default.createElement(reactBootstrap.Image, {
       className: "ImageformSingleImage",
