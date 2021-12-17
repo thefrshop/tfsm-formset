@@ -45,7 +45,14 @@ export default class App extends Component {
 				</div>
 				<br />
 				<h5>기본</h5>
-				<CreatePage ModifyMode={false} DataStruct={struct} onSubmit={this.onSubmitDefault} onChangeItem={this.onChangeItem} hierarchyData={HierarchySample} ListData={ListData}>
+				<CreatePage
+					ModifyMode={false}
+					DataStruct={struct}
+					onSubmit={this.onSubmitDefault}
+					onChangeItem={this.onChangeItem}
+					hierarchyData={HierarchySample}
+					ListData={ListData}
+				>
 					{child}
 				</CreatePage>
 				<br />
@@ -67,7 +74,14 @@ export default class App extends Component {
 					<div>
 						<br />
 						<h5>수정</h5>
-						<CreatePage InitData={InitData} ModifyMode={true} DataStruct={struct} onSubmit={this.onSubmitModifi} hierarchyData={HierarchySample} ListData={ListData}>
+						<CreatePage
+							InitData={InitData}
+							ModifyMode={true}
+							DataStruct={struct}
+							onSubmit={this.onSubmitModifi}
+							hierarchyData={HierarchySample}
+							ListData={ListData}
+						>
 							{child}
 						</CreatePage>
 						<br />
@@ -85,7 +99,12 @@ export default class App extends Component {
 								</Button>
 							</div>
 
-							<ReactJson src={this.state.modifidata} theme="twilight" name={'Output'} iconStyle="circle" />
+							<ReactJson
+								src={this.state.modifidata}
+								theme="twilight"
+								name={'Output'}
+								iconStyle="circle"
+							/>
 							<div className="consoleBtSection">
 								<Button
 									style={{ padding: '2px 5px' }}
@@ -158,7 +177,8 @@ export default class App extends Component {
 					columns={columns}
 					pagination
 					Poptions={{ showTotal: false, hideSizePerPage: true }}
-					onChange={(dataField, cell, row, rowIndex, value) => console.log(dataField, cell, row, rowIndex, value)}
+					onChange={(dataField, cell, row, rowIndex, value) =>
+						console.log(dataField, cell, row, rowIndex, value)}
 				/>
 			</div>
 		);
@@ -184,10 +204,19 @@ export default class App extends Component {
 							{this.Test('Text', exL.Text, exL.TextInit)}
 							{this.Test('Price', exL.Price, exL.PriceInit)}
 							{this.Test('Hierarchy', exL.Hierarchy, exL.HierarchyInit, null, exL.HierarchySample)}
-							{this.Test('HierarchyLastMulti', exL.HierarchyLast, exL.HierarchyLastInit, null, exL.HierarchySample)}
+							{this.Test(
+								'HierarchyLastMulti',
+								exL.HierarchyLast,
+								exL.HierarchyLastInit,
+								null,
+								exL.HierarchySample
+							)}
 							{this.Test('ListSelect', exL.ListSelect, exL.ListSelectInit, null, null, exL.ListData)}
 							{this.Test('ListSelects', exL.ListSelects, exL.ListSelectsInit, null, null, exL.ListDatas)}
-							{this.Test('Child', exL.Child, null, [ <div key="Child1">Child1</div>, <div key="Child2">Child2</div> ])}
+							{this.Test('Child', exL.Child, null, [
+								<div key="Child1">Child1</div>,
+								<div key="Child2">Child2</div>
+							])}
 							{this.Test('Select', exL.Select, exL.SelectInit)}
 							{this.Test('UploadImage', exL.UploadImage, exL.UploadImageInit)}
 							{this.Test('UploadImageSingle', exL.UploadImageSingle, exL.UploadImageSingleInit)}
