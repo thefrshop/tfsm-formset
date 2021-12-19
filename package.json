@@ -1,6 +1,6 @@
 {
 	"name": "tfsm-formset",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"description": "tfsm-formset",
 	"author": "thefreshop",
 	"license": "MIT",
@@ -57,7 +57,7 @@
 		"moment": "^2.29.1",
 		"moment-timezone": "^0.5.34",
 		"react-addons-update": "^15.6.3",
-		"react-bootstrap": "^2.0.3",
+		"react-bootstrap": "^1.6.4",
 		"react-bootstrap-table-next": "^4.0.3",
 		"react-bootstrap-table2-paginator": "^2.1.2",
 		"react-bootstrap-table2-toolkit": "^2.1.3",
