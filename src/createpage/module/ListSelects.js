@@ -33,6 +33,8 @@ export const ItemsView = (M, index, item, values, handleChange, ModifyMode) => {
 						searchBar={item.searchBar}
 						pagination={item.pagination}
 						toggleList={item.toggleList}
+						Poptions={item.Poptions}
+						multselect={item.multselect}
 					/>
 				</div>
 			</div>

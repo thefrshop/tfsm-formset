@@ -112,8 +112,14 @@ export const HierarchySample = {
 
 			{ Name: '111', pid: 0, Code: '111', lev: 0, key: 'RSeghKOWqnOojJxljSFu' }
 		],
-		[ { Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' }, { Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' } ],
-		[ { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' }, { pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' } ]
+		[
+			{ Code: '2', pid: 'sKItoqKJnAbTnGVP3mfM', lev: 1, Name: '2', key: 'bvA6fuaFER7IQvpoCOSt' },
+			{ Code: '22', lev: 1, Name: '22', pid: 'sKItoqKJnAbTnGVP3mfM', key: '6tAxuc4g2GwcA8AuJV1d' }
+		],
+		[
+			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '33', key: '0HANo5pGWvHBLuonzePR' },
+			{ pid: 'bvA6fuaFER7IQvpoCOSt', Name: '33', lev: 2, Code: '34', key: '0HA23233WvHBLuonzePR' }
+		]
 	]
 };
 
@@ -193,7 +199,8 @@ export const ListSelects = {
 					],
 					keyField: 'Code',
 					viewField: 'Name',
-					searchBar: true
+					searchBar: true,
+					multselect: true
 				}
 			]
 		}

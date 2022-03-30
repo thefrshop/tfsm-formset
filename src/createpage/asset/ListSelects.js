@@ -39,19 +39,40 @@ class ListSelected extends React.Component {
 	};
 
 	onSelectOk = (Selected) => {
-		var data = this.state.Selected;
-		var fitem = data.find((m) => m[this.props.keyField] === Selected[this.props.keyField]);
-		//console.log(fitem);
+		if (this.props.multselect === true) {
+			//console.log(Selected);
+			var data = this.state.Selected;
 
-		if (fitem === undefined) data.push(Selected);
+			Selected.forEach((item) => {
+				var fitem = data.find((m) => m[this.props.keyField] === item.data[this.props.keyField]);
+				//console.log(fitem);
 
-		this.setState(
-			{
-				Selected: data,
-				ShowPopup: false
-			},
-			() => this.onChange()
-		);
+				if (fitem === undefined) data.push(item.data);
+			});
+			this.setState(
+				{
+					Selected: data,
+					ShowPopup: false
+				},
+				() => this.onChange()
+			);
+		} else {
+			console.log(Selected);
+
+			var data = this.state.Selected;
+			var fitem = data.find((m) => m[this.props.keyField] === Selected[this.props.keyField]);
+			//console.log(fitem);
+
+			if (fitem === undefined) data.push(Selected);
+
+			this.setState(
+				{
+					Selected: data,
+					ShowPopup: false
+				},
+				() => this.onChange()
+			);
+		}
 	};
 
 	onChange = () => {

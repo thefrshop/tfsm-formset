@@ -12,7 +12,8 @@ class PopupListSelect extends React.Component {
 
 		this.state = {
 			isloading: false,
-			done: false
+			done: false,
+			SelectedList: []
 		};
 	}
 
@@ -36,6 +37,24 @@ class PopupListSelect extends React.Component {
 		});
 	};
 
+	onSelectmulti = (row, isSelect, rowIndex, e) => {
+		//console.log(row, isSelect, rowIndex, e);
+		var SelectedList = this.state.SelectedList;
+		if (isSelect) {
+			SelectedList.push({ rowIndex: rowIndex, data: row });
+			this.setState({
+				SelectedList: SelectedList,
+				done: true
+			});
+		} else {
+			let filteredArray = SelectedList.filter((m) => m.rowIndex !== rowIndex);
+			this.setState({
+				SelectedList: filteredArray,
+				done: true
+			});
+		}
+	};
+
 	MoveCarousel = (selectedIndex) => {
 		this.setState({
 			index: selectedIndex
@@ -43,13 +62,23 @@ class PopupListSelect extends React.Component {
 	};
 
 	selectRowProp = () => {
-		return {
-			mode: 'radio',
-			hideSelectColumn: true,
-			clickToSelect: true,
-			onSelect: this.onSelect,
-			bgColor: '#ffffe0'
-		};
+		if (this.props.multselect === true) {
+			return {
+				mode: 'checkbox',
+				hideSelectColumn: true,
+				clickToSelect: true,
+				onSelect: this.onSelectmulti,
+				bgColor: '#ffffe0'
+			};
+		} else {
+			return {
+				mode: 'radio',
+				hideSelectColumn: true,
+				clickToSelect: true,
+				onSelect: this.onSelect,
+				bgColor: '#ffffe0'
+			};
+		}
 	};
 
 	onHide = () => {
@@ -62,7 +91,9 @@ class PopupListSelect extends React.Component {
 	render() {
 		const rowEvents = {
 			onDoubleClick: (e, row, rowIndex) => {
-				this.props.onOk(this.state.Selected);
+				if (this.props.multselect !== true) {
+					this.props.onOk(this.state.Selected);
+				}
 			}
 		};
 
@@ -82,7 +113,17 @@ class PopupListSelect extends React.Component {
 					<Modal.Footer className="PopFooter">
 						<div className="DoneView">
 							{!this.state.done ? null : (
-								<Button variant="Submit" className="FooterButton" onClick={() => this.props.onOk(this.state.Selected)}>
+								<Button
+									variant="Submit"
+									className="FooterButton"
+									onClick={() => {
+										if (this.props.multselect === true) {
+											this.props.onOk(this.state.SelectedList);
+										} else {
+											this.props.onOk(this.state.Selected);
+										}
+									}}
+								>
 									추가
 								</Button>
 							)}

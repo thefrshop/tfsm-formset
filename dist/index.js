@@ -2033,7 +2033,8 @@ var ItemsView$7 = function ItemsView(M, index, item, values, handleChange, Modif
     viewField: item.viewField,
     searchBar: item.searchBar,
     pagination: item.pagination,
-    toggleList: item.toggleList
+    toggleList: item.toggleList,
+    Poptions: item.Poptions
   })))), item.Viewhidden ? null : /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
   }, /*#__PURE__*/React__default.createElement("div", {
@@ -2081,6 +2082,31 @@ var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
       });
     };
 
+    _this.onSelectmulti = function (row, isSelect, rowIndex, e) {
+      var SelectedList = _this.state.SelectedList;
+
+      if (isSelect) {
+        SelectedList.push({
+          rowIndex: rowIndex,
+          data: row
+        });
+
+        _this.setState({
+          SelectedList: SelectedList,
+          done: true
+        });
+      } else {
+        var filteredArray = SelectedList.filter(function (m) {
+          return m.rowIndex !== rowIndex;
+        });
+
+        _this.setState({
+          SelectedList: filteredArray,
+          done: true
+        });
+      }
+    };
+
     _this.MoveCarousel = function (selectedIndex) {
       _this.setState({
         index: selectedIndex
@@ -2088,13 +2114,23 @@ var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.selectRowProp = function () {
-      return {
-        mode: 'radio',
-        hideSelectColumn: true,
-        clickToSelect: true,
-        onSelect: _this.onSelect,
-        bgColor: '#ffffe0'
-      };
+      if (_this.props.multselect === true) {
+        return {
+          mode: 'checkbox',
+          hideSelectColumn: true,
+          clickToSelect: true,
+          onSelect: _this.onSelectmulti,
+          bgColor: '#ffffe0'
+        };
+      } else {
+        return {
+          mode: 'radio',
+          hideSelectColumn: true,
+          clickToSelect: true,
+          onSelect: _this.onSelect,
+          bgColor: '#ffffe0'
+        };
+      }
     };
 
     _this.onHide = function () {
@@ -2107,7 +2143,8 @@ var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
 
     _this.state = {
       isloading: false,
-      done: false
+      done: false,
+      SelectedList: []
     };
     return _this;
   }
@@ -2121,7 +2158,9 @@ var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
 
     var rowEvents = {
       onDoubleClick: function onDoubleClick(e, row, rowIndex) {
-        _this2.props.onOk(_this2.state.Selected);
+        if (_this2.props.multselect !== true) {
+          _this2.props.onOk(_this2.state.Selected);
+        }
       }
     };
     return /*#__PURE__*/React__default.createElement("div", {
@@ -2153,7 +2192,11 @@ var PopupListSelect$1 = /*#__PURE__*/function (_React$Component) {
       variant: "Submit",
       className: "FooterButton",
       onClick: function onClick() {
-        return _this2.props.onOk(_this2.state.Selected);
+        if (_this2.props.multselect === true) {
+          _this2.props.onOk(_this2.state.SelectedList);
+        } else {
+          _this2.props.onOk(_this2.state.Selected);
+        }
       }
     }, "\uCD94\uAC00")), !this.state.isloading ? null : /*#__PURE__*/React__default.createElement(reactBootstrap.Spinner, {
       as: "span",
@@ -2197,18 +2240,36 @@ var ListSelected$1 = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.onSelectOk = function (Selected) {
-      var data = _this.state.Selected;
-      var fitem = data.find(function (m) {
-        return m[_this.props.keyField] === Selected[_this.props.keyField];
-      });
-      if (fitem === undefined) data.push(Selected);
+      if (_this.props.multselect === true) {
+        var data = _this.state.Selected;
+        Selected.forEach(function (item) {
+          var fitem = data.find(function (m) {
+            return m[_this.props.keyField] === item.data[_this.props.keyField];
+          });
+          if (fitem === undefined) data.push(item.data);
+        });
 
-      _this.setState({
-        Selected: data,
-        ShowPopup: false
-      }, function () {
-        return _this.onChange();
-      });
+        _this.setState({
+          Selected: data,
+          ShowPopup: false
+        }, function () {
+          return _this.onChange();
+        });
+      } else {
+        console.log(Selected);
+        var data = _this.state.Selected;
+        var fitem = data.find(function (m) {
+          return m[_this.props.keyField] === Selected[_this.props.keyField];
+        });
+        if (fitem === undefined) data.push(Selected);
+
+        _this.setState({
+          Selected: data,
+          ShowPopup: false
+        }, function () {
+          return _this.onChange();
+        });
+      }
     };
 
     _this.onChange = function () {
@@ -2338,7 +2399,9 @@ var ItemsView$8 = function ItemsView(M, index, item, values, handleChange, Modif
     viewField: item.viewField,
     searchBar: item.searchBar,
     pagination: item.pagination,
-    toggleList: item.toggleList
+    toggleList: item.toggleList,
+    Poptions: item.Poptions,
+    multselect: item.multselect
   })))), item.Viewhidden ? null : /*#__PURE__*/React__default.createElement("div", {
     className: "ItemBody"
   }, /*#__PURE__*/React__default.createElement("div", {
